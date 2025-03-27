@@ -1,0 +1,135 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 60px; /* Space for fixed navbar */
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    background: linear-gradient(90deg, #4F46E5, #3B82F6);
+    padding: 1rem;
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+  
+  .nav-link.active {
+    background-color: rgba(255,255,255,0.2);
+  }
+  
+  .menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .mobile-menu {
+    display: none;
+    background-color: #4F46E5;
+    padding: 1rem;
+  }
+  
+  .mobile-menu .nav-link {
+    display: block;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    
+    .menu-button {
+      display: block;
+    }
+    
+    .mobile-menu.active {
+      display: block;
+    }
+  }
+  
+  /* Home Page Styles */
+  .hero {
+    text-align: center;
+    padding: 4rem 1rem;
+    background-color: #f8f9fa;
+  }
+  
+  .features {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  /* Utility Classes */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: #4F46E5;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #3B82F6;
+  }
