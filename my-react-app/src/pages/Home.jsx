@@ -1,7 +1,4 @@
 import React from "react";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
-import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -18,8 +15,6 @@ const Home = () => {
         <h2>Features</h2>
         {/* Add feature components */}
       </div>
-
-      <Footer />
     </div>
   );
 };
