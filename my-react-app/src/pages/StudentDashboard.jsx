@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { mockBookings } from "../utils/mockBookings";
+import { mockEvents } from "../utils/mockEvents";
 import EventCard from "../components/EventCard";
 import StudentDetails from "../components/StudentDetails";
 import Navbar from "../components/Navbar";
 import "../styles/StudentDashboard.css"; // Importing custom CSS
 
 const StudentDashboard = () => {
-  const [bookings] = useState(mockBookings);
+  const [bookings] = useState(mockEvents);
   const [filter, setFilter] = useState("upcoming");
 
   const filteredBookings = bookings.filter(b =>
