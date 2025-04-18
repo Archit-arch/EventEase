@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import StudentDashboard from "./pages/StudentDashboard";
 import Footer from "./components/Footer";
 import EventManager from './pages/EventManager';
+import EventCreation from './pages/EventCreation';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/studentDashboard" element={<StudentDashboard/>} />
         <Route path="/eventManager" element={<EventManager/>} />
+        <Route path="/create-event" element={<EventCreation/>} />
       </Routes>
       <Footer />
     </Router>
