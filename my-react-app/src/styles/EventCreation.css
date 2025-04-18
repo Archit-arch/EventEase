@@ -1,0 +1,74 @@
+.event-creation-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f4f6f8;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.event-creation-form {
+background-color: #ffffff;
+padding: 2.5rem 3rem;
+border-radius: 12px;
+box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+max-width: 500px;
+width: 100%;
+}
+
+.event-creation-form h1 {
+margin-bottom: 1.5rem;
+font-size: 1.8rem;
+text-align: center;
+color: #333;
+}
+
+.event-creation-form label {
+display: block;
+margin-bottom: 1rem;
+font-weight: 500;
+color: #333;
+}
+
+.event-creation-form input,
+.event-creation-form textarea {
+width: 100%;
+padding: 0.75rem;
+margin-top: 0.3rem;
+border: 1px solid #ccc;
+border-radius: 6px;
+font-size: 1rem;
+transition: border 0.3s ease;
+}
+
+.event-creation-form input:focus,
+.event-creation-form textarea:focus {
+outline: none;
+border-color: #4a90e2;
+box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.event-creation-form textarea {
+min-height: 100px;
+resize: vertical;
+}
+
+/* Submit button */
+.event-creation-form button[type="submit"] {
+margin-top: 1.5rem;
+width: 100%;
+padding: 0.8rem;
+background-color: #4a90e2;
+color: white;
+font-size: 1rem;
+font-weight: bold;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.event-creation-form button[type="submit"]:hover {
+background-color: #357ab8;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { mockEvents } from "../utils/mockEvents"; // Assume you have a similar mockEvents file
 import EventCard from "../components/EventCard";
 import Navbar from "../components/Navbar";
@@ -8,6 +9,7 @@ const EventManager = () => {
   // We use the mockEvents array to simulate the created events by the club
   const [events, setEvents] = useState(mockEvents);
   const [filter, setFilter] = useState("upcoming");
+  const navigate = useNavigate();
 
   // Filter events: upcoming if not completed, past if completed
   const filteredEvents = events.filter(event =>
@@ -18,6 +20,7 @@ const EventManager = () => {
   // This might open a modal or redirect to a creation form.
   const handleCreateNewEvent = () => {
     // Replace with your navigation or modal trigger logic.
+    navigate("/create-event"); // Example: navigate to a create event page
     console.log("Navigating to event creation page...");
   };
 
