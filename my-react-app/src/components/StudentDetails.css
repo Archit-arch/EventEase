@@ -1,27 +1,22 @@
 .student-details {
-    background-color: #f3f4f6;
-    padding: 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 80px;
-  }
-  
-  .student-heading {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 16px;
-    color: #1f2937;
-  }
-  
-  .student-info {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: #374151;
-  }
-  
-  .label {
-    font-weight: 600;
-    color: #111827;
-  }
-  
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.student-heading {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.student-info {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.label {
+  font-weight: bold;
+}

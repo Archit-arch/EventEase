@@ -4,6 +4,7 @@ import EventCard from "../components/EventCard";
 import StudentDetails from "../components/StudentDetails";
 import Navbar from "../components/Navbar";
 import "../styles/StudentDashboard.css"; // Importing custom CSS
+import Footer from '../components/Footer/Footer.jsx';
 
 const StudentDashboard = () => {
   const [bookings] = useState(mockEvents);
@@ -54,6 +55,8 @@ const StudentDashboard = () => {
           <StudentDetails />
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Footer from '../components/Footer/Footer.jsx';
 
 const Events = () => {
   const eventList = [
@@ -16,6 +17,8 @@ const Events = () => {
           </li>
         ))}
       </ul>
+
+      <Footer />
     </div>
   );
 };
