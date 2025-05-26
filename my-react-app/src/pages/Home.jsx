@@ -15,8 +15,8 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1>Welcome to EventEase</h1>
-        <p>Your campus event management solution</p>
+        <h1>Welcome to Event-Ease</h1>
+        <p>Your campus event management solution at One Place</p>
         <a href="/events" className="btn btn-primary">
           Browse Events
         </a>
