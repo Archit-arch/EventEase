@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { mockEvents } from "../utils/mockEvents"; // Assume you have a similar mockEvents file
 import EventCard from "../components/EventCard";
-import Navbar from "../components/Navbar";
+import ClubNavbar from "../components/ClubNavbar";
 import "../styles/EventManager.css"; // Custom CSS for this page
 
 const EventManager = () => {
@@ -26,7 +26,7 @@ const EventManager = () => {
 
   return (
     <div className="dashboard-container">
-      <Navbar />
+      <ClubNavbar />
 
       <div className="dashboard-content">
         {/* Left: List of Created Events */}

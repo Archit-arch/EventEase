@@ -2,41 +2,50 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Card, Alert, Row, Col, InputGroup } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaLock, FaUserTag, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer/Footer.jsx';
+import Navbar from '../components/Navbar.jsx';
+import axios from 'axios'; 
 
 function Register() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     name: '',
-    role: 'user'
+    role: 'student'
   });
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
+ // ✅ Handle form field changes
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccess('');
 
-    // Simulate success after form submission
-    setSuccess('Registration successful! Redirecting to login...');
-    setTimeout(() => navigate('/'), 2000);
-  };
+  try {
+    const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+
+    if (response.status === 201) {
+      localStorage.setItem('token', response.data.token);
+      setSuccess('Registration successful! Redirecting to Home...');
+      setTimeout(() => navigate('/'), 2000);
+    }
+  } catch (err) {
+    const errorMsg = err.response?.data?.error || 'Something went wrong';
+    setError(errorMsg);
+  }
+};
 
   return (
     <>
+      <Navbar />
       <div
         style={{
           backgroundImage: 'url("/images/login-bg.jpg")',
@@ -120,9 +129,9 @@ function Register() {
                         onChange={handleChange}
                         required
                       >
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                        <option value="organizer">Organizer</option>
+                        <option value="student">student</option>
+                        
+                        <option value="organizer">organizer</option>
                       </Form.Select>
                     </InputGroup>
                   </Form.Group>
@@ -136,7 +145,6 @@ function Register() {
           </Row>
         </Container>
       </div>
-      <Footer />
     </>
   );
 }
