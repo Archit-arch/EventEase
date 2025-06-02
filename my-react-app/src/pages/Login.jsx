@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Card, Alert, Row, Col, InputGroup } from 'react-bootstrap';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer/Footer.jsx';
+import Navbar from '../components/Navbar.jsx';
+import axios from 'axios';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -14,19 +15,76 @@ function Login() {
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
-  const handleSubmit = (e) => {
+/*
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    // Simulate successful login and redirect
-    setSuccess('Login successful! Redirecting...');
-    setTimeout(() => navigate('/dashboard'), 2000);
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', formData); // update URL as needed
+
+      if (response.status === 200) {
+        setSuccess(response.data.message);
+
+        const user = response.data.user;
+        localStorage.setItem('user', JSON.stringify(user));
+
+        const userRole = user.role;
+        setTimeout(() => {
+          if (userRole === 'student') {
+            navigate('/studentDashboard');
+          } else if (userRole === 'organizer') {
+            navigate('/eventManager');
+          } else {
+            navigate('/');
+          }
+        }, 1500);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
+    }
   };
+*/
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccess('');
+
+  try {
+    const response = await axios.post('http://localhost:5000/api/auth/login', formData); // Update URL as needed
+
+    if (response.status === 200) {
+      setSuccess(response.data.message);
+
+      const { user, token } = response.data;
+
+      // Store user info and JWT token
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+
+      const userRole = user.role;
+
+
+      setTimeout(() => {
+        if (userRole === 'student') {
+          navigate('/studentDashboard', {replace: true});
+        } else if (userRole === 'organizer') {
+          navigate('/eventManager', { replace: true });
+        } else {
+          navigate('/');
+        }
+      }, 500);
+    }
+  } catch (err) {
+    setError(err.response?.data?.message || 'Login failed. Please try again.');
+  }
+};
 
   return (
     <>
+      <Navbar />
       <div
         style={{
           backgroundImage: 'url("/images/event-1.jpg")',
@@ -38,6 +96,7 @@ function Login() {
           justifyContent: 'center',
         }}
       >
+        
         <Container className="d-flex justify-content-center align-items-center min-vh-100">
           <Row className="w-100">
             <Col md={{ span: 6, offset: 3 }}>
@@ -94,7 +153,6 @@ function Login() {
           </Row>
         </Container>
       </div>
-      <Footer />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import ClubNavbar from "../components/ClubNavbar";
 import "../styles/EventCreation.css";
 
 const EventCreation = ({ onSave }) => {
@@ -43,7 +43,7 @@ const EventCreation = ({ onSave }) => {
 
     return (
         <div className="event-creation-container">
-            <Navbar />
+            <ClubNavbar />
             <div className="event-creation-form">
                 <h1>Create New Event</h1>
                 <form onSubmit={handleSubmit}>
