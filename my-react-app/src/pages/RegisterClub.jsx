@@ -1,33 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Card, Alert, Row, Col, InputGroup } from 'react-bootstrap';
-import { FaBuilding, FaUser, FaAlignLeft } from 'react-icons/fa';
-import axios from 'axios';
+import { FaBuilding, FaAlignLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer/Footer.jsx';
 import ClubNavbar from '../components/ClubNavbar.jsx';
+import api from '../api/axios';
 
-function CreateClub({ currentUserId }) {
+const RegisterClub = () => {
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
   });
-
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
-  // Handle form input changes
+  // Get user from localStorage once on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      // If no user, redirect to login or handle accordingly
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    // Validate club name length
     if (formData.name.trim().length === 0) {
       setError('Club name is required.');
       return;
@@ -38,26 +45,25 @@ function CreateClub({ currentUserId }) {
     }
 
     try {
-      // POST to your backend API endpoint for club creation
-      const response = await axios.post('http://localhost:5000/api/clubs', {
+      const response = await api.post('/club-requests', {
         name: formData.name.trim(),
         description: formData.description.trim(),
-        created_by: currentUserId,
+        created_by: user?.id,  // Use user from state
       });
 
       if (response.status === 201) {
-        setSuccess('Club created successfully! Redirecting...');
-        setTimeout(() => navigate('/clubs'), 2000); // Redirect to clubs list or dashboard
+        setSuccess('Club request submitted successfully! Redirecting...');
+        setTimeout(() => navigate('/eventManager'), 2000);
       }
     } catch (err) {
-      const errorMsg = err.response?.data?.error || 'Failed to create club';
+      const errorMsg = err.response?.data?.error || 'Failed to submit club request';
       setError(errorMsg);
     }
   };
 
   return (
     <>
-       <ClubNavbar/>
+      <ClubNavbar />
       <div
         style={{
           backgroundImage: 'url("/images/login-bg.jpg")',
@@ -121,6 +127,7 @@ function CreateClub({ currentUserId }) {
       </div>
     </>
   );
-}
+};
 
-export default CreateClub;
+export default RegisterClub;
+// This code defines a RegisterClub component that allows users to create a new club.
