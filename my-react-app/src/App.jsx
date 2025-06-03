@@ -6,18 +6,19 @@ import EventDetails from "./pages/EventDetails";
 import Navbar from "./components/Navbar";
 import StudentDashboard from "./pages/StudentDashboard";
 import EventManager from './pages/EventManager';
-import EventCreation from './pages/EventCreation';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import RegisterClub from './pages/RegisterClub';
 import Footer from './components/Footer/Footer.jsx';
 import AdminDashboard from './pages/AdminDashboard';
 
+
 import Unauthorized from "./pages/Unauthorized/Unauthorized.jsx";
 import ViewRequests from "./pages/ViewRequests.jsx";
 import ViewAdminLogs from "./pages/ViewAdminLogs.jsx";
 
 import VenueRequests from "./pages/VenueRequests.jsx";
+import EventRequestForm from './pages/EventRequestForm.jsx';
 function App() {
   return (
     <Router>
@@ -28,9 +29,7 @@ function App() {
         <Route path="/login" element = {<Login/>}/>
         <Route path="/register-club" element={<RegisterClub/>} />
 
-        
-        
-        <Route path="/create-event" element={<EventCreation/>} />  
+        <Route path="/create-event" element={<EventRequestForm/>} />  
         <Route path="/register" element={<Register/>} />
 
         <Route path="/studentDashboard" element={<StudentDashboard/>} />
