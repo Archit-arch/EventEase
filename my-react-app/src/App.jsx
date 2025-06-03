@@ -17,6 +17,7 @@ import Unauthorized from "./pages/Unauthorized/Unauthorized.jsx";
 import ViewRequests from "./pages/ViewRequests.jsx";
 import ViewAdminLogs from "./pages/ViewAdminLogs.jsx";
 
+import VenueRequests from "./pages/VenueRequests.jsx";
 function App() {
   return (
     <Router>
@@ -40,6 +41,8 @@ function App() {
         <Route path="/view-requests" element={<ViewRequests />} />
         
         <Route path="/view-admin-logs" element={< ViewAdminLogs />} />
+
+        <Route path="/venue-requests" element={<VenueRequests />} />
       </Routes>
       <Footer />
     </Router>
