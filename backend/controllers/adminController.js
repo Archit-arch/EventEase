@@ -191,6 +191,178 @@ const getVenueLogs = async (req, res) => {
   }
 };
 
+const eventRequests = async (req, res) => {
+    try {
+    const result = await pool.query(
+      'SELECT * FROM event_requests WHERE status = $1 ORDER BY requested_at DESC',
+      ['pending']
+    );
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error fetching venue requests:', error);
+    res.status(500).json({ error: 'Failed to fetch event requests' });
+  }
+};
+
+
+// Approve an event request
+const approveEvent = async (req, res) => {
+  const requestId = req.params.id;
+  const adminId = req.user.id;
+
+  try {
+    const { rows } = await pool.query('SELECT * FROM event_requests WHERE id = $1', [requestId]);
+    if (rows.length === 0) return res.status(404).json({ error: 'Event request not found' });
+
+    const request = rows[0];
+
+    // Insert approved event into events table
+    await pool.query(
+      `INSERT INTO events 
+        (title, description, date, start_time, end_time, venue_id, club_id, created_by) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        request.title,
+        request.description,
+        request.date,
+        request.start_time,
+        request.end_time,
+        request.venue_id,
+        request.club_id,
+        request.created_by
+      ]
+    );
+
+    // Update status
+    await pool.query('UPDATE event_requests SET status = $1 WHERE id = $2', ['Approved', requestId]);
+
+    // Admin log entry
+    await pool.query(
+      `INSERT INTO admin_logs (admin_id, request_id, status, approved_at, request_type)
+       VALUES ($1, $2, $3, NOW(), $4)`,
+      [adminId, requestId, 'Approved', 'event']
+    );
+
+    res.status(200).json({ message: 'Event approved successfully.' });
+
+  } catch (error) {
+    console.error('Error approving event:', error);
+    res.status(500).json({ error: 'Failed to approve event' });
+  }
+};
+
+
+//Reject an event request
+const rejectEvent = async (req, res) => {
+  const requestId = req.params.id;
+  const { reason } = req.body;
+  const adminId = req.user.id;
+
+  if (!reason?.trim()) return res.status(400).json({ error: 'Rejection reason is required' });
+
+  try {
+    const result = await pool.query(
+      'UPDATE event_requests SET status = $1, rejection_reason = $2 WHERE id = $3 RETURNING *',
+      ['Rejected', reason, requestId]
+    );
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ error: 'Event request not found' });
+
+    await pool.query(
+      `INSERT INTO admin_logs (admin_id, request_id, status, approved_at, request_type)
+       VALUES ($1, $2, $3, NOW(), $4)`,
+      [adminId, requestId, 'Rejected', 'event']
+    );
+
+    res.status(200).json({ message: 'Event request rejected.', data: result.rows[0] });
+  } catch (error) {
+    console.error('Error rejecting venue request:', error);
+    res.status(500).json({ error: 'Failed to reject venue request' });
+  }
+};
+
+
+const getEventLogs = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        al.id AS log_id,
+        u.name AS admin_name,
+        er.title AS event_title,
+        er.date,
+        er.start_time,
+        er.end_time,
+        er.venue_id,
+        er.club_id,
+        al.status,
+        al.approved_at AS action_at
+      FROM admin_logs al
+      JOIN users u ON al.admin_id = u.user_id
+      JOIN event_requests er ON al.request_id = er.id
+      WHERE al.request_type = 'event'
+      ORDER BY al.approved_at DESC
+    `);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Failed to fetch event logs:', err);
+    res.status(500).json({ error: 'Could not fetch event logs' });
+  }
+};
+
+/*
+// 1. Get all users (optionally filter by role or status)
+const getAllUsers = async (req, res) => {
+  try {
+    const result = await pool.query('SELECT user_id, name, email, role, is_active, created_at FROM users ORDER BY created_at DESC');
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+};
+
+// 2. Suspend a user
+const suspendUser = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const result = await pool.query(
+      'UPDATE users SET is_active = false WHERE user_id = $1 RETURNING *',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User suspended successfully', user: result.rows[0] });
+  } catch (error) {
+    console.error('Error suspending user:', error);
+    res.status(500).json({ error: 'Failed to suspend user' });
+  }
+};
+
+// 3. Reactivate a user
+const reactivateUser = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const result = await pool.query(
+      'UPDATE users SET is_active = true WHERE user_id = $1 RETURNING *',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User reactivated successfully', user: result.rows[0] });
+  } catch (error) {
+    console.error('Error reactivating user:', error);
+    res.status(500).json({ error: 'Failed to reactivate user' });
+  }
+};
+*/
 module.exports = {
   getClubRequests,
   approveClub,
@@ -200,5 +372,9 @@ module.exports = {
   approveVenue,
   rejectVenue,
   getVenueLogs,
+  eventRequests,
+  approveEvent,
+  rejectEvent,
+  getEventLogs
 };
 

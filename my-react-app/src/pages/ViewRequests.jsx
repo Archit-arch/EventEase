@@ -6,6 +6,7 @@ import AdminNavbar from "../components/AdminNavbar";
 import api from '../api/axios';
 import ClubRequests from './ClubRequests';
 import VenueRequestsAdmin from "./VenueRequestsAdmin";
+import EventRequestsAdmin from "./EventRequestsAdmin";
 
 const ViewRequests = () => {
   const [user, setUser] = useState(null);
@@ -31,7 +32,7 @@ const ViewRequests = () => {
       </div>
 
       {activeTab === 'clubs' && <ClubRequests />}
-      {activeTab === 'events' && <EventRequests />}
+      {activeTab === 'events' && <EventRequestsAdmin/>}
       {activeTab === 'venues' && <VenueRequestsAdmin />}
     </div>
     </>

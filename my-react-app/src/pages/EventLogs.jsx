@@ -24,9 +24,9 @@ const EventLogs = () => {
         </thead>
         <tbody>
           {logs.map(log => (
-            <tr key={log.id}>
+            <tr key={log.log_id}>
               <td>{log.admin_name}</td>
-              <td>{log.event_name}</td>
+              <td>{log.event_title}</td>
               <td>{log.status}</td>
               <td>{new Date(log.action_at).toLocaleString()}</td>
             </tr>
