@@ -13,6 +13,7 @@ const StudentDashboard = () => {
   const [user, setUser] = useState(null);
   const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
+  
 useEffect(() => {
   const storedUser = localStorage.getItem('user');
   const token = localStorage.getItem('token');
@@ -29,7 +30,7 @@ useEffect(() => {
   const parsedUser = JSON.parse(storedUser);
 
   if (parsedUser.role !== 'student') {
-    navigate('/login');
+    navigate('/unauthorized');
     return;
   }
 
@@ -101,7 +102,6 @@ useEffect(() => {
           <StudentDetails user={user} />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

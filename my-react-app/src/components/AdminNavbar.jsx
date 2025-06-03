@@ -7,9 +7,9 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Approves Club or Events", path: "/register-club" },
+    { name: "Approve/Reject Requests", path: "/view-requests" },
     { name: "Security-Audits", path: "/security-audits" },
-    { name: "Settings", path: "/settings"}
+    { name: "Admin Logs", path: "/view-admin-logs" },
   ];
 
   return (

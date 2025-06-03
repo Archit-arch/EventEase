@@ -12,6 +12,11 @@ import Register from './pages/Register';
 import RegisterClub from './pages/RegisterClub';
 import Footer from './components/Footer/Footer.jsx';
 import AdminDashboard from './pages/AdminDashboard';
+
+import Unauthorized from "./pages/Unauthorized/Unauthorized.jsx";
+import ViewRequests from "./pages/ViewRequests.jsx";
+import ViewAdminLogs from "./pages/ViewAdminLogs.jsx";
+
 function App() {
   return (
     <Router>
@@ -31,7 +36,10 @@ function App() {
         <Route path="/eventManager" element={<EventManager/>} />
         <Route path="/adminDashboard" element={<AdminDashboard/>} />
         
-
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/view-requests" element={<ViewRequests />} />
+        
+        <Route path="/view-admin-logs" element={< ViewAdminLogs />} />
       </Routes>
       <Footer />
     </Router>

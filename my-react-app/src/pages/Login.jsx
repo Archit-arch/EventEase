@@ -72,7 +72,10 @@ const handleSubmit = async (e) => {
           navigate('/studentDashboard', {replace: true});
         } else if (userRole === 'organizer') {
           navigate('/eventManager', { replace: true });
-        } else {
+        } else if (userRole === 'admin') {
+          navigate('/adminDashboard', { replace: true });
+        }
+          else {
           navigate('/');
         }
       }, 500);
