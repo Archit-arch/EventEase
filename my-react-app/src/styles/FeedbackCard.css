@@ -1,0 +1,63 @@
+/* FeedbackCard.css */
+.feedback-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30,40,80,0.10);
+  padding: 1.5rem 1.6rem 1.2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 260px;
+  max-width: 340px;
+  margin: 0 auto;
+  transition: box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+.feedback-card:hover {
+  box-shadow: 0 8px 32px rgba(30,40,80,0.13);
+  border-color: #4f8cff22;
+}
+.feedback-stars {
+  color: #fbbf24;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+}
+.feedback-text {
+  font-size: 1.08rem;
+  color: #333;
+  margin-bottom: 1.3rem;
+  min-height: 48px;
+  line-height: 1.5;
+}
+.feedback-placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+.feedback-user-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: auto;
+}
+.feedback-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  object-fit: cover;
+  border: 2px solid #f3f4f6;
+}
+.feedback-user-details {
+  display: flex;
+  flex-direction: column;
+}
+.feedback-user-name {
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+}
+.feedback-user-role {
+  color: #9ca3af;
+  font-size: 0.92rem;
+}

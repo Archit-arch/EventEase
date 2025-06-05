@@ -1,7 +1,10 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import StudentNavbar from "../components/StudentNavbar";
 import StudentDetails from "../components/StudentDetails";
+import FeedbackCarousel from "../components/FeedbackCarousel";
+import BookingModal from "../components/BookingModal";
+import FeedbackModal from "../components/FeedbackModal";
 import api from '../api/axios';
 import "../styles/EventDetails.css";
 
@@ -19,33 +22,54 @@ const formatTime = (timeString) => {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
+const isEventOver = (event) => {
+  if (!event?.date || !event?.end_time) return false;
+  const [hours, minutes, seconds = "00"] = event.end_time.split(":");
+  const eventEnd = new Date(event.date);
+  eventEnd.setHours(Number(hours), Number(minutes), Number(seconds), 0);
+  return new Date() > eventEnd;
+};
+
 const EventDetails = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState({
+    show: false,
+    success: false,
+    message: "",
+    redirect: ""
+  });
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
+  const [hasBooked, setHasBooked] = useState(false);
+
   const navigate = useNavigate();
 
+  // User & Auth
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
   useEffect(() => {
-      const storedUser = localStorage.getItem('user');
-      const token = localStorage.getItem('token');
-      if (!storedUser || !token) {
-        navigate('/login');
-        return;
-      }
-      const parsedUser = JSON.parse(storedUser);
-      if (parsedUser.role !== 'student') {
-        navigate('/unauthorized');
-        return;
-      }
-      setUser(parsedUser);
-    }, [navigate]);
+    const storedUser = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    if (!storedUser || !token) {
+      navigate('/login');
+      return;
+    }
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser.role !== 'student') {
+      navigate('/unauthorized');
+      return;
+    }
+    setUser(parsedUser);
+  }, [navigate]);
 
+  // Fetch event details
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -60,29 +84,118 @@ const EventDetails = () => {
     fetchEvent();
   }, [id]);
 
+  // Fetch feedbacks
+  useEffect(() => {
+    const fetchFeedbacks = async () => {
+      try {
+        const res = await api.get(`/students/events/${id}/feedback`);
+        setFeedbacks(res.data);
+      } catch (err) {
+        setFeedbacks([]);
+      }
+    };
+    fetchFeedbacks();
+  }, [id]);
+
+  // Check if user has booked this event
+  useEffect(() => {
+    const checkBooking = async () => {
+      if (!user) return;
+      try {
+        const res = await api.get('/students/bookings');
+        const booked = res.data.some(
+          b => String(b.event_id) === String(id) && b.status === "booked"
+        );
+        setHasBooked(booked);
+      } catch (err) {
+        setHasBooked(false);
+      }
+    };
+    checkBooking();
+  }, [user, id]);
+
+  // Booking handler
   const handleBooking = async () => {
     try {
-      const res = await api.post('/students/bookings', { event_id: id});
-      // If booking is rejected due to venue unavailability
+      const res = await api.post('/students/bookings', { event_id: id });
       if (res.data.booking && res.data.booking.status === "rejected") {
-        alert("Booking failed: Venue is not available or full.");
+        setModal({
+          show: true,
+          success: false,
+          message: "Booking failed: Venue is not available or full.",
+          redirect: "/events"
+        });
       } else if (res.data.booking && res.data.booking.status === "booked") {
-        alert("Booking successful!");
+        setModal({
+          show: true,
+          success: true,
+          message: "Booking successful!",
+          redirect: "/studentdashboard"
+        });
       } else if (res.data.error) {
-        alert("Booking failed: " + res.data.error);
+        setModal({
+          show: true,
+          success: false,
+          message: "Booking failed: " + res.data.error,
+          redirect: "/events"
+        });
       } else {
-        alert("Booking status: " + (res.data.message || "Unknown response"));
+        setModal({
+          show: true,
+          success: false,
+          message: "Booking status: " + (res.data.message || "Unknown response"),
+          redirect: "/events"
+        });
       }
     } catch (err) {
-      // Try to show a specific message from the backend if available
       const errorMsg =
         err.response?.data?.error ||
         err.response?.data?.message ||
         "Booking failed. Please try again.";
-      alert(errorMsg);
+      setModal({
+        show: true,
+        success: false,
+        message: errorMsg,
+        redirect: "/events"
+      });
     }
   };
 
+  // Feedback submit handler
+  const handleSubmitFeedback = async (rating, comment) => {
+    setFeedbackLoading(true);
+    try {
+      await api.post('/students/feedback', {
+        event_id: id,
+        ratings: rating,
+        comments: comment
+      });
+      setShowFeedbackModal(false);
+      // Refresh feedbacks
+      const res = await api.get(`/students/events/${id}/feedback`);
+      setFeedbacks(res.data);
+      setModal({
+        show: true,
+        success: true,
+        message: "Feedback submitted!",
+        redirect: `/studentdashboard`
+      });
+    } catch (err) {
+      setModal({
+        show: true,
+        success: false,
+        message: err.response?.data?.error || "Failed to submit feedback.",
+        redirect: `/events`
+      });
+    } finally {
+      setFeedbackLoading(false);
+    }
+  };
+
+  const handleModalOk = () => {
+    setModal({ ...modal, show: false });
+    navigate(modal.redirect);
+  };
 
   if (loading) return <div className="centered-message">Loading...</div>;
   if (!event) return <div className="centered-message">Event not found.</div>;
@@ -123,9 +236,14 @@ const EventDetails = () => {
                 <span>{event.description}</span>
               </div>
             </div>
-            {user?.role === "student" && (
+            {!isEventOver(event) && user?.role === "student" && (
               <button className="event-details-book-btn" onClick={handleBooking}>
                 Book This Event
+              </button>
+            )}
+            {isEventOver(event) && user?.role === "student" && hasBooked && (
+              <button className="event-details-book-btn" onClick={() => setShowFeedbackModal(true)}>
+                Give Feedback
               </button>
             )}
           </div>
@@ -134,6 +252,26 @@ const EventDetails = () => {
           <StudentDetails user={user} />
         </div>
       </div>
+      {/* Feedback Section - only show if event is over */}
+      {isEventOver(event) && (
+        
+        <FeedbackCarousel feedbacks={feedbacks} />
+
+      )}
+
+      {/* Modals */}
+      <BookingModal
+        show={modal.show}
+        success={modal.success}
+        message={modal.message}
+        onOk={handleModalOk}
+      />
+      <FeedbackModal
+        show={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+        onSubmit={handleSubmitFeedback}
+        loading={feedbackLoading}
+      />
     </div>
   );
 };

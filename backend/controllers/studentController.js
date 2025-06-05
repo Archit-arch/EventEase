@@ -134,9 +134,107 @@ const createBooking = async (req, res, next) => {
 };
 
 
+const getStudentBookings = async (req, res, next) => {
+  try {
+    const user_id = req.user.id; // Get from authenticated user
+
+    const query = `
+      SELECT 
+        b.booking_id,
+        b.status,
+        b.booked_at,
+        e.event_id,
+        e.title,
+        e.description,
+        e.date,
+        e.start_time,
+        e.end_time,
+        v.name AS venue_name,
+        v.location AS venue_location,
+        c.name AS club_name
+      FROM bookings b
+      JOIN events e ON b.event_id = e.event_id
+      JOIN venues v ON e.venue_id = v.venue_id
+      JOIN clubs c ON e.club_id = c.club_id
+      WHERE b.user_id = $1
+      ORDER BY e.date DESC;
+    `;
+
+    const result = await pool.query(query, [user_id]);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching student bookings:', err);
+    next(err);
+  }
+};
+
+const submitEventFeedback = async (req, res, next) => {
+  try {
+    // Get user ID from authenticated user (set by auth middleware)
+    const user_id = req.user.id;
+    const { event_id, ratings, comments } = req.body;
+
+    // Basic validation
+    if (!event_id || !ratings) {
+      return res.status(400).json({ error: 'Event ID and ratings are required.' });
+    }
+
+    // Optional: Check if feedback already exists for this user and event
+    const existing = await pool.query(
+      'SELECT * FROM event_feedback WHERE user_id = $1 AND event_id = $2',
+      [user_id, event_id]
+    );
+    if (existing.rows.length > 0) {
+      return res.status(409).json({ error: 'Feedback already submitted for this event.' });
+    }
+
+    // Insert feedback
+    const result = await pool.query(
+      `INSERT INTO event_feedback (user_id, event_id, ratings, comments, submitted_at)
+       VALUES ($1, $2, $3, $4, NOW())
+       RETURNING *`,
+      [user_id, event_id, ratings, comments]
+    );
+
+    res.status(201).json({
+      message: 'Feedback submitted successfully!',
+      feedback: result.rows[0]
+    });
+  } catch (err) {
+    console.error('Error submitting feedback:', err);
+    next(err);
+  }
+};
+
+const getEventFeedback = async (req, res, next) => {
+  try {
+    const eventId = req.params.eventId;
+    const query = `
+      SELECT 
+        f.feedback_id,
+        f.ratings,
+        f.comments,
+        f.submitted_at,
+        u.name AS user_name
+      FROM event_feedback f
+      JOIN users u ON f.user_id = u.user_id
+      WHERE f.event_id = $1
+      ORDER BY f.submitted_at DESC
+    `;
+    const result = await pool.query(query, [eventId]);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching feedback:', err);
+    next(err);
+  }
+};
+
 
 module.exports = {
   getEvents,
   getEventById,
-  createBooking
+  createBooking,
+  getStudentBookings,
+  submitEventFeedback,
+  getEventFeedback
 };
