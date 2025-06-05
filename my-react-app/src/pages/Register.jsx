@@ -30,7 +30,7 @@ function Register() {
   setSuccess('');
 
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, formData);
 
     if (response.status === 201) {
       localStorage.setItem('token', response.data.token);

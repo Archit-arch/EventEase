@@ -53,7 +53,7 @@ const handleSubmit = async (e) => {
   setSuccess('');
 
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/login', formData); // Update URL as needed
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, formData); // Update URL as needed
 
     if (response.status === 200) {
       setSuccess(response.data.message);

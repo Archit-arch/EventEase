@@ -1,0 +1,2 @@
+subjectAltName = DNS:eventease.centralindia.cloudapp.azure.com, IP:4.213.127.173
+extendedKeyUsage = serverAuth

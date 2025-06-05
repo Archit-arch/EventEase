@@ -1,0 +1,75 @@
+/* Navbar.css */
+.user-section {
+  margin-left: 2rem; 
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.user-button {
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.user-button:hover {
+  color: #4f8cff;
+}
+
+.user-name {
+  margin-left: 5px;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: #fff;
+  color: #222;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  min-width: 180px;
+  padding: 1rem;
+  z-index: 100;
+  text-align: left;
+}
+
+.user-dropdown div {
+  margin-bottom: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.user-dropdown div:last-child {
+  margin-bottom: 0;
+}
+
+.logout-btn {
+  background: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #c62828;
+}
+
+.logout-btn.mobile {
+  width: 100%;
+  margin: 1rem 0 0 0;
+  justify-content: flex-start;
+}

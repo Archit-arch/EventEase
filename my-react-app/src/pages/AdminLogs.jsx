@@ -17,7 +17,6 @@ const AdminLogs = () => {
         <thead>
           <tr>
             <th>Admin</th>
-            <th>Id</th>
             <th>Club Name</th>
             <th>Action</th>
             <th>Time</th>
