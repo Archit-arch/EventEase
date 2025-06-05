@@ -3,7 +3,6 @@ import EventCard from "../components/EventCard";
 import StudentDetails from "../components/StudentDetails";
 import StudentNavbar from "../components/StudentNavbar";
 import "../styles/StudentDashboard.css";
-import Footer from '../components/Footer/Footer.jsx';
 import { useNavigate } from "react-router-dom";
 import api from '../api/axios'; 
 
@@ -14,51 +13,67 @@ const StudentDashboard = () => {
   const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
   
-useEffect(() => {
-  const storedUser = localStorage.getItem('user');
-  const token = localStorage.getItem('token');
-
-  console.log('Stored User:', storedUser);
-  console.log('Stored Token:', token);
-
-  if (!storedUser || !token) {
-    console.log('Redirecting to login due to missing user/token');
-    navigate('/login');
-    return;
-  }
-
-  const parsedUser = JSON.parse(storedUser);
-
-  if (parsedUser.role !== 'student') {
-    navigate('/unauthorized');
-    return;
-  }
-
-  setUser(parsedUser); // Valid student user
-
-  // Optional: Verify token with backend
-  api.get('/auth/studentDashboard')
-    .then(res => {
-      console.log("✔️ Dashboard access OK:", res.data);
-    })
-    .catch(err => {
-      console.error("❌ Token invalid or expired:", err.response?.data || err.message);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      navigate('/login'); // Redirect only if API fails
-    });
-}, [navigate]);
-
-
-  // Currently using mockEvents (optional: later fetch real ones)
   useEffect(() => {
-    import('../utils/mockEvents').then(module => {
-      setBookings(module.mockEvents || []);
-    });
+    const storedUser = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    if (!storedUser || !token) {
+      navigate('/login');
+      return;
+    }
+
+    const parsedUser = JSON.parse(storedUser);
+
+    if (parsedUser.role !== 'student') {
+      navigate('/unauthorized');
+      return;
+    }
+
+    setUser(parsedUser);
+
+    // Optional: Verify token with backend
+    api.get('/auth/studentDashboard')
+      .then(res => {})
+      .catch(err => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        navigate('/login');
+      });
+  }, [navigate]);
+
+  // Fetch real bookings from backend
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const res = await api.get('/students/bookings');
+        setBookings(res.data);
+      } catch (err) {
+        console.error("Failed to fetch bookings:", err);
+      }
+    };
+    fetchBookings();
   }, []);
 
-  const filteredBookings = bookings.filter(b =>
-    filter === "upcoming" ? !b.isCompleted : b.isCompleted
+  const isUpcoming = (booking) => {
+    if (!booking.date || !booking.start_time) return false;
+    const [hours, minutes, seconds = "00"] = booking.start_time.split(":");
+    const eventDate = new Date(booking.date);
+    eventDate.setHours(Number(hours), Number(minutes), Number(seconds), 0);
+    const now = new Date();
+    return eventDate > now && booking.status === 'booked';
+  };
+
+  const isPast = (booking) => {
+    if (!booking.date || !booking.start_time) return false;
+    const [hours, minutes, seconds = "00"] = booking.start_time.split(":");
+    const eventDate = new Date(booking.date);
+    eventDate.setHours(Number(hours), Number(minutes), Number(seconds), 0);
+    const now = new Date();
+    return eventDate <= now && booking.status === 'booked';
+  };
+
+  const filteredBookings = bookings.filter(
+    filter === "upcoming" ? isUpcoming : isPast
   );
 
   return (
@@ -91,7 +106,7 @@ useEffect(() => {
           ) : (
             <div className="event-grid">
               {filteredBookings.map(booking => (
-                <EventCard key={booking.id} event={booking} />
+                <EventCard key={booking.event_id} event={booking} />
               ))}
             </div>
           )}

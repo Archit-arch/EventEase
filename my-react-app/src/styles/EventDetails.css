@@ -121,3 +121,20 @@
   align-self: flex-start;
   margin-top: 0.5rem;
 }
+
+.feedback-carousel-section h3,
+.feedback-section h3 {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #2566d8;
+  background: linear-gradient(90deg, #38c6ff 20%, #4f8cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(79,140,255,0.06);
+}
+
