@@ -10,6 +10,7 @@ const Navbar = () => {
     { name: "Approve/Reject Requests", path: "/view-requests" },
     { name: "Security-Audits", path: "/security-audits" },
     { name: "Admin Logs", path: "/view-admin-logs" },
+    { name: "User Management", path: "/user-management" },
   ];
 
   return (

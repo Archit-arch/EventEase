@@ -311,11 +311,11 @@ const getEventLogs = async (req, res) => {
   }
 };
 
-/*
+
 // 1. Get all users (optionally filter by role or status)
 const getAllUsers = async (req, res) => {
   try {
-    const result = await pool.query('SELECT user_id, name, email, role, is_active, created_at FROM users ORDER BY created_at DESC');
+    const result = await pool.query('SELECT user_id, name, email, role, is_active, created_at FROM users WHERE role!=$1 ORDER BY created_at DESC', ['admin']);
     res.status(200).json(result.rows);
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -323,9 +323,15 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// 2. Suspend a user
 const suspendUser = async (req, res) => {
   const userId = req.params.id;
+  const { reason } = req.body;
+  const adminId = req.user.id; // assuming JWT authMiddleware adds this
+
+  if (!reason || reason.trim() === '') {
+    return res.status(400).json({ error: 'Suspension reason is required' });
+  }
+
   try {
     const result = await pool.query(
       'UPDATE users SET is_active = false WHERE user_id = $1 RETURNING *',
@@ -336,6 +342,13 @@ const suspendUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    // Log the suspension in admin_logs or security_logs
+    await pool.query(
+      `INSERT INTO admin_logs (admin_id, request_id, status, approved_at, request_type, description)
+       VALUES ($1, $2, $3, NOW(), $4, $5)`,
+      [adminId, userId, 'Rejected', 'user', reason]
+    );
+
     res.status(200).json({ message: 'User suspended successfully', user: result.rows[0] });
   } catch (error) {
     console.error('Error suspending user:', error);
@@ -343,9 +356,12 @@ const suspendUser = async (req, res) => {
   }
 };
 
+
 // 3. Reactivate a user
 const reactivateUser = async (req, res) => {
   const userId = req.params.id;
+  const { reason } = req.body;
+  const adminId = req.user.id; // assuming JWT authMiddleware adds this
   try {
     const result = await pool.query(
       'UPDATE users SET is_active = true WHERE user_id = $1 RETURNING *',
@@ -355,6 +371,13 @@ const reactivateUser = async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
+    
+     // Log the suspension in admin_logs or security_logs
+    await pool.query(
+      `INSERT INTO admin_logs (admin_id, request_id, status, approved_at, request_type, description)
+       VALUES ($1, $2, $3, NOW(), $4, $5)`,
+      [adminId, userId, 'Approved', 'user', reason]
+    );
 
     res.status(200).json({ message: 'User reactivated successfully', user: result.rows[0] });
   } catch (error) {
@@ -362,7 +385,32 @@ const reactivateUser = async (req, res) => {
     res.status(500).json({ error: 'Failed to reactivate user' });
   }
 };
-*/
+
+const getUserLogs = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        al.id,
+        al.status,
+        al.approved_at,
+        al.description,
+        u.user_id,
+        u.name,
+        u.role,
+        u.email
+      FROM admin_logs al
+      JOIN users u ON al.request_id = u.user_id
+      WHERE al.request_type = 'user'
+      ORDER BY al.approved_at DESC
+    `);
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error fetching user logs:', error);
+    res.status(500).json({ error: 'Failed to fetch user logs' });
+  }
+};
+
 module.exports = {
   getClubRequests,
   approveClub,
@@ -375,6 +423,10 @@ module.exports = {
   eventRequests,
   approveEvent,
   rejectEvent,
-  getEventLogs
+  getEventLogs,
+  getAllUsers,
+  suspendUser,
+  reactivateUser,
+  getUserLogs
 };
 

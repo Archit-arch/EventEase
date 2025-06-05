@@ -19,6 +19,8 @@ import ViewAdminLogs from "./pages/ViewAdminLogs.jsx";
 
 import VenueRequests from "./pages/VenueRequests.jsx";
 import EventRequestForm from './pages/EventRequestForm.jsx';
+import UserManagement from './pages/UserManagement.jsx';
+
 function App() {
   return (
     <Router>
@@ -42,6 +44,9 @@ function App() {
         <Route path="/view-admin-logs" element={< ViewAdminLogs />} />
 
         <Route path="/venue-requests" element={<VenueRequests />} />
+        <Route path="/user-management" element={<UserManagement />} />
+        
+        {/* Catch-all route for 404 */}
       </Routes>
       <Footer />
     </Router>

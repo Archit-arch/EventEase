@@ -9,6 +9,7 @@ import ClubRequests from './ClubRequests';
 import AdminLogs from "./AdminLogs";
 import EventLogs from "./EventLogs";
 import VenueLogs from "./VenueLogs";
+import UserLogs from "./UserLogs";
 
 const ViewAdminLogs = () => {
   const [user, setUser] = useState(null);
@@ -23,7 +24,7 @@ const ViewAdminLogs = () => {
     <div className="container mt-5">
       <h2 className="text-center mb-4">Admin Dashboard</h2>
       <div className="d-flex justify-content-center mb-3">
-        {['clubs', 'events', 'venues'].map((tab) => (
+        {['clubs', 'events', 'venues', 'users'].map((tab) => (
           <button
             key={tab}
             className={`btn btn-${activeTab === tab ? 'primary' : 'outline-primary'} mx-2`}
@@ -37,6 +38,7 @@ const ViewAdminLogs = () => {
       {activeTab === 'clubs' && <AdminLogs />}
       {activeTab === 'events' && <EventLogs />}
       {activeTab === 'venues' && <VenueLogs />}
+      {activeTab === 'users' && <UserLogs/>}
     </div>
     </>
   );
