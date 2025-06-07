@@ -17,6 +17,45 @@ const ViewAdminLogs = () => {
 
   const navigate = useNavigate();
 
+  // Role and token verification
+    useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
+     
+      
+      console.log('Stored User:', storedUser);
+      console.log('Stored Token:', token);
+  
+      if (!storedUser || !token) {
+        console.log('Redirecting to login due to missing user/token');
+        navigate('/login');
+        return;
+      }
+  
+      const parsedUser = JSON.parse(storedUser);
+  
+      if (parsedUser.role !== 'admin') {
+        console.warn('Unauthorized role:', parsedUser.role);
+        navigate('/unauthorized');
+        return;
+      }
+  
+      setUser(parsedUser); // Valid organizer user
+  
+      // Optional: Verify token with backend
+      api.get('/auth/adminDashboard')
+        .then(res => {
+          console.log("✔️ Event Manager access OK:", res.data);
+        })
+        .catch(err => {
+          console.error("❌ Token invalid or expired:", err.response?.data || err.message);
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          navigate('/login');
+        });
+    }, [navigate]);
+
+
   return (
     <>
     <AdminNavbar/>
