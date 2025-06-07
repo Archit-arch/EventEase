@@ -1,0 +1,34 @@
+# === Global ===
+node_modules
+package-lock.json
+dist
+dist-ssr
+*.log
+*.local
+.DS_Store
+
+# === Logs ===
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# === Editor directories and files ===
+.vscode/
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# === Backend-specific ===
+backend/node_modules
+backend/package-lock.json
+
+# === Frontend-specific ===
+my-react-app/node_modules
+my-react-app/package-lock.json

@@ -2,8 +2,6 @@ FROM node:18
 
 WORKDIR /app
 
-# Install PostgreSQL client (psql) for debugging
-RUN apt-get update && apt-get install -y postgresql-client
 
 COPY package*.json ./
 RUN npm install
