@@ -117,7 +117,7 @@ const RegisterClub = () => {
                   </Form.Group>
 
                   <Button variant="primary" type="submit" className="w-100">
-                    Create Club
+                    Submit Club Registration Request
                   </Button>
                 </Form>
               </Card>

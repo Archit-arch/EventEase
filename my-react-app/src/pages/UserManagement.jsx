@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
 import AdminNavbar from '../components/AdminNavbar';
+import { useNavigate } from "react-router-dom";
 
 const UserManagement = () => {
+  const [user, setUser] = useState(null);
+
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   //const [filterRole, setFilterRole] = useState('student');
@@ -11,6 +14,7 @@ const UserManagement = () => {
   const [searchId, setSearchId] = useState('');
   const [searchResult, setSearchResult] = useState(null);
 
+  const navigate = useNavigate();
   const fetchRequests = async () => {
     try {
       const res = await api.get('/admin/all-users');
@@ -56,6 +60,43 @@ const UserManagement = () => {
   ? requests.filter((req) => req.role?.toLowerCase() === filterRole.toLowerCase())
   : requests;
 
+  // Role and token verification
+    useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
+     
+      
+      console.log('Stored User:', storedUser);
+      console.log('Stored Token:', token);
+  
+      if (!storedUser || !token) {
+        console.log('Redirecting to login due to missing user/token');
+        navigate('/login');
+        return;
+      }
+  
+      const parsedUser = JSON.parse(storedUser);
+  
+      if (parsedUser.role !== 'admin') {
+        console.warn('Unauthorized role:', parsedUser.role);
+        navigate('/unauthorized');
+        return;
+      }
+  
+      setUser(parsedUser); // Valid organizer user
+  
+      // Optional: Verify token with backend
+      api.get('/auth/adminDashboard')
+        .then(res => {
+          console.log("✔️ Event Manager access OK:", res.data);
+        })
+        .catch(err => {
+          console.error("❌ Token invalid or expired:", err.response?.data || err.message);
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          navigate('/login');
+        });
+    }, [navigate]);
 
   if (loading) return <p>Loading...</p>;
 
