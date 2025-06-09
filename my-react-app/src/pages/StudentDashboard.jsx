@@ -4,45 +4,32 @@ import StudentDetails from "../components/StudentDetails";
 import StudentNavbar from "../components/StudentNavbar";
 import "../styles/StudentDashboard.css";
 import { useNavigate } from "react-router-dom";
-import api from '../api/axios'; 
+import api from '../api/axios';  // axios instance with withCredentials: true
+import { useAuth } from '../hooks/useAuth';
 
 const StudentDashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [filter, setFilter] = useState("upcoming");
-  const [user, setUser] = useState(null);
   const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
-  
+  const { user, loading, error } = useAuth();
+//
+  // Handle redirects based on auth state
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-
-    if (!storedUser || !token) {
-      navigate('/login');
-      return;
-    }
-
-    const parsedUser = JSON.parse(storedUser);
-
-    if (parsedUser.role !== 'student') {
-      navigate('/unauthorized');
-      return;
-    }
-
-    setUser(parsedUser);
-
-    // Optional: Verify token with backend
-    api.get('/auth/studentDashboard')
-      .then(res => {})
-      .catch(err => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
+    if (!loading) {
+      if (!user) {
         navigate('/login');
-      });
-  }, [navigate]);
+      } else if (user.role !== 'student') {
+        navigate('/unauthorized');
+      }
+    }
+  }, [user, loading, navigate]);
 
-  // Fetch real bookings from backend
+
+  // Fetch bookings once user is set
   useEffect(() => {
+    if (!user) return;
+
     const fetchBookings = async () => {
       try {
         const res = await api.get('/students/bookings');
@@ -51,9 +38,11 @@ const StudentDashboard = () => {
         console.error("Failed to fetch bookings:", err);
       }
     };
-    fetchBookings();
-  }, []);
 
+    fetchBookings();
+  }, [user]);
+
+  // Time-based filters
   const isUpcoming = (booking) => {
     if (!booking.date || !booking.start_time) return false;
     const [hours, minutes, seconds = "00"] = booking.start_time.split(":");

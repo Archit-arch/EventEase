@@ -3,7 +3,8 @@ import { Form, Button, Container, Card, Alert, Row, Col, InputGroup } from 'reac
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
-import axios from 'axios';
+import api from '../api/axios'; // axios instance with withCredentials:true
+import axios from 'axios'; 
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -15,75 +16,44 @@ function Login() {
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
-/*
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData); // update URL as needed
-
-      if (response.status === 200) {
-        setSuccess(response.data.message);
-
-        const user = response.data.user;
-        localStorage.setItem('user', JSON.stringify(user));
-
-        const userRole = user.role;
-        setTimeout(() => {
-          if (userRole === 'student') {
-            navigate('/studentDashboard');
-          } else if (userRole === 'organizer') {
-            navigate('/eventManager');
-          } else {
-            navigate('/');
-          }
-        }, 1500);
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
-    }
-  };
-*/
-
-const handleSubmit = async (e) => {
   e.preventDefault();
   setError('');
   setSuccess('');
 
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, formData); // Update URL as needed
+    // Step 1: Login request
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
+      formData,
+      { withCredentials: true },
+    );
 
-    if (response.status === 200) {
-      setSuccess(response.data.message);
+    // Step 2: Verify token using cookie
+    const verifyRes = await api.get('/auth/verify');
+    const user = verifyRes.data.user;
+    console.log('User from verify:', user);
+    // ✅ Only show success if both succeeded
+    setSuccess(response.data.message || 'Login successful');
 
-      const { user, token } = response.data;
-
-      // Store user info and JWT token
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', token);
-
-      const userRole = user.role;
-
-
-      setTimeout(() => {
-        if (userRole === 'student') {
-          navigate('/studentDashboard', {replace: true});
-        } else if (userRole === 'organizer') {
-          navigate('/eventManager', { replace: true });
-        } else if (userRole === 'admin') {
-          navigate('/adminDashboard', { replace: true });
-        }
-          else {
-          navigate('/');
-        }
-      }, 500);
+    // Step 3: Redirect based on role
+    if (user?.role === 'student') {
+      navigate('/studentDashboard', { replace: true });
+    } else if (user?.role === 'organizer') {
+      navigate('/eventManager', { replace: true });
+    } else if (user?.role === 'admin') {
+      navigate('/adminDashboard', { replace: true });
+    } else {
+      navigate('/', { replace: true });
     }
+//
   } catch (err) {
-    setError(err.response?.data?.message || 'Login failed. Please try again.');
+    console.error('Login error:', err);
+    setError(err.response?.data?.message || 'Hello failure. Please Try Again ');
   }
 };
+
 
   return (
     <>
@@ -99,7 +69,6 @@ const handleSubmit = async (e) => {
           justifyContent: 'center',
         }}
       >
-        
         <Container className="d-flex justify-content-center align-items-center min-vh-100">
           <Row className="w-100">
             <Col md={{ span: 6, offset: 3 }}>
@@ -116,7 +85,7 @@ const handleSubmit = async (e) => {
                       <InputGroup.Text><FaEnvelope /></InputGroup.Text>
                       <Form.Control
                         type="email"
-                        placeholder="Enter email"
+                        placeholder="Enter email first"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -141,6 +110,7 @@ const handleSubmit = async (e) => {
                         variant="outline-secondary"
                         onClick={() => setShowPassword(!showPassword)}
                         tabIndex={-1}
+                        type="button"
                       >
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </Button>
@@ -150,7 +120,7 @@ const handleSubmit = async (e) => {
                   <Button variant="primary" type="submit" className="w-100">
                     Login
                   </Button>
-                </Form>
+                </Form> 
               </Card>
             </Col>
           </Row>
@@ -161,3 +131,4 @@ const handleSubmit = async (e) => {
 }
 
 export default Login;
+//

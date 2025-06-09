@@ -10,6 +10,11 @@ export default defineConfig({
     https: {
       key: fs.readFileSync('/app/certs/cert-key.pem'),
       cert: fs.readFileSync('/app/certs/cert.pem')
+    },
+    hmr: {
+      protocol: 'wss',
+      host: 'eventease.centralindia.cloudapp.azure.com',
+      port: 5173
     }
   },
   // Inject custom middleware
@@ -24,4 +29,3 @@ export default defineConfig({
   }
 });
 // This configuration sets up Vite to use React and enables HTTPS with the specified certificate and key files.
-

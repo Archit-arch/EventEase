@@ -1,7 +1,6 @@
 // adminController.js
 const pool = require('../db');
 require('dotenv').config();
-
 // Get all pending club requests
 const getClubRequests = async (req, res) => {
   try {

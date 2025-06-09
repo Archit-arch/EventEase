@@ -2,15 +2,27 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Access denied. No token provided.' });
+  // Read token from cookies
+  const token = req.cookies.token;
+
+  // If no token, deny access
+  if (!token) {
+    return res.status(401).json({ error: 'Access denied. No token provided.' });
+  }
 
   try {
+    // Verify token and get decoded user data
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // attaches user to request
+
+    // Attach decoded info to request for next handlers
+    req.user = decoded;
+
+    // Proceed to next middleware or route
     next();
+
   } catch (err) {
-    res.status(400).json({ error: 'Invalid token' });
+    // If token invalid or expired, deny access
+    return res.status(400).json({ error: 'Invalid token' });
   }
 };
 

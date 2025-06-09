@@ -1,58 +1,28 @@
-/*
 const express = require('express');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes'); // Public routes for auth (register/login)
-const clubRoutes = require('./routes/clubRoutes');
-const studentRoutes = require('./routes/studentRoutes'); // Public routes for students to view events
-const adminRoutes = require('./routes/adminRoutes'); // Admin routes for club management
-const protectedRoutes = require('./routes/protectedRoutes'); // Routes requiring JWT + role check
-const errorHandler = require('./middleware/errorHandler');   // Global error handler middleware
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const path = require('path');
+
+const authRoutes = require('./routes/authRoutes');         // Public: login, register
+const clubRoutes = require('./routes/clubRoutes');         // Organizer routes
+const studentRoutes = require('./routes/studentRoutes');   // Public: student event views
+const adminRoutes = require('./routes/adminRoutes');       // Admin dashboard & logs
+const protectedRoutes = require('./routes/protectedRoutes'); // Routes that require JWT
+const errorHandler = require('./middleware/errorHandler'); // Global error handler
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-
-// Add BEFORE protected routes!
-app.use('/api/auth', authRoutes);
-app.use('/api/organizer', clubRoutes); 
-app.use('/api/admin', adminRoutes);
-// Protected routes (JWT auth + role-based access)
-app.use('/api/auth', protectedRoutes);
-app.use('/api/students', studentRoutes);
-
-// Global error handler middleware
-app.use(errorHandler);
-
-module.exports = app;
-
-*/
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./routes/authRoutes'); // Public routes for auth (register/login)
-const clubRoutes = require('./routes/clubRoutes');
-const studentRoutes = require('./routes/studentRoutes'); // Public routes for students to view events
-const adminRoutes = require('./routes/adminRoutes'); // Admin routes for club management
-const protectedRoutes = require('./routes/protectedRoutes'); // Routes requiring JWT + role check
-const errorHandler = require('./middleware/errorHandler');   // Global error handler middleware
-
-const helmet = require('helmet'); 
-const app = express();
-
-const allowedOrigins = [
-  'https://eventease.centralindia.cloudapp.azure.com:5173',
-  'https://4.213.127.173:5173',
-];
-
+// ✅ 1. Helmet for security headers
 app.use(helmet());
 
-//Add custom Content Security Policy
+// ✅ 2. Content Security Policy
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
     scriptSrc: [
       "'self'",
-      "'unsafe-inline'", // if needed for inline scripts (prefer to avoid)
+      "'unsafe-inline'",
       'https://eventease.centralindia.cloudapp.azure.com:5173',
     ],
     styleSrc: [
@@ -72,14 +42,35 @@ app.use(helmet.contentSecurityPolicy({
     connectSrc: [
       "'self'",
       'https://eventease.centralindia.cloudapp.azure.com:5173',
-      'wss://eventease.centralindia.cloudapp.azure.com:5173', // for websockets if used
+      'wss://eventease.centralindia.cloudapp.azure.com:5173',
     ],
-    objectSrc: ["'none'"], // Block Flash, plugins, etc.
+    objectSrc: ["'none'"],
     upgradeInsecureRequests: [],
   },
 }));
 
-// For secure/dynamic content
+// ✅ 3. CORS – Allow only known frontend origins with credentials (cookies)
+const allowedOrigins = [
+  'https://eventease.centralindia.cloudapp.azure.com:5173',
+  'https://4.213.127.173:5173',
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS policy does not allow this origin'), false);
+    }
+  },
+  credentials: true, // Send cookies across origin
+}));
+
+// ✅ 4. Body & Cookie Parsing
+app.use(express.json());
+app.use(cookieParser());
+
+// ✅ 5. Cache Control for dynamic pages
 app.use((req, res, next) => {
   if (!req.url.match(/\.(js|css|png|jpg|jpeg|svg|woff|woff2)$/)) {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -89,41 +80,25 @@ app.use((req, res, next) => {
   next();
 });
 
-// For static assets, use express.static with cache options
-const path = require('path');
+// ✅ 6. Static Asset Serving (with long-term caching)
 app.use('/static', express.static(path.join(__dirname, 'public'), {
   maxAge: '1y',
   immutable: true,
-  setHeaders: (res, path) => {
+  setHeaders: (res) => {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
   }
 }));
 
+// ✅ 7. Public Routes
+app.use('/api/auth', authRoutes);        // Login/Register
+app.use('/api/students', studentRoutes); // Public: students view events
+app.use('/api/admin', adminRoutes);      // Admin dashboard/logs
+app.use('/api', clubRoutes);             // Organizer/club routes
 
-app.use('/api', cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin like mobile apps or curl requests
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(new Error('CORS policy does not allow access from this origin'), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true,
-}));
-
-app.use(express.json());
-
-// Public routes
-app.use('/api/auth', authRoutes);
-app.use('/api', clubRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/students', studentRoutes);
-
-// Protected routes (JWT auth + role-based access)
+// ✅ 8. Protected Routes (require JWT via cookie)
 app.use('/api/auth', protectedRoutes);
 
-// Global error handler middleware
+// ✅ 9. Global Error Handling
 app.use(errorHandler);
 
 module.exports = app;
