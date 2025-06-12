@@ -3,8 +3,12 @@ import { Form, Button, Container, Card, Alert, Row, Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios.js';
 import ClubNavbar from '../components/ClubNavbar.jsx';
+import { useAuth } from '../hooks/useAuth';
 
 const EventRequestForm = () => {
+  const { user, loading, error: authError } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -14,21 +18,28 @@ const EventRequestForm = () => {
     venue_id: '',
     club_id: ''
   });
+
   const [venues, setVenues] = useState([]);
+  const [userClubs, setUserClubs] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [user, setUser] = useState(null);
-  const [userClubs, setUserClubs] = useState([]);
+  const [loadingVenues, setLoadingVenues] = useState(true);
+  const [loadingClubs, setLoadingClubs] = useState(true);
 
-  const navigate = useNavigate();
+  // Redirect logic based on auth state and role
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        console.log("User not authenticated, redirecting to login");
+        navigate('/login');
+      } else if (user.role !== 'organizer') {
+        navigate('/unauthorized');
+      }
+    }
+  }, [user, loading, navigate]);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (!storedUser) {
-      navigate('/login');
-      return;
-    }
-    setUser(storedUser);
+    if (!user) return; // Wait for user before fetching
 
     const fetchVenues = async () => {
       try {
@@ -36,24 +47,28 @@ const EventRequestForm = () => {
         setVenues(response.data);
       } catch (err) {
         console.error('Error fetching venues:', err);
+      } finally {
+        setLoadingVenues(false);
       }
     };
 
-     const fetchUserClubs = async () => {
-    try {
-      const response = await api.get(`/user-clubs/${storedUser.id}`);
-      setUserClubs(response.data);
-    } catch (err) {
-      console.error('Error fetching user clubs:', err);
-    }
-  };
+    const fetchUserClubs = async () => {
+      try {
+        const response = await api.get(`/user-clubs/${user.id}`);
+        setUserClubs(response.data);
+      } catch (err) {
+        console.error('Error fetching user clubs:', err);
+      } finally {
+        setLoadingClubs(false);
+      }
+    };
 
     fetchVenues();
     fetchUserClubs();
-  }, [navigate]);
+  }, [user]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const selectedVenue = venues.find(v => v.venue_id.toString() === formData.venue_id);
@@ -68,11 +83,16 @@ const EventRequestForm = () => {
       return;
     }
 
+    if (formData.start_time >= formData.end_time) {
+      setError('End time must be after start time.');
+      return;
+    }
+
     try {
       const response = await api.post('/event-requests', {
         ...formData,
-         venue_id: Number(formData.venue_id),
-          club_id: Number(formData.club_id),
+        venue_id: Number(formData.venue_id),
+        club_id: Number(formData.club_id),
         created_by: user.id,
       });
 
@@ -86,16 +106,13 @@ const EventRequestForm = () => {
   };
 
   return (
-
-
     <Container className="mt-5">
-
-      <ClubNavbar/>
+      <ClubNavbar />
       <Row className="justify-content-center">
         <Col md={8}>
           <Card className="p-4">
             <h3 className="mb-4 text-center">Request New Event</h3>
-            {error && <Alert variant="danger">{error}</Alert>}
+            {(error || authError) && <Alert variant="danger">{error || authError}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
@@ -124,7 +141,13 @@ const EventRequestForm = () => {
                 <Col>
                   <Form.Group className="mb-3">
                     <Form.Label>Date *</Form.Label>
-                    <Form.Control type="date" name="date" value={formData.date} onChange={handleChange} required />
+                    <Form.Control
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      required
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
@@ -155,7 +178,13 @@ const EventRequestForm = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label>Venue *</Form.Label>
-                <Form.Select name="venue_id" value={formData.venue_id} onChange={handleChange} required>
+                <Form.Select
+                  name="venue_id"
+                  value={formData.venue_id}
+                  onChange={handleChange}
+                  required
+                  disabled={loadingVenues}
+                >
                   <option value="">Select Venue</option>
                   {venues.map((venue) => (
                     <option key={venue.venue_id} value={venue.venue_id}>
@@ -165,7 +194,6 @@ const EventRequestForm = () => {
                 </Form.Select>
               </Form.Group>
 
-              {/* Venue Details Display */}
               {selectedVenue && (
                 <div className="mb-3 p-3 border rounded bg-light">
                   <h5>Venue Details:</h5>
@@ -176,23 +204,37 @@ const EventRequestForm = () => {
               )}
 
               <Form.Group className="mb-3">
-  <Form.Label>Club *</Form.Label>
-  <Form.Select
-    name="club_id"
-    value={formData.club_id}
-    onChange={handleChange}
-    required
-  >
-    <option value="">Select Club</option>
-    {userClubs.map((club) => (
-      <option key={club.club_id} value={club.club_id}>
-        {club.name}
-      </option>
-    ))}
-  </Form.Select>
-</Form.Group>
+                <Form.Label>Club *</Form.Label>
+                <Form.Select
+                  name="club_id"
+                  value={formData.club_id}
+                  onChange={handleChange}
+                  required
+                  disabled={loadingClubs}
+                >
+                  <option value="">Select Club</option>
+                  {userClubs.map((club) => (
+                    <option key={club.club_id} value={club.club_id}>
+                      {club.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button
+                variant="primary"
+                type="submit"
+                className="w-100"
+                disabled={
+                  loadingVenues || loadingClubs ||
+                  !formData.title ||
+                  !formData.date ||
+                  !formData.start_time ||
+                  !formData.end_time ||
+                  !formData.venue_id ||
+                  !formData.club_id
+                }
+              >
                 Submit Event Request
               </Button>
             </Form>

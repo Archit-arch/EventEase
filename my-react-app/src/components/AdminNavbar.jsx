@@ -1,17 +1,41 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { useAuth } from '../hooks/useAuth';
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import api from '../api/axios';
+import '../styles/Navbar.css'; // Import your CSS styles
 
-const Navbar = () => {
+const AdminNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, loading, error } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await api.get('/auth/logout'); // GET /logout withCredentials already set in api instance
+      navigate('/login'); // Redirect to login page
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  };
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Approve/Reject Requests", path: "/view-requests" },
-    { name: "Security-Audits", path: "/security-audits" },
     { name: "Admin Logs", path: "/view-admin-logs" },
+    { name: "Approve/Reject Requests", path: "/view-requests" },
+    { name: "Security-Logs", path: "/security-logs" },
     { name: "User Management", path: "/user-management" },
-  ];
+  ]; 
+
+  useEffect(() => {
+        if (!loading) {
+          if (!user) {
+            console.log("User not authenticated, redirecting to login");
+            navigate('/login');
+          } else if (user.role !== 'admin') {
+            navigate('/unauthorized');
+          }
+        }
+      }, [user, loading, navigate]);
 
   return (
     <nav className="navbar">
@@ -32,6 +56,7 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
 
         <button 
@@ -54,10 +79,12 @@ const Navbar = () => {
           >
             {link.name}
           </NavLink>
+          
         ))}
+         <button onClick={handleLogout} className="logout-btn">Logout</button>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

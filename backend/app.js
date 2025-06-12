@@ -10,7 +10,7 @@ const studentRoutes = require('./routes/studentRoutes');   // Public: student ev
 const adminRoutes = require('./routes/adminRoutes');       // Admin dashboard & logs
 const protectedRoutes = require('./routes/protectedRoutes'); // Routes that require JWT
 const errorHandler = require('./middleware/errorHandler'); // Global error handler
-
+const { basicRateLimiter, loginAttemptLimiter } = require('./middleware/loginLimiter');
 const app = express();
 
 // ✅ 1. Helmet for security headers
@@ -79,6 +79,8 @@ app.use((req, res, next) => {
   }
   next();
 });
+// ✅ 5.5 Global Rate Limiting Middleware
+app.use(basicRateLimiter); // Limits requests per IP globally (e.g., 50 every 10 minutes)
 
 // ✅ 6. Static Asset Serving (with long-term caching)
 app.use('/static', express.static(path.join(__dirname, 'public'), {

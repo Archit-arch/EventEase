@@ -1,0 +1,76 @@
+/* AdminSecurityLogsPage.css */
+.admin-logs-container {
+  padding: 2rem;
+  background: #f9f9f9;
+}
+.filters select {
+  padding: 6px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.filters input {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+.filters button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+}
+.summary {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.card {
+  padding: 1rem;
+  border-radius: 10px;
+  background: #e0e0e0;
+  font-weight: bold;
+}
+.card.green { background: #c8facc; }
+.card.red { background: #fbc8c8; }
+.card.orange { background: #ffe4b3; }
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+.logs-table th, .logs-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+}
+.tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.tag.login_success { background-color: #d4edda; }
+.tag.login_fail { background-color: #f8d7da; }
+.tag.auth_fail { background-color: #fff3cd; }
+
+.search-btn {
+  background-color: #1d4ed8; /* Tailwind blue-700 */
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.search-btn:hover {
+  background-color: #2563eb; /* Tailwind blue-600 */
+}
+
+.search-btn:active {
+  background-color: #1e40af; /* Tailwind blue-800 */
+}
+
+.search-btn:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}

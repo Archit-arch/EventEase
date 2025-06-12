@@ -3,9 +3,9 @@ import ClubNavbar from "../components/ClubNavbar";
 import "../styles/EventCreation.css";
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import { useAuth } from '../hooks/useAuth';
 
 const VenueRequests = () => {
-    const [user, setUser] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         location: '',
@@ -16,19 +16,27 @@ const VenueRequests = () => {
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        } else {
-            navigate('/login');
-        }
-    }, [navigate]);
+    // Get user info and auth status
+    const { user, loading } = useAuth();
 
+    // Redirect based on authentication and role
+    useEffect(() => {
+        if (!loading) {
+            if (!user) {
+                console.log("User not authenticated, redirecting to login");
+                navigate('/login');
+            } else if (user.role !== 'organizer') {
+                navigate('/unauthorized');
+            }
+        }
+    }, [user, loading, navigate]);
+
+    // Update form state on input change
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');

@@ -12,7 +12,7 @@ export function useAuth() {
     async function fetchUser() {
       try {
         const res = await api.get('/auth/me');
-        setUser(res.data.user);  // assuming backend sends { user: {...} }
+        setUser(res.data);  // assuming backend sends { user: {...} }
         setError(null);
       } catch (err) {
         setUser(null);

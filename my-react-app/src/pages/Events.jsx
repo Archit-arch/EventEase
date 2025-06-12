@@ -5,6 +5,7 @@ import Footer from '../components/Footer/Footer.jsx';
 import EventCard from "../components/EventCard";
 import api from '../api/axios';
 import "../styles/Events.css"; // Import the CSS file for this page
+import { useAuth } from '../hooks/useAuth';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -14,20 +15,19 @@ const Events = () => {
   const [eventType, setEventType] = useState("upcoming");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { user, loading_auth, error } = useAuth();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    if (!storedUser || !token) {
-      navigate('/login');
-      return;
-    }
-    const parsedUser = JSON.parse(storedUser);
-    if (parsedUser.role !== 'student') {
-      navigate('/unauthorized');
-      return;
-    }
-  }, [navigate]);
+      if (!loading) {
+        if (!user) {
+          console.log("User not authenticated, redirecting to login");
+          navigate('/login');
+        } else if (user.role !== 'student') {
+          navigate('/unauthorized');
+        }
+      }
+    }, [user, loading_auth, navigate]);
+  
 
   useEffect(() => {
     const fetchEvents = async () => {

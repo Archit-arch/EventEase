@@ -17,6 +17,9 @@ function Register() {
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
+  
+
+
  // ✅ Handle form field changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,11 +32,11 @@ function Register() {
   setError('');
   setSuccess('');
 
+
   try {
     const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, formData);
 
     if (response.status === 201) {
-      localStorage.setItem('token', response.data.token);
       setSuccess('Registration successful! Redirecting to Home...');
       setTimeout(() => navigate('/'), 2000);
     }
@@ -117,6 +120,17 @@ function Register() {
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </Button>
                     </InputGroup>
+
+                    {/* 🔐 Password Policy */}
+  <Form.Text className="text-muted">
+    Password must be at least 8 characters and include:
+    <ul style={{ paddingLeft: '1.2rem', marginBottom: '0.2rem' }}>
+      <li>One uppercase letter (A–Z)</li>
+      <li>One lowercase letter (a–z)</li>
+      <li>One number (0–9)</li>
+      <li>One special character (!@#$%^&amp;* etc.)</li>
+    </ul>
+  </Form.Text>
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="formRole">

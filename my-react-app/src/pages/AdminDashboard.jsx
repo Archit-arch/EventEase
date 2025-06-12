@@ -5,38 +5,27 @@ import AdminNavbar from "../components/AdminNavbar";
 import ClubRequests from "./ClubRequests";
 import ViewAdminLogs from "./ViewAdminLogs";
 import "../styles/EventManager.css";
+import { useAuth } from '../hooks/useAuth';
 
 const AdminDashboard = () => {
-  const [user, setUser] = useState(null);
-  const [activeTab, setActiveTab] = useState("clubs");
-  const navigate = useNavigate();
+const [loading, setLoading] = useState(true); // Add loading state
+const [activeTab, setActiveTab] = useState("clubs");
+const navigate = useNavigate();
+const { user, loading_auth, error } = useAuth();
 
+   // Handle redirects based on auth state
   useEffect(() => {
-  let isMounted = true;
-
-  api.get('/auth/verify')
-    .then(res => {
-      const user = res.data.user;
-      if (isMounted) {
-        if (user?.role !== 'admin') {
-          navigate('/unauthorized');
-        } else {
-          setUser(user);
-        }
+    if (!loading) {
+      if (!user) {
+        console.log("User not authenticated, redirecting to login");
+        navigate('/login');
+      } else if (user.role !== 'admin') {
+        navigate('/unauthorized');
       }
-    })
-    .catch(() => {
-      if (isMounted) navigate('/login');
-    });
-
-  return () => {
-    isMounted = false;
-  };
-}, [navigate]);
-
+    }
+  }, [user, loading_auth, navigate]);
   return (
     <div className="container mt-5">
-      <AdminNavbar user={user} />
       <ViewAdminLogs />
     </div>
   );

@@ -157,10 +157,178 @@ const createEventRequest = async (req, res, next) => {
   }
 }
 
+// const getOrganizerEvents = async (req, res, next) => {
+//   try {
+//     const organizer_id = req.user.id; // Authenticated organizer's ID
+
+//     const query = `
+//       SELECT 
+//         e.event_id, 
+//         e.title, 
+//         e.description, 
+//         e.date, 
+//         e.start_time, 
+//         e.end_time, 
+//         v.name AS venue_name, 
+//         v.location AS venue_location,
+//         c.name AS club_name
+//       FROM events e
+//       JOIN venues v ON e.venue_id = v.venue_id
+//       JOIN clubs c ON e.club_id = c.club_id
+//       WHERE e.created_by = $1
+//       ORDER BY e.date, e.start_time;
+//     `;
+
+//     const result = await pool.query(query, [organizer_id]);
+
+//     res.status(200).json(result.rows);
+//   } catch (err) {
+//     console.error('Error fetching organizer events:', err);
+//     next(err);
+//   }
+// };
+
+
+const getOrganizerEvents = async (req, res, next) => {
+  try {
+    const organizer_id = req.user.id; // Authenticated organizer's ID
+
+    const query = `
+      SELECT 
+  er.id AS request_id,
+  er.title,
+  er.description,
+  er.date,
+  er.start_time,
+  er.end_time,
+  v.name AS venue_name,
+  v.location AS venue_location,
+  c.name AS club_name,
+  COUNT(b.user_id) AS student_count,
+  er.status,
+  er.rejection_reason
+FROM event_requests er
+JOIN venues v ON er.venue_id = v.venue_id
+JOIN clubs c ON er.club_id = c.club_id
+LEFT JOIN events e ON 
+    e.title = er.title AND 
+    e.date = er.date AND 
+    e.start_time = er.start_time AND 
+    e.end_time = er.end_time AND 
+    e.venue_id = er.venue_id AND 
+    e.club_id = er.club_id
+LEFT JOIN bookings b ON e.event_id = b.event_id
+WHERE er.created_by = $1
+GROUP BY 
+  er.id, er.title, er.description, er.date, er.start_time, er.end_time,
+  v.name, v.location, c.name, er.status
+ORDER BY er.date, er.start_time;
+    `;
+
+    const result = await pool.query(query, [organizer_id]);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching organizer events:', err);
+    next(err);
+  }
+};
+
+const getOrganizerClubs = async (req, res, next) => {
+  try {
+    const organizer_id = req.user.id;
+
+    const query = `
+      SELECT 
+        id AS club_id,
+        name,
+        description,
+        status,
+        created_at
+      FROM club_requests
+      WHERE created_by = $1
+      ORDER BY created_at DESC;
+    `;
+
+    const result = await pool.query(query, [organizer_id]);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Error fetching organizer clubs:", err);
+    next(err);
+  }
+};
+
+
+const getOrganizerVenues = async (req, res, next) => {
+  try {
+    const organizer_id = req.user.id;
+
+    const query = `
+      SELECT 
+        id,
+        name,
+        location,
+        capacity,
+        status,
+        created_at
+      FROM venue_requests
+      WHERE created_by = $1
+      ORDER BY created_at DESC;
+    `;
+
+    const result = await pool.query(query, [organizer_id]);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Error fetching organizer venues:", err);
+    next(err);
+  }
+};
+
+const getEventRequestById = async (req, res, next) => {
+  const requestId = req.params.id;
+
+  console.log("Incoming request to fetch event by ID:", requestId);
+
+
+  try {
+    const result = await pool.query(
+      `SELECT 
+         er.id,
+         er.title,
+         er.description,
+         er.date,
+         er.start_time,
+         er.end_time,
+         er.venue_id,
+         er.club_id,
+         er.status,
+         er.rejection_reason
+       FROM event_requests er
+       WHERE er.id = $1`,
+      [requestId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching event by ID:", err);
+    next(err);
+  }
+};
+
+
+
 module.exports = {
   createClubRequest,
   createVenueRequest,
   getVenues,
   getClubs,
-  createEventRequest
+  createEventRequest,
+  getOrganizerEvents,
+  getOrganizerClubs,
+  getOrganizerVenues,
+  getEventRequestById
 };

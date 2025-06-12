@@ -410,6 +410,53 @@ const getUserLogs = async (req, res) => {
   }
 };
 
+const getAllLogs = async(req, res)=>{
+  const { type, email, userId, from, to } = req.query;
+
+  let query = 'SELECT * FROM security_logs WHERE true';
+  const params = [];
+
+  if (type) {
+    params.push(type);
+    query += ` AND type = $${params.length}`;
+  }
+  if (email) {
+    params.push(`%${email}%`);
+    query += ` AND meta->>'email' ILIKE $${params.length}`;
+  }
+  if (userId) {
+    params.push(userId);
+    query += ` AND meta->>'userId' = $${params.length}`;
+  }
+  if (from) {
+    params.push(from);
+    query += ` AND timestamp >= $${params.length}`;
+  }
+  if (to) {
+    params.push(to);
+    query += ` AND timestamp <= $${params.length}`;
+  }
+
+  query += ' ORDER BY timestamp DESC LIMIT 50';
+
+  try {
+    const result = await pool.query(query, params);
+    const logs = result.rows;
+
+    // Summarize by type
+    const summary = {};
+    logs.forEach(log => {
+      summary[log.type] = (summary[log.type] || 0) + 1;
+    });
+
+    res.json({ logs, summary });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch logs' });
+  }
+
+};
+
 module.exports = {
   getClubRequests,
   approveClub,
@@ -426,6 +473,7 @@ module.exports = {
   getAllUsers,
   suspendUser,
   reactivateUser,
-  getUserLogs
+  getUserLogs,
+  getAllLogs
 };
 

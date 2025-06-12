@@ -7,6 +7,7 @@ import BookingModal from "../components/BookingModal";
 import FeedbackModal from "../components/FeedbackModal";
 import api from '../api/axios';
 import "../styles/EventDetails.css";
+import { useAuth } from '../hooks/useAuth';
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
@@ -33,7 +34,6 @@ const isEventOver = (event) => {
 const EventDetails = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState({
     show: false,
@@ -47,27 +47,19 @@ const EventDetails = () => {
   const [hasBooked, setHasBooked] = useState(false);
 
   const navigate = useNavigate();
-
-  // User & Auth
+  const { user, loading_auth, error } = useAuth();
+  //
+    // Handle redirects based on auth state
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    if (!storedUser || !token) {
-      navigate('/login');
-      return;
+    if (!loading) {
+      if (!user) {
+        console.log("User not authenticated, redirecting to login");
+        navigate('/login');
+      } else if (user.role !== 'student' && user.role !== 'organizer') {
+        navigate('/unauthorized');
+      }
     }
-    const parsedUser = JSON.parse(storedUser);
-    if (parsedUser.role !== 'student') {
-      navigate('/unauthorized');
-      return;
-    }
-    setUser(parsedUser);
-  }, [navigate]);
+  }, [user, loading_auth, navigate]);
 
   // Fetch event details
   useEffect(() => {
@@ -115,9 +107,11 @@ const EventDetails = () => {
   }, [user, id]);
 
   // Booking handler
+  // In your handleBooking function
   const handleBooking = async () => {
     try {
       const res = await api.post('/students/bookings', { event_id: id });
+      
       if (res.data.booking && res.data.booking.status === "rejected") {
         setModal({
           show: true,
@@ -139,27 +133,31 @@ const EventDetails = () => {
           message: "Booking failed: " + res.data.error,
           redirect: "/events"
         });
-      } else {
+      }
+    } catch (err) {
+      // Handle rate limiting specifically
+      if (err.response?.status === 429) {
         setModal({
           show: true,
           success: false,
-          message: "Booking status: " + (res.data.message || "Unknown response"),
+          message: "Too many booking attempts. Please wait a few minutes before trying again.",
+          redirect: "/events"
+        });
+      } else {
+        const errorMsg =
+          err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Booking failed. Please try again.";
+        setModal({
+          show: true,
+          success: false,
+          message: errorMsg,
           redirect: "/events"
         });
       }
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.error ||
-        err.response?.data?.message ||
-        "Booking failed. Please try again.";
-      setModal({
-        show: true,
-        success: false,
-        message: errorMsg,
-        redirect: "/events"
-      });
     }
   };
+
 
   // Feedback submit handler
   const handleSubmitFeedback = async (rating, comment) => {

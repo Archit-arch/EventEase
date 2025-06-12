@@ -1,4 +1,13 @@
 /* Navbar.css */
+
+.desktop-only {
+  display: flex;
+}
+
+.mobile-only {
+  display: none;
+}
+
 .user-section {
   margin-left: 2rem; 
   display: flex;
@@ -72,4 +81,54 @@
   width: 100%;
   margin: 1rem 0 0 0;
   justify-content: flex-start;
+}
+
+/* Mobile User Info Section */
+.mobile-user-info {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+.mobile-user-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #4f8cff;
+  margin-bottom: 0.5rem;
+}
+
+.mobile-user-details {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.mobile-user-details div {
+  margin-bottom: 0.25rem;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: flex;
+  }
+  
+  .mobile-menu {
+    padding: 1rem;
+  }
+  
+  .mobile-menu .nav-link {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
 }

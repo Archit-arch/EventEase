@@ -4,43 +4,45 @@ import { FaBuilding, FaAlignLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import ClubNavbar from '../components/ClubNavbar.jsx';
 import api from '../api/axios';
+import { useAuth } from '../hooks/useAuth';
 
 const RegisterClub = () => {
-  const [user, setUser] = useState(null);
+  const { user, loading, error } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
   });
-  const [error, setError] = useState('');
+  const [formError, setFormError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
 
-  // Get user from localStorage once on mount
+  // Redirect logic based on auth and role
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      // If no user, redirect to login or handle accordingly
-      navigate('/login');
+    if (!loading) {
+      if (!user) {
+        navigate('/login');
+      } else if (user.role !== 'organizer') {
+        navigate('/unauthorized');
+      }
     }
-  }, [navigate]);
+  }, [user, loading, navigate]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setFormError('');
     setSuccess('');
 
     if (formData.name.trim().length === 0) {
-      setError('Club name is required.');
+      setFormError('Club name is required.');
       return;
     }
     if (formData.name.length > 100) {
-      setError('Club name cannot exceed 100 characters.');
+      setFormError('Club name cannot exceed 100 characters.');
       return;
     }
 
@@ -48,7 +50,7 @@ const RegisterClub = () => {
       const response = await api.post('/club-requests', {
         name: formData.name.trim(),
         description: formData.description.trim(),
-        created_by: user?.id,  // Use user from state
+        created_by: user?.id,
       });
 
       if (response.status === 201) {
@@ -56,10 +58,11 @@ const RegisterClub = () => {
         setTimeout(() => navigate('/eventManager'), 2000);
       }
     } catch (err) {
-      const errorMsg = err.response?.data?.error || 'Failed to submit club request';
-      setError(errorMsg);
+      setFormError(err.response?.data?.error || 'Failed to submit club request');
     }
   };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <>
@@ -81,7 +84,7 @@ const RegisterClub = () => {
               <Card className="shadow-sm p-4">
                 <Card.Title className="text-center mb-4">Create New Club</Card.Title>
 
-                {error && <Alert variant="danger">{error}</Alert>}
+                {formError && <Alert variant="danger">{formError}</Alert>}
                 {success && <Alert variant="success">{success}</Alert>}
 
                 <Form onSubmit={handleSubmit}>
@@ -130,4 +133,3 @@ const RegisterClub = () => {
 };
 
 export default RegisterClub;
-// This code defines a RegisterClub component that allows users to create a new club.

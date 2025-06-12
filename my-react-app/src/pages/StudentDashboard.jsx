@@ -13,11 +13,12 @@ const StudentDashboard = () => {
   const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
   const { user, loading, error } = useAuth();
-//
+  
   // Handle redirects based on auth state
   useEffect(() => {
     if (!loading) {
       if (!user) {
+        console.log("User not authenticated, redirecting to login");
         navigate('/login');
       } else if (user.role !== 'student') {
         navigate('/unauthorized');
