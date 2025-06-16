@@ -7,7 +7,7 @@ import api from '../api/axios';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, loading, error } = useAuth();
+  const { user, loading, error} = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {

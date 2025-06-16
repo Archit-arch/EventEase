@@ -1,5 +1,6 @@
 const express = require('express');
-const { createClubRequest, createVenueRequest, getVenues , createEventRequest, getClubs, getOrganizerEvents, getOrganizerClubs, getOrganizerVenues, getEventRequestById} = require('../controllers/clubController');
+const { createClubRequest, createVenueRequest, getVenues , createEventRequest, getClubs, getOrganizerEvents, getOrganizerClubs, getOrganizerVenues} = require('../controllers/clubController');
+const {getStudentList, sendNotification} = require('../controllers/clubController');
 const router = express.Router();
 const { validateClubRequest, validateVenueRequest, validateEventRequest } = require('../validators/clubValidator');
 const validateInput = require('../middleware/validateInput');
@@ -16,6 +17,7 @@ router.get('/user-clubs/:userId',authMiddleware, roleMiddleware('organizer'), ge
 router.get('/organizers/events/', authMiddleware, roleMiddleware('organizer'), getOrganizerEvents);
 router.get('/organizers/clubs/', authMiddleware, roleMiddleware('organizer'), getOrganizerClubs);
 router.get('/organizers/venues/', authMiddleware, roleMiddleware('organizer'), getOrganizerVenues);
-router.get('/organizers/events/:id', authMiddleware, roleMiddleware('organizer'), getEventRequestById);
+router.get('/event-requests/:id/students', authMiddleware, roleMiddleware('organizer'), getStudentList);
+router.post('/events/:id/notify', authMiddleware, roleMiddleware('organizer'), sendNotification);
 
 module.exports = router;

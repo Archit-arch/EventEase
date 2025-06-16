@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { useAuth } from '../hooks/useAuth';
+import { useAuth} from '../hooks/useAuth';
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import api from '../api/axios';
 import '../styles/Navbar.css'; // Import your CSS styles
@@ -29,7 +29,7 @@ const AdminNavbar = () => {
   useEffect(() => {
         if (!loading) {
           if (!user) {
-            console.log("User not authenticated, redirecting to login");
+            console.log("User not authenticated, redirecting to login, in AdminNavbar");
             navigate('/login');
           } else if (user.role !== 'admin') {
             navigate('/unauthorized');

@@ -1,0 +1,129 @@
+/* Main container for event details */
+.event-details-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem 3.5rem; /* ⬆️ Increased inner spacing */
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  max-width: 1100px; /* ⬆️ Increased max width */
+  width: 92%;        /* ⬆️ Slightly more width on medium screens */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 1001;
+  text-align: center;
+  align-items: center;
+}
+
+
+/* Title */
+.event-details-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center; /* ⬅️ Center text */
+  background: linear-gradient(90deg, #4f8cff, #2566d8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 1px 6px rgba(79, 140, 255, 0.1);
+}
+
+/* Center no-student text */
+.event-details-container p {
+  text-align: center;
+  font-size: 1.05rem;
+  color: #444;
+}
+
+
+/* Students table */
+.students-table-wrapper {
+  overflow-x: auto;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.97rem;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.students-table th,
+.students-table td {
+  padding: 0.75rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.students-table th {
+  background: #e8f0fe;
+  color: #2566d8;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+.students-table tbody tr:hover {
+  background-color: #f0f7ff;
+}
+
+/* Notification button */
+.footer-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.notify-btn {
+  background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.15);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.notify-btn:hover {
+  background: linear-gradient(90deg, #2566d8 0%, #38c6ff 100%);
+  transform: scale(1.03);
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2566d8;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #1a4fb9;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

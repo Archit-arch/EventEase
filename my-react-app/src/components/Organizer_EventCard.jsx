@@ -20,12 +20,13 @@ const formatTime = (timeString) => {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-const Organizer_EventCard = ({ event }) => {
+const Organizer_EventCard = ({ event, onManageClick }) => {
   const navigate = useNavigate();
 
   if (!event) return <div className="event-card">No event data</div>;
 
   const {
+    request_id,
     title = "Untitled Event",
     date,
     start_time,
@@ -40,8 +41,11 @@ const Organizer_EventCard = ({ event }) => {
   } = event;
 
   const handleManageClick = () => {
-    navigate(`/organizer/events/${event.reques_id}/edit`);
+    if (onManageClick) {
+      onManageClick(request_id); // Call parent function
+    }
   };
+
 
   return (
     <div className="event-card">
@@ -53,6 +57,8 @@ const Organizer_EventCard = ({ event }) => {
       <div className="event-details">
         <h3 className="event-title">{title}</h3>
         <div className="event-info">
+
+          <p><strong>Description:</strong> {description || "No description provided."}</p>
           <p><strong>Date:</strong> {formatDate(date)}</p>
           <p><strong>Time:</strong> {formatTime(start_time)} – {formatTime(end_time)}</p>
           <p><strong>Location:</strong> {venue_location} {venue_name}</p>

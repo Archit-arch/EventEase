@@ -1,10 +1,11 @@
+// src/pages/StudentDashboard.jsx
 import React, { useState, useEffect } from "react";
 import EventCard from "../components/EventCard";
 import StudentDetails from "../components/StudentDetails";
 import StudentNavbar from "../components/StudentNavbar";
 import "../styles/StudentDashboard.css";
 import { useNavigate } from "react-router-dom";
-import api from '../api/axios';  // axios instance with withCredentials: true
+import api from '../api/axios';
 import { useAuth } from '../hooks/useAuth';
 
 const StudentDashboard = () => {
@@ -12,22 +13,29 @@ const StudentDashboard = () => {
   const [filter, setFilter] = useState("upcoming");
   const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
-  const { user, loading, error } = useAuth();
-  
-  // Handle redirects based on auth state
+  const { user, loading } = useAuth();
+
+  // ✅ Safe redirect
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        console.log("User not authenticated, redirecting to login");
-        navigate('/login');
-      } else if (user.role !== 'student') {
-        navigate('/unauthorized');
-      }
+    console.log("🟡 useEffect firing");
+    console.log("👤 user:", user);
+    console.log("⏳ loading:", loading);
+
+    if (loading) return;
+
+    if (!user) {
+      console.log("❌ No user, redirecting to login");
+      navigate('/login');
+    } else if (!user.role || user.role.toLowerCase().trim() !== 'student') {
+      console.log("🚫 Unauthorized role:", user.role);
+      navigate('/unauthorized');
+    } else {
+      console.log("✅ User is authorized student");
     }
   }, [user, loading, navigate]);
 
 
-  // Fetch bookings once user is set
+  // ✅ Fetch bookings when authenticated
   useEffect(() => {
     if (!user) return;
 
@@ -43,7 +51,6 @@ const StudentDashboard = () => {
     fetchBookings();
   }, [user]);
 
-  // Time-based filters
   const isUpcoming = (booking) => {
     if (!booking.date || !booking.start_time) return false;
     const [hours, minutes, seconds = "00"] = booking.start_time.split(":");
@@ -65,6 +72,8 @@ const StudentDashboard = () => {
   const filteredBookings = bookings.filter(
     filter === "upcoming" ? isUpcoming : isPast
   );
+
+  if (loading) return <div>Loading Student Dashboard...</div>;
 
   return (
     <div className="dashboard-container">
