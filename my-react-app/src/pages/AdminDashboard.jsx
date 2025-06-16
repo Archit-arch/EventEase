@@ -6,7 +6,6 @@ import ClubRequests from "./ClubRequests";
 import ViewAdminLogs from "./ViewAdminLogs";
 import "../styles/EventManager.css";
 import { useAuth } from '../hooks/useAuth';
-
 const AdminDashboard = () => {
 const [loading, setLoading] = useState(true); // Add loading state
 const [activeTab, setActiveTab] = useState("clubs");
@@ -20,6 +19,7 @@ const { user, loading_auth, error } = useAuth();
         console.log("User not authenticated, redirecting to login");
         navigate('/login');
       } else if (user.role !== 'admin') {
+        
         navigate('/unauthorized');
       }
     }

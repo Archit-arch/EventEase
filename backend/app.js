@@ -4,26 +4,66 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const path = require('path');
 
-const authRoutes = require('./routes/authRoutes');         // Public: login, register
-const clubRoutes = require('./routes/clubRoutes');         // Organizer routes
-const studentRoutes = require('./routes/studentRoutes');   // Public: student event views
-const adminRoutes = require('./routes/adminRoutes');       // Admin dashboard & logs
-const protectedRoutes = require('./routes/protectedRoutes'); // Routes that require JWT
-const errorHandler = require('./middleware/errorHandler'); // Global error handler
+const authRoutes = require('./routes/authRoutes');
+const clubRoutes = require('./routes/clubRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const protectedRoutes = require('./routes/protectedRoutes');
+const errorHandler = require('./middleware/errorHandler');
 const { basicRateLimiter, loginAttemptLimiter } = require('./middleware/loginLimiter');
+
 const app = express();
+
+
+//Prometheus metrics
+// ✅ Prometheus Monitoring Setup
+const client = require('prom-client');
+
+// Create a new Registry
+const register = new client.Registry();
+
+// Enable default system + Node.js metrics
+client.collectDefaultMetrics({ register });
+
+// Optional: custom HTTP counter
+const httpRequestCounter = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'statusCode']
+});
+register.registerMetric(httpRequestCounter);
+
+// Middleware to count requests
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequestCounter.labels(req.method, req.route?.path || req.path, res.statusCode).inc();
+  });
+  next();
+});
+
+// /metrics endpoint for Prometheus
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+  } catch (err) {
+    res.status(500).end(err.message);
+  }
+});
+
 
 // ✅ 1. Helmet for security headers
 app.use(helmet());
 
-// ✅ 2. Content Security Policy
+// ✅ 2. Content Security Policy (CSP) with frame-ancestors
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
     scriptSrc: [
       "'self'",
       "'unsafe-inline'",
-      'https://eventease.centralindia.cloudapp.azure.com:5173',
+      'https://eventease.centralindia.cloudapp.azure.com',
+      'https://4.213.127.173',
     ],
     styleSrc: [
       "'self'",
@@ -41,18 +81,30 @@ app.use(helmet.contentSecurityPolicy({
     ],
     connectSrc: [
       "'self'",
-      'https://eventease.centralindia.cloudapp.azure.com:5173',
-      'wss://eventease.centralindia.cloudapp.azure.com:5173',
+      'https://eventease.centralindia.cloudapp.azure.com',
+      'wss://eventease.centralindia.cloudapp.azure.com',
     ],
     objectSrc: ["'none'"],
+    baseUri: ["'none'"],
+    frameAncestors: ["'none'"], // ✅ Prevent clickjacking
     upgradeInsecureRequests: [],
-  },
+    // reportUri: ['/csp-report'], // Optional for ASVS Level 3
+  }
 }));
 
-// ✅ 3. CORS – Allow only known frontend origins with credentials (cookies)
+// ✅ 3. Additional Security Headers
+app.use((req, res, next) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('X-Content-Type-Options', 'nosniff'); // Anti-MIME sniffing
+
+  next();
+});
+
+// ✅ 4. CORS – Allow only known frontend origins
 const allowedOrigins = [
-  'https://eventease.centralindia.cloudapp.azure.com:5173',
-  'https://4.213.127.173:5173',
+  'https://eventease.centralindia.cloudapp.azure.com',
 ];
 
 app.use(cors({
@@ -66,11 +118,11 @@ app.use(cors({
   credentials: true, // Send cookies across origin
 }));
 
-// ✅ 4. Body & Cookie Parsing
+// ✅ 5. Body & Cookie Parsing
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ 5. Cache Control for dynamic pages
+// ✅ 6. Cache Control for dynamic pages
 app.use((req, res, next) => {
   if (!req.url.match(/\.(js|css|png|jpg|jpeg|svg|woff|woff2)$/)) {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -79,10 +131,13 @@ app.use((req, res, next) => {
   }
   next();
 });
-// ✅ 5.5 Global Rate Limiting Middleware
-app.use(basicRateLimiter); // Limits requests per IP globally (e.g., 50 every 10 minutes)
+// Disable the 'X-Powered-By' header
+app.disable('x-powered-by'); // hides Express version
 
-// ✅ 6. Static Asset Serving (with long-term caching)
+// ✅ 7. Global Rate Limiting Middleware
+app.use(basicRateLimiter);
+
+// ✅ 8. Static Asset Serving (with long-term caching)
 app.use('/static', express.static(path.join(__dirname, 'public'), {
   maxAge: '1y',
   immutable: true,
@@ -91,16 +146,22 @@ app.use('/static', express.static(path.join(__dirname, 'public'), {
   }
 }));
 
-// ✅ 7. Public Routes
-app.use('/api/auth', authRoutes);        // Login/Register
-app.use('/api/students', studentRoutes); // Public: students view events
-app.use('/api/admin', adminRoutes);      // Admin dashboard/logs
-app.use('/api', clubRoutes);             // Organizer/club routes
+// ✅ 9. Public Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api', clubRoutes);
 
-// ✅ 8. Protected Routes (require JWT via cookie)
+// ✅ 10. Protected Routes
 app.use('/api/auth', protectedRoutes);
 
-// ✅ 9. Global Error Handling
+// ✅ 11. Global Error Handling
 app.use(errorHandler);
+
+// ✅ (Optional) CSP Violation Reporting Endpoint (L3)
+// app.post('/csp-report', express.json({ type: 'application/csp-report' }), (req, res) => {
+//   console.warn('CSP Violation:', req.body);
+//   res.status(204).end();
+// });
 
 module.exports = app;

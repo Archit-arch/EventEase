@@ -34,7 +34,8 @@ const Organizer_ClubCard = ({ club }) => {
     name = "Untitled Club",
     description = "",
     status = "Pending",
-    created_at
+    created_at,
+    rejection_reason = ""
   } = club;
 
   const { formattedDate, formattedTime } = formatDateTime(created_at);
@@ -48,10 +49,14 @@ const Organizer_ClubCard = ({ club }) => {
       />
       <div className="event-details">
         <h3 className="event-title">{name}</h3>
-        <p><strong>Description:</strong> {description}</p>
-        <p><strong>Date:</strong> {formattedDate}</p>
-        <p><strong>Time:</strong> {formattedTime}</p>
+        <p><strong>Description:</strong> {description || "No description provided."}</p>
+        <p><strong>Request Date:</strong> {formattedDate}</p>
+        <p><strong>Request Time:</strong> {formattedTime}</p>
         <p><strong>Status:</strong> {status}</p>
+
+        {status.toLowerCase() === "rejected" && rejection_reason  && (
+            <p><strong>Reason:</strong> {rejection_reason}</p>
+          )}
       </div>
     </div>
   );

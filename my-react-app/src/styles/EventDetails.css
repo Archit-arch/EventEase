@@ -21,6 +21,7 @@
   max-width: 1100px;
   margin: 1.5rem auto;
   padding: 2rem 1rem;
+  z-index: 1;
 }
 
 .glass-card {
@@ -125,6 +126,7 @@
 .feedback-carousel-section h3,
 .feedback-section h3 {
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  position: relative;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -136,5 +138,6 @@
   margin-bottom: 1.5rem;
   text-align: center;
   text-shadow: 0 2px 8px rgba(79,140,255,0.06);
+  z-index: 1;
 }
 

@@ -24,6 +24,9 @@ function Login() {
   setSuccess('');
 
   try {
+    // Step 0: Force logout to clear any previous session
+    // await api.get('/auth/logout');  // <-- Add this line
+
     // Step 1: Login request
     const response = await axios.post(
       `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
@@ -35,27 +38,27 @@ function Login() {
     const verifyRes = await api.get('/auth/verify');
     const user = verifyRes.data.user;
     console.log('User from verify:', user);
-  
+
     setSuccess(response.data.message || 'Login successful');
 
-    // Use setTimeout to allow state update to render
-setTimeout(() => {
-  if (user?.role === 'student') {
-    navigate('/studentDashboard', { replace: true });
-  } else if (user?.role === 'organizer') {
-    navigate('/eventManager', { replace: true });
-  } else if (user?.role === "admin") {
-    navigate('/adminDashboard', { replace: true });
-  } else {
-    navigate('/', { replace: true });
-  }
-}, 1000); // Short delay to ensure UI update
-//
+    setTimeout(() => {
+      if (user?.role === 'student') {
+        navigate('/studentDashboard', { replace: true });
+      } else if (user?.role === 'organizer') {
+        navigate('/eventManager', { replace: true });
+      } else if (user?.role === 'admin') {
+        navigate('/adminDashboard', { replace: true });
+      } else {
+        navigate('/', { replace: true });
+      }
+    }, 1000);
+
   } catch (err) {
     console.error('Login error:', err);
-    setError(err.response?.data?.message || 'Login Failed. Please Try Again ');
+    setError(err.response?.data?.error || 'Login Failed. Please Try Again');
   }
 };
+
 
 
   return (
@@ -121,8 +124,18 @@ setTimeout(() => {
                   </Form.Group>
 
                   <Button variant="primary" type="submit" className="w-100">
-                    Login
+                    Loginabc
                   </Button>
+                  <Button
+                    variant="outline-danger"
+                    className="w-100 mt-3"
+                    onClick={() => {
+                      window.location.href = `${import.meta.env.VITE_API_BASE_URL}/api/auth/google`;
+                    }}
+                  >
+                    Sign in with Google
+                  </Button>
+
                 </Form> 
               </Card>
             </Col>

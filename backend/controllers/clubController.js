@@ -234,6 +234,150 @@ ORDER BY er.date, er.start_time;
   }
 };
 
+const getEventRequestById = async (req, res, next) => {
+  const requestId = req.params.id;
+
+  console.log("Incoming request to fetch event by ID:", requestId);
+
+
+  try {
+    const result = await pool.query(
+      `SELECT 
+         er.id,
+         er.title,
+         er.description,
+         er.date,
+         er.start_time,
+         er.end_time,
+         v.name as venue_name,
+         v.location as venue_location,
+         c.name as club_name,
+         COUNT(b.user_id) AS student_count,
+         er.status,
+         er.rejection_reason
+       FROM event_requests er
+        JOIN venues v ON er.venue_id = v.venue_id
+        JOIN clubs c ON er.club_id = c.club_id
+        LEFT JOIN events e ON 
+          e.title = er.title AND 
+          e.date = er.date AND 
+          e.start_time = er.start_time AND 
+          e.end_time = er.end_time AND 
+          e.venue_id = er.venue_id AND 
+          e.club_id = er.club_id
+        LEFT JOIN bookings b ON e.event_id = b.event_id
+       WHERE er.id = $1
+       GROUP BY 
+        er.id, er.title, er.description, er.date, er.start_time, er.end_time,
+        v.name, v.location, c.name, er.status
+      ORDER BY er.date, er.start_time;`
+       ,
+      [requestId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching event by ID:", err);
+    next(err);
+  }
+};
+
+const getStudentList = async (req, res, next) => {
+  const organizerId = req.user.id;
+
+  if (!organizerId) {
+  return res.status(401).json({ error: 'Unauthorized: Organizer ID missing' });
+}
+
+  try {
+    // Step 1: Get all events created by this organizer
+    const verify = await pool.query(
+      `SELECT event_id FROM events WHERE created_by = $1`,
+      [organizerId]
+    );
+
+    if (verify.rows.length === 0) {
+      return res.status(403).json({ error: 'No events found for this organizer' });
+    }  
+
+    const eventIds = verify.rows.map(row => row.event_id);
+
+    // Step 2: Fetch students who booked any of these events
+    const studentResult = await pool.query(
+      `SELECT DISTINCT u.user_id AS user_id, u.name, u.email
+       FROM bookings b
+       JOIN users u ON b.user_id = u.user_id
+       WHERE b.event_id = ANY($1::int[])`,
+      [eventIds]
+    );
+
+    res.status(200).json(studentResult.rows);
+  } catch (err) {
+    console.error('Error fetching student list:', err);
+    next(err);
+  }
+};
+
+
+const sendNotification = async (req, res, next) => {
+  const organizerId = req.user.id;
+  const eventRequestId = req.params.id;
+
+  try {
+    // 1. Get event request details
+    const eventRequest = await pool.query(
+      `SELECT title, date, start_time, end_time, venue_id FROM event_requests WHERE id = $1`,
+      [eventRequestId]
+    );
+
+    if (eventRequest.rows.length === 0) {
+      return res.status(404).json({ error: 'Event request not found.' });
+    }
+
+    const { title, date, start_time, end_time, venue_id } = eventRequest.rows[0];
+
+    // 2. Find the approved event created by the current organizer
+    const event = await pool.query(
+      `SELECT event_id FROM events 
+       WHERE title = $1 AND date = $2 AND start_time = $3 AND end_time = $4 
+       AND venue_id = $5 AND created_by = $6`,
+      [title, date, start_time, end_time, venue_id, organizerId]
+    );
+
+    if (event.rows.length === 0) {
+      return res.status(403).json({ error: 'Event not approved or not owned by this organizer.' });
+    }
+
+    const eventId = event.rows[0].event_id;
+
+    // 3. Get student user_ids from bookings
+    const studentRes = await pool.query(
+      `SELECT user_id FROM bookings WHERE event_id = $1`,
+      [eventId]
+    );
+
+    const studentIds = studentRes.rows.map(row => row.user_id);
+
+    // 4. Simulate notification
+    console.log("Simulating notifications to student user_ids:", studentIds);
+
+    res.status(200).json({
+      message: 'Notification sent successfully.',
+      studentUserIds: studentIds,
+    });
+
+  } catch (error) {
+    console.error("Error in sending notification:", error);
+    next(error);
+  }
+};
+
+
+
 const getOrganizerClubs = async (req, res, next) => {
   try {
     const organizer_id = req.user.id;
@@ -244,7 +388,8 @@ const getOrganizerClubs = async (req, res, next) => {
         name,
         description,
         status,
-        created_at
+        created_at,
+        rejection_reason
       FROM club_requests
       WHERE created_by = $1
       ORDER BY created_at DESC;
@@ -270,7 +415,8 @@ const getOrganizerVenues = async (req, res, next) => {
         location,
         capacity,
         status,
-        created_at
+        created_at,
+        rejection_reason
       FROM venue_requests
       WHERE created_by = $1
       ORDER BY created_at DESC;
@@ -284,42 +430,6 @@ const getOrganizerVenues = async (req, res, next) => {
   }
 };
 
-const getEventRequestById = async (req, res, next) => {
-  const requestId = req.params.id;
-
-  console.log("Incoming request to fetch event by ID:", requestId);
-
-
-  try {
-    const result = await pool.query(
-      `SELECT 
-         er.id,
-         er.title,
-         er.description,
-         er.date,
-         er.start_time,
-         er.end_time,
-         er.venue_id,
-         er.club_id,
-         er.status,
-         er.rejection_reason
-       FROM event_requests er
-       WHERE er.id = $1`,
-      [requestId]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Event not found' });
-    }
-
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.error("Error fetching event by ID:", err);
-    next(err);
-  }
-};
-
-
 
 module.exports = {
   createClubRequest,
@@ -330,5 +440,7 @@ module.exports = {
   getOrganizerEvents,
   getOrganizerClubs,
   getOrganizerVenues,
-  getEventRequestById
+  getEventRequestById,
+  sendNotification,
+  getStudentList
 };

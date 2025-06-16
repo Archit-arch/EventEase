@@ -1,56 +1,86 @@
-/* styles/NotificationModel.css */
-.notification-model-overlay {
+/* Container for modal overlay */
+.notification-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Dim background */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1000;
 }
 
-.notification-model {
-  background-color: #fff;
-  padding: 30px 40px;
+/* Modal content box */
+.notification-modal .modal-content {
+  background: #ffffff;
   border-radius: 12px;
-  text-align: center;
-  max-width: 400px;
+  padding: 2rem;
   width: 90%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
+  display: flex;              /* ✅ Add this */
+  flex-direction: column;     /* ✅ Stack children vertically */
+  gap: 1rem; 
 }
 
-.notification-title {
+/* Modal header */
+.notification-modal h3 {
+  margin-bottom: 1.2rem;
+  color: #1d3557;
   font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Inputs and textarea */
+.notification-modal input[type="text"],
+.notification-modal textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0 1rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: none;
+}
+
+/* Modal button container */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Send button */
+.modal-buttons button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+/* Specific styling */
+.modal-buttons button:first-child {
+  background-color: #1d72b8;
+  color: white;
+}
+
+.modal-buttons .cancel-btn {
+  background-color: #ccc;
   color: #333;
 }
 
-.notification-description {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 20px;
+/* Hover effects */
+.modal-buttons button:hover {
+  opacity: 0.9;
 }
 
-.notification-ok-btn {
-  padding: 10px 20px;
-  background-color: #0066cc;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.notification-ok-btn:hover {
-  background-color: #004c99;
-}
-
+/* Modal fade animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -61,3 +91,35 @@
     transform: scale(1);
   }
 }
+
+/* Message indicating notification status */
+.status-message {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: green;
+  text-align: center;
+}
+
+/* Container for student ID list */
+.student-list {
+  margin-top: 1rem;
+  background-color: #f1f5f8;
+  padding: 1rem;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 0.95rem;
+}
+
+/* Student ID list styling */
+.student-list ul {
+  list-style-type: disc;
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+.student-list li {
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+

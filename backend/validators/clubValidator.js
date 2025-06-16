@@ -39,7 +39,16 @@ exports.validateEventRequest = [
 
   body('date')
     .notEmpty().withMessage('Event date is required.')
-    .isISO8601().withMessage('Date must be a valid ISO 8601 date.'),
+    .isISO8601().withMessage('Date must be a valid ISO 8601 date.')
+    .custom((value) => {
+      const today = new Date();
+      const eventDate = new Date(value);
+      if (eventDate < today) {
+        throw new Error('Event date cannot be in the past.');
+      }
+      return true;
+    }),
+
 
   body('start_time')
     .notEmpty().withMessage('Start time is required.')
@@ -47,7 +56,14 @@ exports.validateEventRequest = [
 
   body('end_time')
     .notEmpty().withMessage('End time is required.')
-    .matches(/^([0-1]\d|2[0-3]):([0-5]\d)$/).withMessage('End time must be in HH:MM format.'),
+    .matches(/^([0-1]\d|2[0-3]):([0-5]\d)$/).withMessage('End time must be in HH:MM format.')
+    .custom((value, { req }) => {
+      const startTime = req.body.start_time;
+      if (startTime && value <= startTime) {
+        throw new Error('End time must be after start time.');
+      }
+      return true;
+    }),
 
   body('venue_id')
     .notEmpty().withMessage('Venue ID is required.')

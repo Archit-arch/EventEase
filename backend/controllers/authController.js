@@ -1,4 +1,3 @@
-
 // EventEase - Backend Authentication Controller
 
 const pool = require('../db');
@@ -6,7 +5,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { failedLoginAttempts } = require('../middleware/loginLimiter.js');
-
 const logSecurityEvent = require('../utils/logSecurityEvent');
 
 const generateToken = (user) => {
@@ -52,22 +50,32 @@ const registerUser = async (req, res, next) => {
     const user = result.rows[0];
     const token = generateToken(user);
 
+    // Clear any previous token before setting a new one
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None',
+      path: '/'
+    });
+
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
+      path: '/'
     });
 
-    await logSecurityEvent('REGISTER_SUCCESS', 'User registered', {
-  userId: user.user_id,
-  email,
-  role,
-  ip: req.ip,
-  path: req.originalUrl,
-  userAgent: req.headers['user-agent']
-});
+    console.log('✅ Set-Cookie (REGISTER):', token);
 
+    await logSecurityEvent('REGISTER_SUCCESS', 'User registered', {
+      userId: user.user_id,
+      email,
+      role,
+      ip: req.ip,
+      path: req.originalUrl,
+      userAgent: req.headers['user-agent']
+    });
 
     res.status(201).json({
       message: 'Registration successful',
@@ -86,29 +94,20 @@ const loginUser = async (req, res, next) => {
 
   const record = failedLoginAttempts.get(ip) || { count: 0, lastAttempt: Date.now(), blockedUntil: null };
 
-  
-// 🚫 If currently blocked
-if (record.blockedUntil && Date.now() < record.blockedUntil) {
-    console.log('🚫 Login attempt blocked');
+  if (record.blockedUntil && Date.now() < record.blockedUntil) {
+    const waitTime = Math.ceil((record.blockedUntil - Date.now()) / 60000);
+    await logSecurityEvent('LOGIN_BLOCKED', 'Blocked IP attempted login', {
+      email,
+      ip,
+      path: req.originalUrl,
+      userAgent: req.headers['user-agent'],
+    });
 
-  const waitTime = Math.ceil((record.blockedUntil - Date.now()) / 60000);
-  try {
-  await logSecurityEvent('LOGIN_BLOCKED', 'Blocked IP attempted login', {
-    email,
-    ip,
-    path: req.originalUrl,
-    userAgent: req.headers['user-agent'],
-  });
-  console.log('LOGIN_BLOCKED event logged');
-} catch (err) {
-  console.error('Failed to log LOGIN_BLOCKED:', err.message);
-}
-
-  return res.status(429).json({ error: `Too many failed attempts. Try again after ${waitTime} minute(s).` });
-}
+    return res.status(429).json({ error: `Too many failed attempts. Try again after ${waitTime} minute(s).` });
+  }
 
   if (!email || !password) {
-     await logSecurityEvent('VALIDATION_ERROR', 'Email or password missing', {
+    await logSecurityEvent('VALIDATION_ERROR', 'Email or password missing', {
       ip: req.ip,
       path: req.originalUrl,
       userAgent: req.headers['user-agent']
@@ -119,66 +118,74 @@ if (record.blockedUntil && Date.now() < record.blockedUntil) {
   try {
     const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userResult.rows.length === 0) {
-  record.count += 1;
-  record.lastAttempt = Date.now();
+      record.count += 1;
+      record.lastAttempt = Date.now();
 
-  if (record.count >= 5) {
-    record.blockedUntil = Date.now() + 10 * 60 * 1000; // 10 mins
-  }
+      if (record.count >= 5) {
+        record.blockedUntil = Date.now() + 10 * 60 * 1000;
+      }
 
-  failedLoginAttempts.set(ip, record);
+      failedLoginAttempts.set(ip, record);
 
-  await logSecurityEvent('LOGIN_FAIL', 'User not found', {
-    email,
-    ip,
-    path: req.originalUrl,
-    userAgent: req.headers['user-agent'],
-  });
+      await logSecurityEvent('LOGIN_FAIL', 'User not found', {
+        email,
+        ip,
+        path: req.originalUrl,
+        userAgent: req.headers['user-agent'],
+      });
 
-  return res.status(400).json({
-    error: record.blockedUntil
-      ? `Too many failed attempts. Blocked for 15 minutes.`
-      : 'Invalid email or password'
-  });
-}
-
+      return res.status(400).json({
+        error: record.blockedUntil
+          ? `Too many failed attempts. Blocked for 15 minutes.`
+          : 'Invalid email or password'
+      });
+    }
 
     const user = userResult.rows[0];
     const validPass = await bcrypt.compare(password, user.password_hash);
 
-   if (!validPass) {
-  record.count += 1;
-  record.lastAttempt = Date.now();
+    if (!validPass) {
+      record.count += 1;
+      record.lastAttempt = Date.now();
 
-  if (record.count >= 5) {
-    record.blockedUntil = Date.now() + 2 * 60 * 1000;
-  }
+      if (record.count >= 5) {
+        record.blockedUntil = Date.now() + 2 * 60 * 1000;
+      }
 
-  failedLoginAttempts.set(ip, record);
+      failedLoginAttempts.set(ip, record);
 
-  await logSecurityEvent('LOGIN_FAIL', 'Incorrect password', {
-    userId: user.user_id,
-    email,
-    ip: req.ip,
-    path: req.originalUrl,
-    userAgent: req.headers['user-agent']
-  });
+      await logSecurityEvent('LOGIN_FAIL', 'Incorrect password', {
+        userId: user.user_id,
+        email,
+        ip: req.ip,
+        path: req.originalUrl,
+        userAgent: req.headers['user-agent']
+      });
 
-  return res.status(400).json({
-    error: record.blockedUntil
-      ? `Too many failed attempts. Blocked for 15 minutes.`
-      : 'Invalid email or password'
-  });
-}
+      return res.status(400).json({
+        error: record.blockedUntil
+          ? `Too many failed attempts. Blocked for 15 minutes.`
+          : 'Invalid email or password'
+      });
+    }
+
     const token = generateToken(user);
+    failedLoginAttempts.delete(ip);
 
-    failedLoginAttempts.delete(ip); // 🎯 Clear on success
+    // Overwrite old token
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None',
+      path: '/'
+    });
 
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
       maxAge: 24 * 60 * 60 * 1000,
+      path: '/'
     });
 
     await logSecurityEvent('LOGIN_SUCCESS', 'User logged in', {
@@ -206,62 +213,73 @@ if (record.blockedUntil && Date.now() < record.blockedUntil) {
 
 const logoutUser = async (req, res) => {
   try {
-    // This assumes authMiddleware has already added `req.user`
-    const { user_id, email } = req.user;
+    const token = req.cookies.token;
+    const decoded = token ? jwt.verify(token, process.env.JWT_SECRET) : null;
 
-    res.clearCookie('token', {
+    // Forcefully expire cookie
+    res.cookie('token', '', {
       httpOnly: true,
       secure: true,
-      sameSite: 'None'
+      sameSite: 'None',
+      expires: new Date(0),
+      path: '/'
     });
 
-    await logSecurityEvent('LOGOUT_USER', 'User logged out', {
-      userId: user_id,
-      email,
-      ip: req.ip,
-      path: req.originalUrl,
-      userAgent: req.headers['user-agent']
-    });
+    if (decoded) {
+      await logSecurityEvent('LOGOUT_USER', 'User logged out', {
+        userId: decoded.id,
+        email: decoded.email,
+        ip: req.ip,
+        path: req.originalUrl,
+        userAgent: req.headers['user-agent']
+      });
+    } else {
+      await logSecurityEvent('LOGOUT_USER_ANON', 'Anonymous logout attempt', {
+        ip: req.ip,
+        path: req.originalUrl,
+        userAgent: req.headers['user-agent']
+      });
+    }
 
-    res.status(200).json({ message: 'Logout successful' });
+    return res.status(200).json({ message: 'Logout successful' });
+
   } catch (err) {
     console.error('Logout error:', err);
-    res.status(500).json({ error: 'Logout failed' });
+    return res.status(500).json({ error: 'Logout failed' });
   }
 };
 
-// ME (authenticated user info)
 const getCurrentUser = (req, res) => {
   const { id, name, email, role } = req.user;
-  res.status(200).json({ id, name, email, role });
+  res.status(200).json({ user: { id, name, email, role } });
 };
 
-// VERIFY TOKEN (for frontend use)
 const verifyToken = async (req, res) => {
   const token = req.cookies.token;
-  if (!token){
+  if (!token) {
     await logSecurityEvent('NO_TOKEN', 'No Token provided', {
-        ip: req.ip,
+      ip: req.ip,
       path: req.originalUrl,
       userAgent: req.headers['user-agent'],
-      });
-    return res.status(401).json({ message: 'No token' })
-  };
+    });
+    return res.status(401).json({ message: 'No token' });
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return res.status(200).json({ user: decoded });
   } catch (err) {
-   await  logSecurityEvent('TOKEN_INVALID', 'Invalid token access attempt', {
-  ip: req.ip,
-  path: req.originalUrl,
-  userAgent: req.headers['user-agent'],
-  token: token?.slice(0, 10) + '...' // optional: partial token for debugging
-});
+    await logSecurityEvent('TOKEN_INVALID', 'Invalid token access attempt', {
+      ip: req.ip,
+      path: req.originalUrl,
+      userAgent: req.headers['user-agent'],
+      token: token?.slice(0, 10) + '...'
+    });
 
     return res.status(403).json({ message: 'Invalid token' });
   }
 };
+
 module.exports = {
   registerUser,
   loginUser,
@@ -269,4 +287,3 @@ module.exports = {
   getCurrentUser,
   verifyToken
 };
-

@@ -6,7 +6,6 @@ import EventDetails from "./pages/EventDetails";
 import Navbar from "./components/Navbar";
 import StudentDashboard from "./pages/StudentDashboard";
 import EventManager from './pages/EventManager';
-import EventEdit from './pages/EventEdit.jsx';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import RegisterClub from './pages/RegisterClub';
@@ -37,7 +36,6 @@ function App() {
 
         <Route path="/studentDashboard" element={<StudentDashboard />} />
         <Route path="/eventManager" element={<EventManager />} />
-        <Route path="/organizer/events/:id/edit" element={<EventEdit />} />
         <Route path="/adminDashboard" element={<AdminDashboard />} />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
