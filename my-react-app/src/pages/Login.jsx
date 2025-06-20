@@ -124,7 +124,7 @@ function Login() {
                   </Form.Group>
 
                   <Button variant="primary" type="submit" className="w-100">
-                    Loginabc
+                    Log in
                   </Button>
                   <Button
                     variant="outline-danger"

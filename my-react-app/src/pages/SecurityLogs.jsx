@@ -70,6 +70,7 @@ const SecurityLogs = () => {
         <option value="LOGIN_BLOCKED">Login Blocked</option>
         <option value="GLOBAL_RATE_LIMIT_HIT">Global Rate Limit Hit</option>
         <option value="BOOKING_RATE_LIMIT_HIT">Booking Rate Limit Hit</option>
+        <option value="LOGIN_DENIED">Login Denied</option>
 </select>
         <input name="email" placeholder="Email" onChange={handleChange} />
         <input name="userId" placeholder="User ID" onChange={handleChange} />
