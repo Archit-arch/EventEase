@@ -39,7 +39,7 @@ const sendOTP = async (req, res) => {
     }
 
     const otp = crypto.randomInt(100000, 999999).toString();
-    const expiresAt = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
+    const expiresAt = Date.now() + 3 * 60 * 1000; // OTP valid for 3 minutes
 
     // Store only relevant OTP info here
     otpStore.set(email, { otp, expiresAt });

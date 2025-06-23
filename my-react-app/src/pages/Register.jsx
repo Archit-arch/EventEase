@@ -4,6 +4,9 @@ import { FaUser, FaEnvelope, FaLock, FaUserTag, FaEye, FaEyeSlash } from 'react-
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 import axios from 'axios';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { useEffect } from 'react';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -21,6 +24,24 @@ function Register() {
   const [success, setSuccess] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [timer, setTimer] = useState(0);
+  const otpDuration = 60; // seconds
+
+  useEffect(() => {
+    if (timer === 0) return;
+
+    const interval = setInterval(() => {
+      setTimer(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,6 +67,7 @@ function Register() {
       });
       setOtpSent(true);
       setSuccess('OTP sent to your email.');
+      setTimer(otpDuration); // Start countdown
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to send OTP.');
     } finally {
@@ -145,14 +167,31 @@ function Register() {
                         onChange={handleChange}
                         required
                       />
-                      <Button 
+                      <Button
                         variant={otpSent ? "outline-primary" : "primary"}
-                        onClick={handleSendOTP} 
-                        disabled={!formData.email || loading || otpVerified}
-                        className="ms-2"
+                        onClick={handleSendOTP}
+                        disabled={!formData.email || loading || otpVerified || timer > 0}
+                        className="ms-2 d-flex align-items-center"
                       >
-                        {loading && !otpVerified ? 'Sending...' : (otpSent ? 'Resend OTP' : 'Send OTP')}
+                        {loading && !otpVerified ? 'Sending...' : (
+                          timer > 0 ? (
+                            <div style={{ width: 30, height: 30 }}>
+                              <CircularProgressbar
+                                value={(otpDuration - timer)}
+                                maxValue={otpDuration}
+                                text={`${timer}s`}
+                                styles={buildStyles({
+                                  textSize: '28px',
+                                  pathColor: '#0d6efd',
+                                  textColor: '#0d6efd',
+                                  trailColor: '#e0e0e0',
+                                })}
+                              />
+                            </div>
+                          ) : (otpSent ? 'Resend OTP' : 'Send OTP')
+                        )}
                       </Button>
+
                     </InputGroup>
                   </Form.Group>
 

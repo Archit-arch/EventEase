@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 require('../config/passport'); // Load Google Strategy
+const logSecurityEvent = require('../utils/logSecurityEvent');
 
 const {
   sendOTP,
@@ -116,6 +117,15 @@ router.get(
       secure: true,
       sameSite: 'Strict',
       maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    logSecurityEvent('LOGIN_SUCCESS', 'User logged in via Google OAuth', {
+      userId: req.user.user_id,
+      email: req.user.email,
+      ip: req.ip,
+      path: req.originalUrl,
+      userAgent: req.headers['user-agent'],
+      method: 'google',
     });
 
     const role = req.user.role || 'student';
