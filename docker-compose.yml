@@ -51,6 +51,7 @@
 
 ### Production Docker Compose file for EventEase
 # This file is used to set up the production environment for EventEase.
+
 version: '3.8'
 
 services:
@@ -58,6 +59,7 @@ services:
     build:
       context: ./my-react-app
       dockerfile: Dockerfile.prod
+    image: eventease-frontend:latest
     container_name: eventease_frontend
     restart: always
     # No ports exposed; NGINX will serve the static files
@@ -66,19 +68,21 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
+    image: eventease-backend:latest
     container_name: eventease_backend
     restart: always
     expose:
       - "5000"
     environment:
-      - DATABASE_URL=postgresql://archit:architagarwal@db:5432/eventease?schema=public
-      - JWT_SECRET=ePf$A7h&1!jX@9zLd0^nUvR!w4*DqR2P
-      - PORT=5000
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=${PORT}
+
     volumes:
       - ./backend/certs:/app/certs  #Adding this for nginx <-> backend https communication
     depends_on:
       - db
-
+   
   nginx:
     image: nginx:latest
     container_name: eventease_nginx
@@ -99,9 +103,10 @@ services:
     container_name: eventease-db
     restart: always
     environment:
-      POSTGRES_USER: archit
-      POSTGRES_PASSWORD: architagarwal
-      POSTGRES_DB: eventease
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    - POSTGRES_DB=${POSTGRES_DB}
+
     ports:
       - "5433:5432"
     volumes:
@@ -135,9 +140,16 @@ services:
     image: prometheuscommunity/postgres-exporter
     container_name: eventease_postgres_exporter
     environment:
-      DATA_SOURCE_NAME: "postgresql://archit:architagarwal@db:5432/eventease?sslmode=disable"
+    - DATA_SOURCE_NAME=${POSTGRES_EXPORTER_URL}
     depends_on:
       - db
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100"  # Allow Prometheus to connect via bridge network
+    restart: unless-stopped
 
 
 volumes:

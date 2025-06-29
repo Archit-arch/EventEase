@@ -32,3 +32,41 @@ backend/package-lock.json
 # === Frontend-specific ===
 my-react-app/node_modules
 my-react-app/package-lock.json
+
+# === Certificates and Secrets ===
+my-react-app/certs/
+backend/certs/
+nginx/certs/
+
+# === Docker Artifacts ===
+containers-tcpdump-pcap/
+
+# === NGINX Build and Config Files (optional if generated) ===
+nginx/html/
+nginx/vhost.d/
+
+# === Frontend Build Output ===
+my-react-app/dist/
+
+# === SBOM (if auto-generated or not required in repo) ===
+SBOM/
+
+# === .env files ===
+.env
+.env.*
+my-react-app/.env
+my-react-app/.env.*
+backend/.env
+backend/.env.*
+
+# === Sensitive or Backup Files ===
+eventease.dump
+eventease_backup.dump
+olddb.dump
+
+# === PostgreSQL Configs (if not custom and version-controlled)
+pg_hba.conf
+postgresql.conf
+
+# === Structure/diagnostic files
+structure.txt
