@@ -1,0 +1,1841 @@
+{
+    "matches": [
+        {
+            "vulnerability": {
+                "id": "GHSA-3xgq-45jj-v275",
+                "dataSource": "https://github.com/advisories/GHSA-3xgq-45jj-v275",
+                "namespace": "github:language:javascript",
+                "severity": "High",
+                "urls": [],
+                "description": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+                "cvss": [
+                    {
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                        "metrics": {
+                            "baseScore": 7.5,
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2024-21538",
+                        "epss": 0.0017,
+                        "percentile": 0.38952,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [
+                        "7.0.5"
+                    ],
+                    "state": "fixed"
+                },
+                "advisories": [],
+                "risk": 0.12749999999999997
+            },
+            "relatedVulnerabilities": [
+                {
+                    "id": "CVE-2024-21538",
+                    "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2024-21538",
+                    "namespace": "nvd:cpe",
+                    "severity": "High",
+                    "urls": [
+                        "https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff",
+                        "https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f",
+                        "https://github.com/moxystudio/node-cross-spawn/pull/160",
+                        "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349",
+                        "https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230"
+                    ],
+                    "description": "Versions of the package cross-spawn before 6.0.6, from 7.0.0 and before 7.0.5 are vulnerable to Regular Expression Denial of Service (ReDoS) due to improper input sanitization. An attacker can increase the CPU usage and crash the program by crafting a very large and well crafted string.",
+                    "cvss": [
+                        {
+                            "source": "report@snyk.io",
+                            "type": "Secondary",
+                            "version": "4.0",
+                            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                            "metrics": {
+                                "baseScore": 7.7
+                            },
+                            "vendorMetadata": {}
+                        },
+                        {
+                            "source": "report@snyk.io",
+                            "type": "Secondary",
+                            "version": "3.1",
+                            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                            "metrics": {
+                                "baseScore": 7.5,
+                                "exploitabilityScore": 3.9,
+                                "impactScore": 3.6
+                            },
+                            "vendorMetadata": {}
+                        }
+                    ],
+                    "epss": [
+                        {
+                            "cve": "CVE-2024-21538",
+                            "epss": 0.0017,
+                            "percentile": 0.38952,
+                            "date": "2025-06-28"
+                        }
+                    ]
+                }
+            ],
+            "matchDetails": [
+                {
+                    "type": "exact-direct-match",
+                    "matcher": "javascript-matcher",
+                    "searchedBy": {
+                        "language": "javascript",
+                        "namespace": "github:language:javascript",
+                        "package": {
+                            "name": "cross-spawn",
+                            "version": "7.0.3"
+                        }
+                    },
+                    "found": {
+                        "versionConstraint": ">=7.0.0,<7.0.5 (unknown)",
+                        "vulnerabilityID": "GHSA-3xgq-45jj-v275"
+                    },
+                    "fix": {
+                        "suggestedVersion": "7.0.5"
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "865cfebf5dd00b8c",
+                "name": "cross-spawn",
+                "version": "7.0.3",
+                "type": "npm",
+                "locations": [
+                    {
+                        "path": "/usr/local/lib/node_modules/npm/node_modules/cross-spawn/package.json",
+                        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+                        "accessPath": "/usr/local/lib/node_modules/npm/node_modules/cross-spawn/package.json",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "javascript",
+                "licenses": [
+                    "MIT"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:cross-spawn:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:cross-spawn:cross_spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:cross_spawn:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:cross_spawn:cross_spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:moxystudio:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:moxystudio:cross_spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:cross:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:cross:cross_spawn:7.0.3:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:npm/cross-spawn@7.0.3",
+                "upstreams": []
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2025-23166",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-23166",
+                "namespace": "nvd:cpe",
+                "severity": "High",
+                "urls": [
+                    "https://nodejs.org/en/blog/vulnerability/may-2025-security-releases"
+                ],
+                "description": "The C++ method SignTraits::DeriveBits() may incorrectly call ThrowException() based on user-supplied inputs when executing in a background thread, crashing the Node.js process. Such cryptographic operations are commonly applied to untrusted inputs. Thus, this mechanism potentially allows an adversary to remotely crash a Node.js runtime.",
+                "cvss": [
+                    {
+                        "source": "support@hackerone.com",
+                        "type": "Secondary",
+                        "version": "3.0",
+                        "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                        "metrics": {
+                            "baseScore": 7.5,
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-23166",
+                        "epss": 0.00088,
+                        "percentile": 0.26365,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [
+                        "20.19.2",
+                        "22.15.1",
+                        "23.11.1",
+                        "24.0.2"
+                    ],
+                    "state": "fixed"
+                },
+                "advisories": [],
+                "risk": 0.066
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "stock-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "node",
+                            "version": "18.20.8"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2025-23166",
+                        "versionConstraint": "< 20.19.2,>= 21, < 22.15.1,>= 23, < 23.11.1,>= 24, < 24.0.2 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:nodejs:node.js:*:*:*:*:*:*:*:*"
+                        ]
+                    },
+                    "fix": {
+                        "suggestedVersion": "20.19.2"
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "cf59dfa8fdc1f640",
+                "name": "node",
+                "version": "18.20.8",
+                "type": "binary",
+                "locations": [
+                    {
+                        "path": "/usr/local/bin/node",
+                        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+                        "accessPath": "/usr/local/bin/node",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [],
+                "cpes": [
+                    "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:generic/node@18.20.8",
+                "upstreams": []
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2025-23167",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-23167",
+                "namespace": "nvd:cpe",
+                "severity": "Medium",
+                "urls": [
+                    "https://nodejs.org/en/blog/vulnerability/may-2025-security-releases"
+                ],
+                "description": "A flaw in Node.js 20's HTTP parser allows improper termination of HTTP/1 headers using `\\r\\n\\rX` instead of the required `\\r\\n\\r\\n`.\nThis inconsistency enables request smuggling, allowing attackers to bypass proxy-based access controls and submit unauthorized requests.\n\nThe issue was resolved by upgrading `llhttp` to version 9, which enforces correct header termination.\n\nImpact:\n* This vulnerability affects only Node.js 20.x users prior to the `llhttp` v9 upgrade.",
+                "cvss": [
+                    {
+                        "source": "support@hackerone.com",
+                        "type": "Secondary",
+                        "version": "3.0",
+                        "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                        "metrics": {
+                            "baseScore": 6.5,
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 2.6
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-23167",
+                        "epss": 0.00039,
+                        "percentile": 0.10947,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [
+                        "20.19.2"
+                    ],
+                    "state": "fixed"
+                },
+                "advisories": [],
+                "risk": 0.022424999999999997
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "stock-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "node",
+                            "version": "18.20.8"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2025-23167",
+                        "versionConstraint": "< 20.19.2 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:nodejs:node.js:*:*:*:*:*:*:*:*"
+                        ]
+                    },
+                    "fix": {
+                        "suggestedVersion": "20.19.2"
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "cf59dfa8fdc1f640",
+                "name": "node",
+                "version": "18.20.8",
+                "type": "binary",
+                "locations": [
+                    {
+                        "path": "/usr/local/bin/node",
+                        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+                        "accessPath": "/usr/local/bin/node",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [],
+                "cpes": [
+                    "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:generic/node@18.20.8",
+                "upstreams": []
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2025-23165",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-23165",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://nodejs.org/en/blog/vulnerability/may-2025-security-releases"
+                ],
+                "description": "In Node.js, the `ReadFileUtf8` internal binding leaks memory due to a corrupted pointer in `uv_fs_s.file`: a UTF-16 path buffer is allocated but subsequently overwritten when the file descriptor is set. This results in an unrecoverable memory leak on every call. Repeated use can cause unbounded memory growth, leading to a denial of service.\r\n\r\nImpact:\r\n* This vulnerability affects APIs relying on `ReadFileUtf8` on Node.js release lines: v20 and v22.",
+                "cvss": [
+                    {
+                        "source": "support@hackerone.com",
+                        "type": "Secondary",
+                        "version": "3.0",
+                        "vector": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                        "metrics": {
+                            "baseScore": 3.7,
+                            "exploitabilityScore": 2.3,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-23165",
+                        "epss": 0.00061,
+                        "percentile": 0.19306,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [
+                        "20.19.2",
+                        "22.15.1"
+                    ],
+                    "state": "fixed"
+                },
+                "advisories": [],
+                "risk": 0.020435
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "stock-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "node",
+                            "version": "18.20.8"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2025-23165",
+                        "versionConstraint": "< 20.19.2,>= 21, < 22.15.1 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:nodejs:node.js:*:*:*:*:*:*:*:*"
+                        ]
+                    },
+                    "fix": {
+                        "suggestedVersion": "20.19.2"
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "cf59dfa8fdc1f640",
+                "name": "node",
+                "version": "18.20.8",
+                "type": "binary",
+                "locations": [
+                    {
+                        "path": "/usr/local/bin/node",
+                        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+                        "accessPath": "/usr/local/bin/node",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [],
+                "cpes": [
+                    "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:generic/node@18.20.8",
+                "upstreams": []
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "GHSA-v6h2-p8h4-qcjw",
+                "dataSource": "https://github.com/advisories/GHSA-v6h2-p8h4-qcjw",
+                "namespace": "github:language:javascript",
+                "severity": "Low",
+                "urls": [],
+                "description": "brace-expansion Regular Expression Denial of Service vulnerability",
+                "cvss": [
+                    {
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                        "metrics": {
+                            "baseScore": 3.1,
+                            "exploitabilityScore": 1.7,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-5889",
+                        "epss": 0.00052,
+                        "percentile": 0.16191,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [
+                        "1.1.12"
+                    ],
+                    "state": "fixed"
+                },
+                "advisories": [],
+                "risk": 0.01586
+            },
+            "relatedVulnerabilities": [
+                {
+                    "id": "CVE-2025-5889",
+                    "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-5889",
+                    "namespace": "nvd:cpe",
+                    "severity": "Low",
+                    "urls": [
+                        "https://gist.github.com/mmmsssttt404/37a40ce7d6e5ca604858fe30814d9466",
+                        "https://github.com/juliangruber/brace-expansion/pull/65/commits/a5b98a4f30d7813266b221435e1eaaf25a1b0ac5",
+                        "https://github.com/juliangruber/brace-expansion/releases/tag/v4.0.1",
+                        "https://vuldb.com/?ctiid.311660",
+                        "https://vuldb.com/?id.311660",
+                        "https://vuldb.com/?submit.585717"
+                    ],
+                    "description": "A vulnerability was found in juliangruber brace-expansion up to 1.1.11/2.0.1/3.0.0/4.0.0. It has been rated as problematic. Affected by this issue is the function expand of the file index.js. The manipulation leads to inefficient regular expression complexity. The attack may be launched remotely. The complexity of an attack is rather high. The exploitation is known to be difficult. The exploit has been disclosed to the public and may be used. Upgrading to version 1.1.12, 2.0.2, 3.0.1 and 4.0.1 is able to address this issue. The name of the patch is a5b98a4f30d7813266b221435e1eaaf25a1b0ac5. It is recommended to upgrade the affected component.",
+                    "cvss": [
+                        {
+                            "source": "cna@vuldb.com",
+                            "type": "Secondary",
+                            "version": "4.0",
+                            "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                            "metrics": {
+                                "baseScore": 1.3
+                            },
+                            "vendorMetadata": {}
+                        },
+                        {
+                            "source": "cna@vuldb.com",
+                            "type": "Secondary",
+                            "version": "3.1",
+                            "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                            "metrics": {
+                                "baseScore": 3.1,
+                                "exploitabilityScore": 1.7,
+                                "impactScore": 1.5
+                            },
+                            "vendorMetadata": {}
+                        },
+                        {
+                            "source": "cna@vuldb.com",
+                            "type": "Secondary",
+                            "version": "2.0",
+                            "vector": "AV:N/AC:H/Au:S/C:N/I:N/A:P",
+                            "metrics": {
+                                "baseScore": 2.1,
+                                "exploitabilityScore": 4,
+                                "impactScore": 2.9
+                            },
+                            "vendorMetadata": {}
+                        }
+                    ],
+                    "epss": [
+                        {
+                            "cve": "CVE-2025-5889",
+                            "epss": 0.00052,
+                            "percentile": 0.16191,
+                            "date": "2025-06-28"
+                        }
+                    ]
+                }
+            ],
+            "matchDetails": [
+                {
+                    "type": "exact-direct-match",
+                    "matcher": "javascript-matcher",
+                    "searchedBy": {
+                        "language": "javascript",
+                        "namespace": "github:language:javascript",
+                        "package": {
+                            "name": "brace-expansion",
+                            "version": "1.1.11"
+                        }
+                    },
+                    "found": {
+                        "versionConstraint": ">=1.0.0,<=1.1.11 (unknown)",
+                        "vulnerabilityID": "GHSA-v6h2-p8h4-qcjw"
+                    },
+                    "fix": {
+                        "suggestedVersion": "1.1.12"
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "189a607531ac24f6",
+                "name": "brace-expansion",
+                "version": "1.1.11",
+                "type": "npm",
+                "locations": [
+                    {
+                        "path": "/app/node_modules/brace-expansion/package.json",
+                        "layerID": "sha256:8516a6e5d01966a035ed4c72253396252bc85a0e8a3b00f357d626e4ccaf9f02",
+                        "accessPath": "/app/node_modules/brace-expansion/package.json",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "javascript",
+                "licenses": [
+                    "MIT"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:brace-expansion:brace-expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace-expansion:brace_expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace_expansion:brace-expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace_expansion:brace_expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:juliangruber:brace-expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:juliangruber:brace_expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace:brace-expansion:1.1.11:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace:brace_expansion:1.1.11:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:npm/brace-expansion@1.1.11",
+                "upstreams": []
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "GHSA-v6h2-p8h4-qcjw",
+                "dataSource": "https://github.com/advisories/GHSA-v6h2-p8h4-qcjw",
+                "namespace": "github:language:javascript",
+                "severity": "Low",
+                "urls": [],
+                "description": "brace-expansion Regular Expression Denial of Service vulnerability",
+                "cvss": [
+                    {
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                        "metrics": {
+                            "baseScore": 3.1,
+                            "exploitabilityScore": 1.7,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-5889",
+                        "epss": 0.00052,
+                        "percentile": 0.16191,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [
+                        "2.0.2"
+                    ],
+                    "state": "fixed"
+                },
+                "advisories": [],
+                "risk": 0.01586
+            },
+            "relatedVulnerabilities": [
+                {
+                    "id": "CVE-2025-5889",
+                    "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-5889",
+                    "namespace": "nvd:cpe",
+                    "severity": "Low",
+                    "urls": [
+                        "https://gist.github.com/mmmsssttt404/37a40ce7d6e5ca604858fe30814d9466",
+                        "https://github.com/juliangruber/brace-expansion/pull/65/commits/a5b98a4f30d7813266b221435e1eaaf25a1b0ac5",
+                        "https://github.com/juliangruber/brace-expansion/releases/tag/v4.0.1",
+                        "https://vuldb.com/?ctiid.311660",
+                        "https://vuldb.com/?id.311660",
+                        "https://vuldb.com/?submit.585717"
+                    ],
+                    "description": "A vulnerability was found in juliangruber brace-expansion up to 1.1.11/2.0.1/3.0.0/4.0.0. It has been rated as problematic. Affected by this issue is the function expand of the file index.js. The manipulation leads to inefficient regular expression complexity. The attack may be launched remotely. The complexity of an attack is rather high. The exploitation is known to be difficult. The exploit has been disclosed to the public and may be used. Upgrading to version 1.1.12, 2.0.2, 3.0.1 and 4.0.1 is able to address this issue. The name of the patch is a5b98a4f30d7813266b221435e1eaaf25a1b0ac5. It is recommended to upgrade the affected component.",
+                    "cvss": [
+                        {
+                            "source": "cna@vuldb.com",
+                            "type": "Secondary",
+                            "version": "4.0",
+                            "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                            "metrics": {
+                                "baseScore": 1.3
+                            },
+                            "vendorMetadata": {}
+                        },
+                        {
+                            "source": "cna@vuldb.com",
+                            "type": "Secondary",
+                            "version": "3.1",
+                            "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                            "metrics": {
+                                "baseScore": 3.1,
+                                "exploitabilityScore": 1.7,
+                                "impactScore": 1.5
+                            },
+                            "vendorMetadata": {}
+                        },
+                        {
+                            "source": "cna@vuldb.com",
+                            "type": "Secondary",
+                            "version": "2.0",
+                            "vector": "AV:N/AC:H/Au:S/C:N/I:N/A:P",
+                            "metrics": {
+                                "baseScore": 2.1,
+                                "exploitabilityScore": 4,
+                                "impactScore": 2.9
+                            },
+                            "vendorMetadata": {}
+                        }
+                    ],
+                    "epss": [
+                        {
+                            "cve": "CVE-2025-5889",
+                            "epss": 0.00052,
+                            "percentile": 0.16191,
+                            "date": "2025-06-28"
+                        }
+                    ]
+                }
+            ],
+            "matchDetails": [
+                {
+                    "type": "exact-direct-match",
+                    "matcher": "javascript-matcher",
+                    "searchedBy": {
+                        "language": "javascript",
+                        "namespace": "github:language:javascript",
+                        "package": {
+                            "name": "brace-expansion",
+                            "version": "2.0.1"
+                        }
+                    },
+                    "found": {
+                        "versionConstraint": ">=2.0.0,<=2.0.1 (unknown)",
+                        "vulnerabilityID": "GHSA-v6h2-p8h4-qcjw"
+                    },
+                    "fix": {
+                        "suggestedVersion": "2.0.2"
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "1e92fd1a5f38a5cd",
+                "name": "brace-expansion",
+                "version": "2.0.1",
+                "type": "npm",
+                "locations": [
+                    {
+                        "path": "/usr/local/lib/node_modules/npm/node_modules/brace-expansion/package.json",
+                        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+                        "accessPath": "/usr/local/lib/node_modules/npm/node_modules/brace-expansion/package.json",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "javascript",
+                "licenses": [
+                    "MIT"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:brace-expansion:brace-expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace-expansion:brace_expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace_expansion:brace-expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace_expansion:brace_expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:juliangruber:brace-expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:juliangruber:brace_expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace:brace-expansion:2.0.1:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:brace:brace_expansion:2.0.1:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:npm/brace-expansion@2.0.1",
+                "upstreams": []
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2024-58251",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2024-58251",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://bugs.busybox.net/show_bug.cgi?id=15922",
+                    "https://www.busybox.net",
+                    "https://www.busybox.net/downloads/",
+                    "http://www.openwall.com/lists/oss-security/2025/04/23/6"
+                ],
+                "description": "In netstat in BusyBox through 1.37.0, local users can launch of network application with an argv[0] containing an ANSI terminal escape sequence, leading to a denial of service (terminal locked up) when netstat is used by a victim.",
+                "cvss": [
+                    {
+                        "source": "cve@mitre.org",
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                        "metrics": {
+                            "baseScore": 2.5,
+                            "exploitabilityScore": 1.1,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2024-58251",
+                        "epss": 0.0002,
+                        "percentile": 0.0353,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [],
+                    "state": ""
+                },
+                "advisories": [],
+                "risk": 0.0055000000000000005
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "apk-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:1.37.0:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "busybox",
+                            "version": "1.37.0-r12"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2024-58251",
+                        "versionConstraint": "<= 1.37.0 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:*:*:*:*:*:*:*:*"
+                        ]
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "4463aa8e8f50d17a",
+                "name": "busybox",
+                "version": "1.37.0-r12",
+                "type": "apk",
+                "locations": [
+                    {
+                        "path": "/lib/apk/db/installed",
+                        "layerID": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                        "accessPath": "/lib/apk/db/installed",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [
+                    "GPL-2.0-only"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:busybox:busybox:1.37.0-r12:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:apk/alpine/busybox@1.37.0-r12?arch=x86_64&distro=alpine-3.21.3",
+                "upstreams": [
+                    {
+                        "name": "busybox"
+                    }
+                ],
+                "metadataType": "ApkMetadata",
+                "metadata": {
+                    "files": [
+                        {
+                            "path": "/bin"
+                        },
+                        {
+                            "path": "/bin/busybox"
+                        },
+                        {
+                            "path": "/etc"
+                        },
+                        {
+                            "path": "/etc/securetty"
+                        },
+                        {
+                            "path": "/etc/busybox-paths.d"
+                        },
+                        {
+                            "path": "/etc/busybox-paths.d/busybox"
+                        },
+                        {
+                            "path": "/etc/logrotate.d"
+                        },
+                        {
+                            "path": "/etc/logrotate.d/acpid"
+                        },
+                        {
+                            "path": "/etc/network"
+                        },
+                        {
+                            "path": "/etc/network/if-down.d"
+                        },
+                        {
+                            "path": "/etc/network/if-post-down.d"
+                        },
+                        {
+                            "path": "/etc/network/if-post-up.d"
+                        },
+                        {
+                            "path": "/etc/network/if-pre-down.d"
+                        },
+                        {
+                            "path": "/etc/network/if-pre-up.d"
+                        },
+                        {
+                            "path": "/etc/network/if-up.d"
+                        },
+                        {
+                            "path": "/etc/network/if-up.d/dad"
+                        },
+                        {
+                            "path": "/etc/udhcpc"
+                        },
+                        {
+                            "path": "/etc/udhcpc/udhcpc.conf"
+                        },
+                        {
+                            "path": "/sbin"
+                        },
+                        {
+                            "path": "/usr"
+                        },
+                        {
+                            "path": "/usr/sbin"
+                        },
+                        {
+                            "path": "/usr/share"
+                        },
+                        {
+                            "path": "/usr/share/udhcpc"
+                        },
+                        {
+                            "path": "/usr/share/udhcpc/default.script"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2024-58251",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2024-58251",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://bugs.busybox.net/show_bug.cgi?id=15922",
+                    "https://www.busybox.net",
+                    "https://www.busybox.net/downloads/",
+                    "http://www.openwall.com/lists/oss-security/2025/04/23/6"
+                ],
+                "description": "In netstat in BusyBox through 1.37.0, local users can launch of network application with an argv[0] containing an ANSI terminal escape sequence, leading to a denial of service (terminal locked up) when netstat is used by a victim.",
+                "cvss": [
+                    {
+                        "source": "cve@mitre.org",
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                        "metrics": {
+                            "baseScore": 2.5,
+                            "exploitabilityScore": 1.1,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2024-58251",
+                        "epss": 0.0002,
+                        "percentile": 0.0353,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [],
+                    "state": ""
+                },
+                "advisories": [],
+                "risk": 0.0055000000000000005
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "apk-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:1.37.0:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "busybox",
+                            "version": "1.37.0-r12"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2024-58251",
+                        "versionConstraint": "<= 1.37.0 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:*:*:*:*:*:*:*:*"
+                        ]
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "95681d71fd44fc20",
+                "name": "busybox-binsh",
+                "version": "1.37.0-r12",
+                "type": "apk",
+                "locations": [
+                    {
+                        "path": "/lib/apk/db/installed",
+                        "layerID": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                        "accessPath": "/lib/apk/db/installed",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [
+                    "GPL-2.0-only"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:busybox-binsh:busybox-binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox-binsh:busybox_binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox_binsh:busybox-binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox_binsh:busybox_binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox:busybox-binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox:busybox_binsh:1.37.0-r12:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:apk/alpine/busybox-binsh@1.37.0-r12?arch=x86_64&distro=alpine-3.21.3&upstream=busybox",
+                "upstreams": [
+                    {
+                        "name": "busybox"
+                    }
+                ],
+                "metadataType": "ApkMetadata",
+                "metadata": {
+                    "files": [
+                        {
+                            "path": "/bin"
+                        },
+                        {
+                            "path": "/bin/sh"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2024-58251",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2024-58251",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://bugs.busybox.net/show_bug.cgi?id=15922",
+                    "https://www.busybox.net",
+                    "https://www.busybox.net/downloads/",
+                    "http://www.openwall.com/lists/oss-security/2025/04/23/6"
+                ],
+                "description": "In netstat in BusyBox through 1.37.0, local users can launch of network application with an argv[0] containing an ANSI terminal escape sequence, leading to a denial of service (terminal locked up) when netstat is used by a victim.",
+                "cvss": [
+                    {
+                        "source": "cve@mitre.org",
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                        "metrics": {
+                            "baseScore": 2.5,
+                            "exploitabilityScore": 1.1,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2024-58251",
+                        "epss": 0.0002,
+                        "percentile": 0.0353,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [],
+                    "state": ""
+                },
+                "advisories": [],
+                "risk": 0.0055000000000000005
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "apk-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:1.37.0:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "busybox",
+                            "version": "1.37.0-r12"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2024-58251",
+                        "versionConstraint": "<= 1.37.0 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:*:*:*:*:*:*:*:*"
+                        ]
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "1baef02d2d78b256",
+                "name": "ssl_client",
+                "version": "1.37.0-r12",
+                "type": "apk",
+                "locations": [
+                    {
+                        "path": "/lib/apk/db/installed",
+                        "layerID": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                        "accessPath": "/lib/apk/db/installed",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [
+                    "GPL-2.0-only"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:ssl-client:ssl-client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl-client:ssl_client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl_client:ssl-client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl_client:ssl_client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl:ssl-client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl:ssl_client:1.37.0-r12:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:apk/alpine/ssl_client@1.37.0-r12?arch=x86_64&distro=alpine-3.21.3&upstream=busybox",
+                "upstreams": [
+                    {
+                        "name": "busybox"
+                    }
+                ],
+                "metadataType": "ApkMetadata",
+                "metadata": {
+                    "files": [
+                        {
+                            "path": "/usr"
+                        },
+                        {
+                            "path": "/usr/bin"
+                        },
+                        {
+                            "path": "/usr/bin/ssl_client"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2025-46394",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-46394",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://bugs.busybox.net/show_bug.cgi?id=16018",
+                    "https://www.busybox.net",
+                    "https://www.busybox.net/downloads/",
+                    "http://www.openwall.com/lists/oss-security/2025/04/23/5",
+                    "http://www.openwall.com/lists/oss-security/2025/04/24/3"
+                ],
+                "description": "In tar in BusyBox through 1.37.0, a TAR archive can have filenames hidden from a listing through the use of terminal escape sequences.",
+                "cvss": [
+                    {
+                        "source": "cve@mitre.org",
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:N",
+                        "metrics": {
+                            "baseScore": 3.2,
+                            "exploitabilityScore": 1.5,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-46394",
+                        "epss": 0.00017,
+                        "percentile": 0.02643,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [],
+                    "state": ""
+                },
+                "advisories": [],
+                "risk": 0.00527
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "apk-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:1.37.0:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "busybox",
+                            "version": "1.37.0-r12"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2025-46394",
+                        "versionConstraint": "<= 1.37.0 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:*:*:*:*:*:*:*:*"
+                        ]
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "4463aa8e8f50d17a",
+                "name": "busybox",
+                "version": "1.37.0-r12",
+                "type": "apk",
+                "locations": [
+                    {
+                        "path": "/lib/apk/db/installed",
+                        "layerID": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                        "accessPath": "/lib/apk/db/installed",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [
+                    "GPL-2.0-only"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:busybox:busybox:1.37.0-r12:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:apk/alpine/busybox@1.37.0-r12?arch=x86_64&distro=alpine-3.21.3",
+                "upstreams": [
+                    {
+                        "name": "busybox"
+                    }
+                ],
+                "metadataType": "ApkMetadata",
+                "metadata": {
+                    "files": [
+                        {
+                            "path": "/bin"
+                        },
+                        {
+                            "path": "/bin/busybox"
+                        },
+                        {
+                            "path": "/etc"
+                        },
+                        {
+                            "path": "/etc/securetty"
+                        },
+                        {
+                            "path": "/etc/busybox-paths.d"
+                        },
+                        {
+                            "path": "/etc/busybox-paths.d/busybox"
+                        },
+                        {
+                            "path": "/etc/logrotate.d"
+                        },
+                        {
+                            "path": "/etc/logrotate.d/acpid"
+                        },
+                        {
+                            "path": "/etc/network"
+                        },
+                        {
+                            "path": "/etc/network/if-down.d"
+                        },
+                        {
+                            "path": "/etc/network/if-post-down.d"
+                        },
+                        {
+                            "path": "/etc/network/if-post-up.d"
+                        },
+                        {
+                            "path": "/etc/network/if-pre-down.d"
+                        },
+                        {
+                            "path": "/etc/network/if-pre-up.d"
+                        },
+                        {
+                            "path": "/etc/network/if-up.d"
+                        },
+                        {
+                            "path": "/etc/network/if-up.d/dad"
+                        },
+                        {
+                            "path": "/etc/udhcpc"
+                        },
+                        {
+                            "path": "/etc/udhcpc/udhcpc.conf"
+                        },
+                        {
+                            "path": "/sbin"
+                        },
+                        {
+                            "path": "/usr"
+                        },
+                        {
+                            "path": "/usr/sbin"
+                        },
+                        {
+                            "path": "/usr/share"
+                        },
+                        {
+                            "path": "/usr/share/udhcpc"
+                        },
+                        {
+                            "path": "/usr/share/udhcpc/default.script"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2025-46394",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-46394",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://bugs.busybox.net/show_bug.cgi?id=16018",
+                    "https://www.busybox.net",
+                    "https://www.busybox.net/downloads/",
+                    "http://www.openwall.com/lists/oss-security/2025/04/23/5",
+                    "http://www.openwall.com/lists/oss-security/2025/04/24/3"
+                ],
+                "description": "In tar in BusyBox through 1.37.0, a TAR archive can have filenames hidden from a listing through the use of terminal escape sequences.",
+                "cvss": [
+                    {
+                        "source": "cve@mitre.org",
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:N",
+                        "metrics": {
+                            "baseScore": 3.2,
+                            "exploitabilityScore": 1.5,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-46394",
+                        "epss": 0.00017,
+                        "percentile": 0.02643,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [],
+                    "state": ""
+                },
+                "advisories": [],
+                "risk": 0.00527
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "apk-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:1.37.0:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "busybox",
+                            "version": "1.37.0-r12"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2025-46394",
+                        "versionConstraint": "<= 1.37.0 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:*:*:*:*:*:*:*:*"
+                        ]
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "95681d71fd44fc20",
+                "name": "busybox-binsh",
+                "version": "1.37.0-r12",
+                "type": "apk",
+                "locations": [
+                    {
+                        "path": "/lib/apk/db/installed",
+                        "layerID": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                        "accessPath": "/lib/apk/db/installed",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [
+                    "GPL-2.0-only"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:busybox-binsh:busybox-binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox-binsh:busybox_binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox_binsh:busybox-binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox_binsh:busybox_binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox:busybox-binsh:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:busybox:busybox_binsh:1.37.0-r12:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:apk/alpine/busybox-binsh@1.37.0-r12?arch=x86_64&distro=alpine-3.21.3&upstream=busybox",
+                "upstreams": [
+                    {
+                        "name": "busybox"
+                    }
+                ],
+                "metadataType": "ApkMetadata",
+                "metadata": {
+                    "files": [
+                        {
+                            "path": "/bin"
+                        },
+                        {
+                            "path": "/bin/sh"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "vulnerability": {
+                "id": "CVE-2025-46394",
+                "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-46394",
+                "namespace": "nvd:cpe",
+                "severity": "Low",
+                "urls": [
+                    "https://bugs.busybox.net/show_bug.cgi?id=16018",
+                    "https://www.busybox.net",
+                    "https://www.busybox.net/downloads/",
+                    "http://www.openwall.com/lists/oss-security/2025/04/23/5",
+                    "http://www.openwall.com/lists/oss-security/2025/04/24/3"
+                ],
+                "description": "In tar in BusyBox through 1.37.0, a TAR archive can have filenames hidden from a listing through the use of terminal escape sequences.",
+                "cvss": [
+                    {
+                        "source": "cve@mitre.org",
+                        "type": "Secondary",
+                        "version": "3.1",
+                        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:N",
+                        "metrics": {
+                            "baseScore": 3.2,
+                            "exploitabilityScore": 1.5,
+                            "impactScore": 1.5
+                        },
+                        "vendorMetadata": {}
+                    }
+                ],
+                "epss": [
+                    {
+                        "cve": "CVE-2025-46394",
+                        "epss": 0.00017,
+                        "percentile": 0.02643,
+                        "date": "2025-06-28"
+                    }
+                ],
+                "fix": {
+                    "versions": [],
+                    "state": ""
+                },
+                "advisories": [],
+                "risk": 0.00527
+            },
+            "relatedVulnerabilities": [],
+            "matchDetails": [
+                {
+                    "type": "cpe-match",
+                    "matcher": "apk-matcher",
+                    "searchedBy": {
+                        "namespace": "nvd:cpe",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:1.37.0:*:*:*:*:*:*:*"
+                        ],
+                        "package": {
+                            "name": "busybox",
+                            "version": "1.37.0-r12"
+                        }
+                    },
+                    "found": {
+                        "vulnerabilityID": "CVE-2025-46394",
+                        "versionConstraint": "<= 1.37.0 (unknown)",
+                        "cpes": [
+                            "cpe:2.3:a:busybox:busybox:*:*:*:*:*:*:*:*"
+                        ]
+                    }
+                }
+            ],
+            "artifact": {
+                "id": "1baef02d2d78b256",
+                "name": "ssl_client",
+                "version": "1.37.0-r12",
+                "type": "apk",
+                "locations": [
+                    {
+                        "path": "/lib/apk/db/installed",
+                        "layerID": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                        "accessPath": "/lib/apk/db/installed",
+                        "annotations": {
+                            "evidence": "primary"
+                        }
+                    }
+                ],
+                "language": "",
+                "licenses": [
+                    "GPL-2.0-only"
+                ],
+                "cpes": [
+                    "cpe:2.3:a:ssl-client:ssl-client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl-client:ssl_client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl_client:ssl-client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl_client:ssl_client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl:ssl-client:1.37.0-r12:*:*:*:*:*:*:*",
+                    "cpe:2.3:a:ssl:ssl_client:1.37.0-r12:*:*:*:*:*:*:*"
+                ],
+                "purl": "pkg:apk/alpine/ssl_client@1.37.0-r12?arch=x86_64&distro=alpine-3.21.3&upstream=busybox",
+                "upstreams": [
+                    {
+                        "name": "busybox"
+                    }
+                ],
+                "metadataType": "ApkMetadata",
+                "metadata": {
+                    "files": [
+                        {
+                            "path": "/usr"
+                        },
+                        {
+                            "path": "/usr/bin"
+                        },
+                        {
+                            "path": "/usr/bin/ssl_client"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "source": {
+        "type": "image",
+        "target": {
+            "userInput": "eventease-backend:latest",
+            "imageID": "sha256:67918be809d6088a20766a92846e2ce97ef448f237a3954ae25aa04381a0c8c7",
+            "manifestDigest": "sha256:1f0de787bce72acc14d463d0617f829d31f1a691ec9d0029fcb7091b95bd8515",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "tags": [
+                "eventease-backend:latest"
+            ],
+            "imageSize": 155233486,
+            "layers": [
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:08000c18d16dadf9553d747a58cf44023423a9ab010aab96cf263d2216b8b350",
+                    "size": 7829416
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+                    "size": 113786468
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:f3b40b0cdb1caad1db11b8589c814f85b3e69f3ed33f64a686e465e74a47c9f0",
+                    "size": 5366729
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:82140d9a70a706b719632fec8e4d083419fc62159f94afec80dcabc52e0ed0d2",
+                    "size": 388
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:fbe84c464085505b19e71fa7e7ad255f6fc8e7928980ce3b11f2fb24b6e06585",
+                    "size": 0
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:845ecb393029983e288093a30d22da5d9ffe776567b0c8416ee99ba5061639fb",
+                    "size": 62439
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:6f42d71fd30b781c4eff1317b03f11c740953f21c77ab7b39d1bb0d08f1aed63",
+                    "size": 15571630
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:8516a6e5d01966a035ed4c72253396252bc85a0e8a3b00f357d626e4ccaf9f02",
+                    "size": 12613204
+                },
+                {
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "digest": "sha256:7c80f94483865189fc9ad348c056cce568a0ce30423eda2b86fec2439017eeb7",
+                    "size": 3212
+                }
+            ],
+            "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjo3ODQ5LCJkaWdlc3QiOiJzaGEyNTY6Njc5MThiZTgwOWQ2MDg4YTIwNzY2YTkyODQ2ZTJjZTk3ZWY0NDhmMjM3YTM5NTRhZTI1YWEwNDM4MWEwYzhjNyJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo4MTIwODMyLCJkaWdlc3QiOiJzaGEyNTY6MDgwMDBjMThkMTZkYWRmOTU1M2Q3NDdhNThjZjQ0MDIzNDIzYTlhYjAxMGFhYjk2Y2YyNjNkMjIxNmI4YjM1MCJ9LHsibWVkaWFUeXBlIjoiYXBwbGljYXRpb24vdm5kLmRvY2tlci5pbWFnZS5yb290ZnMuZGlmZi50YXIuZ3ppcCIsInNpemUiOjExNTkxNTc3NiwiZGlnZXN0Ijoic2hhMjU2OjBiMWYyNjA1N2JkMDQ5MWE1MGY1NmZkN2YyOTgzYmQzYWQ0Nzg1MTFmMTJmZmYyYjM2MWE5N2M1MGNiNTgyOGIifSx7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1Mzg5MzEyLCJkaWdlc3QiOiJzaGEyNTY6ZjNiNDBiMGNkYjFjYWFkMWRiMTFiODU4OWM4MTRmODViM2U2OWYzZWQzM2Y2NGE2ODZlNDY1ZTc0YTQ3YzlmMCJ9LHsibWVkaWFUeXBlIjoiYXBwbGljYXRpb24vdm5kLmRvY2tlci5pbWFnZS5yb290ZnMuZGlmZi50YXIuZ3ppcCIsInNpemUiOjM1ODQsImRpZ2VzdCI6InNoYTI1Njo4MjE0MGQ5YTcwYTcwNmI3MTk2MzJmZWM4ZTRkMDgzNDE5ZmM2MjE1OWY5NGFmZWM4MGRjYWJjNTJlMGVkMGQyIn0seyJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmltYWdlLnJvb3Rmcy5kaWZmLnRhci5nemlwIiwic2l6ZSI6MTUzNiwiZGlnZXN0Ijoic2hhMjU2OmZiZTg0YzQ2NDA4NTUwNWIxOWU3MWZhN2U3YWQyNTVmNmZjOGU3OTI4OTgwY2UzYjExZjJmYjI0YjZlMDY1ODUifSx7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo2NTUzNiwiZGlnZXN0Ijoic2hhMjU2Ojg0NWVjYjM5MzAyOTk4M2UyODgwOTNhMzBkMjJkYTVkOWZmZTc3NjU2N2IwYzg0MTZlZTk5YmE1MDYxNjM5ZmIifSx7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxODgyNjI0MCwiZGlnZXN0Ijoic2hhMjU2OjZmNDJkNzFmZDMwYjc4MWM0ZWZmMTMxN2IwM2YxMWM3NDA5NTNmMjFjNzdhYjdiMzlkMWJiMGQwOGYxYWVkNjMifSx7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxNTU0MzgwOCwiZGlnZXN0Ijoic2hhMjU2Ojg1MTZhNmU1ZDAxOTY2YTAzNWVkNGM3MjI1MzM5NjI1MmJjODVhMGU4YTNiMDBmMzU3ZDYyNmU0Y2NhZjlmMDIifSx7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDc1MiwiZGlnZXN0Ijoic2hhMjU2OjdjODBmOTQ0ODM4NjUxODlmYzlhZDM0OGMwNTZjY2U1NjhhMGNlMzA0MjNlZGEyYjg2ZmVjMjQzOTAxN2VlYjcifV19",
+            "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImNvbmZpZyI6eyJVc2VyIjoiYXBwdXNlciIsIkV4cG9zZWRQb3J0cyI6eyI1MDAwL3RjcCI6e319LCJFbnYiOlsiUEFUSD0vdXNyL2xvY2FsL3NiaW46L3Vzci9sb2NhbC9iaW46L3Vzci9zYmluOi91c3IvYmluOi9zYmluOi9iaW4iLCJOT0RFX1ZFUlNJT049MTguMjAuOCIsIllBUk5fVkVSU0lPTj0xLjIyLjIyIl0sIkVudHJ5cG9pbnQiOlsiZG9ja2VyLWVudHJ5cG9pbnQuc2giXSwiQ21kIjpbIm5vZGUiLCJzZXJ2ZXIuanMiXSwiV29ya2luZ0RpciI6Ii9hcHAiLCJMYWJlbHMiOnsiY29tLmRvY2tlci5jb21wb3NlLnByb2plY3QiOiJldmVudGVhc2UiLCJjb20uZG9ja2VyLmNvbXBvc2Uuc2VydmljZSI6ImJhY2tlbmQiLCJjb20uZG9ja2VyLmNvbXBvc2UudmVyc2lvbiI6IjIuMzYuMiJ9LCJBcmdzRXNjYXBlZCI6dHJ1ZX0sImNyZWF0ZWQiOiIyMDI1LTA2LTI0VDExOjMzOjIxLjY3Mjg5NTE0NVoiLCJoaXN0b3J5IjpbeyJjcmVhdGVkIjoiMjAyNS0wMi0xNFQwMzoyODozNloiLCJjcmVhdGVkX2J5IjoiQUREIGFscGluZS1taW5pcm9vdGZzLTMuMjEuMy14ODZfNjQudGFyLmd6IC8gIyBidWlsZGtpdCIsImNvbW1lbnQiOiJidWlsZGtpdC5kb2NrZXJmaWxlLnYwIn0seyJjcmVhdGVkIjoiMjAyNS0wMi0xNFQwMzoyODozNloiLCJjcmVhdGVkX2J5IjoiQ01EIFtcIi9iaW4vc2hcIl0iLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCIsImVtcHR5X2xheWVyIjp0cnVlfSx7ImNyZWF0ZWQiOiIyMDI1LTAzLTI3VDE0OjIzOjA4WiIsImNyZWF0ZWRfYnkiOiJFTlYgTk9ERV9WRVJTSU9OPTE4LjIwLjgiLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCIsImVtcHR5X2xheWVyIjp0cnVlfSx7ImNyZWF0ZWQiOiIyMDI1LTAzLTI3VDE0OjIzOjA4WiIsImNyZWF0ZWRfYnkiOiJSVU4gL2Jpbi9zaCAtYyBhZGRncm91cCAtZyAxMDAwIG5vZGUgICAgIFx1MDAyNlx1MDAyNiBhZGR1c2VyIC11IDEwMDAgLUcgbm9kZSAtcyAvYmluL3NoIC1EIG5vZGUgICAgIFx1MDAyNlx1MDAyNiBhcGsgYWRkIC0tbm8tY2FjaGUgICAgICAgICBsaWJzdGRjKysgICAgIFx1MDAyNlx1MDAyNiBhcGsgYWRkIC0tbm8tY2FjaGUgLS12aXJ0dWFsIC5idWlsZC1kZXBzICAgICAgICAgY3VybCAgICAgXHUwMDI2XHUwMDI2IEFSQ0g9IE9QRU5TU0xfQVJDSD0nbGludXgqJyBcdTAwMjZcdTAwMjYgYWxwaW5lQXJjaD1cIiQoYXBrIC0tcHJpbnQtYXJjaClcIiAgICAgICBcdTAwMjZcdTAwMjYgY2FzZSBcIiR7YWxwaW5lQXJjaCMjKi19XCIgaW4gICAgICAgICB4ODZfNjQpIEFSQ0g9J3g2NCcgQ0hFQ0tTVU09XCIyYzc1ZDVkNTYyZDNmZmMwNDljYTFiYmVhNjViNjhhZTZiZDBlYzUwZWQwNGIxZjYwNmUwNjVlYWYzNWU4NTk5XCIgT1BFTlNTTF9BUkNIPWxpbnV4LXg4Nl82NDs7ICAgICAgICAgeDg2KSBPUEVOU1NMX0FSQ0g9bGludXgtZWxmOzsgICAgICAgICBhYXJjaDY0KSBPUEVOU1NMX0FSQ0g9bGludXgtYWFyY2g2NDs7ICAgICAgICAgYXJtKikgT1BFTlNTTF9BUkNIPWxpbnV4LWFybXY0OzsgICAgICAgICBwcGM2NGxlKSBPUEVOU1NMX0FSQ0g9bGludXgtcHBjNjRsZTs7ICAgICAgICAgczM5MHgpIE9QRU5TU0xfQVJDSD1saW51eC1zMzkweDs7ICAgICAgICAgKikgOzsgICAgICAgZXNhYyAgIFx1MDAyNlx1MDAyNiBpZiBbIC1uIFwiJHtDSEVDS1NVTX1cIiBdOyB0aGVuICAgICBzZXQgLWV1OyAgICAgY3VybCAtZnNTTE8gLS1jb21wcmVzc2VkIFwiaHR0cHM6Ly91bm9mZmljaWFsLWJ1aWxkcy5ub2RlanMub3JnL2Rvd25sb2FkL3JlbGVhc2UvdiROT0RFX1ZFUlNJT04vbm9kZS12JE5PREVfVkVSU0lPTi1saW51eC0kQVJDSC1tdXNsLnRhci54elwiOyAgICAgZWNobyBcIiRDSEVDS1NVTSAgbm9kZS12JE5PREVfVkVSU0lPTi1saW51eC0kQVJDSC1tdXNsLnRhci54elwiIHwgc2hhMjU2c3VtIC1jIC0gICAgICAgXHUwMDI2XHUwMDI2IHRhciAteEpmIFwibm9kZS12JE5PREVfVkVSU0lPTi1saW51eC0kQVJDSC1tdXNsLnRhci54elwiIC1DIC91c3IvbG9jYWwgLS1zdHJpcC1jb21wb25lbnRzPTEgLS1uby1zYW1lLW93bmVyICAgICAgIFx1MDAyNlx1MDAyNiBsbiAtcyAvdXNyL2xvY2FsL2Jpbi9ub2RlIC91c3IvbG9jYWwvYmluL25vZGVqczsgICBlbHNlICAgICBlY2hvIFwiQnVpbGRpbmcgZnJvbSBzb3VyY2VcIiAgICAgXHUwMDI2XHUwMDI2IGFwayBhZGQgLS1uby1jYWNoZSAtLXZpcnR1YWwgLmJ1aWxkLWRlcHMtZnVsbCAgICAgICAgIGJpbnV0aWxzLWdvbGQgICAgICAgICBnKysgICAgICAgICBnY2MgICAgICAgICBnbnVwZyAgICAgICAgIGxpYmdjYyAgICAgICAgIGxpbnV4LWhlYWRlcnMgICAgICAgICBtYWtlICAgICAgICAgcHl0aG9uMyAgICAgICAgIHB5LXNldHVwdG9vbHMgICAgIFx1MDAyNlx1MDAyNiBleHBvcnQgR05VUEdIT01FPVwiJChta3RlbXAgLWQpXCIgICAgIFx1MDAyNlx1MDAyNiBmb3Iga2V5IGluICAgICAgIEMwRDYyNDg0MzlGMUQ1NjA0QUFGRkI0MDIxRDkwMEZGREIyMzM3NTYgICAgICAgREQ3OTJGNTk3M0M2REU1MkM0MzJDQkRBQzc3QUJGQTAwRERCRjJCNyAgICAgICBDQzY4RjVBMzEwNkZGNDQ4MzIyRTQ4RUQyN0Y1RTM4RDVCMEEyMTVGICAgICAgIDhGQ0NBMTNGRUYxRDBDMkU5MTAwOEUwOTc3MEY3QTlBNUFFMTU2MDAgICAgICAgODkwQzA4REI4NTc5MTYyRkVFMERGOURCOEJFQUI0REZDRjU1NUVGNCAgICAgICBDODJGQTNBRTFDQkVEQzZCRTQ2QjkzNjBDNDNDRUM0NUMxN0FCOTNDICAgICAgIDEwOEY1MkI0OERCNTdCQjBDQzQzOUIyOTk3QjAxNDE5QkQ5MkY4MEEgICAgICAgQTM2M0E0OTkyOTFDQkJDOTQwREQ2MkU0MUYxMDAyN0FGMDAyRjhCMCAgICAgOyBkbyAgICAgICBncGcgLS1iYXRjaCAtLWtleXNlcnZlciBoa3BzOi8va2V5cy5vcGVucGdwLm9yZyAtLXJlY3Yta2V5cyBcIiRrZXlcIiB8fCAgICAgICBncGcgLS1iYXRjaCAtLWtleXNlcnZlciBrZXlzZXJ2ZXIudWJ1bnR1LmNvbSAtLXJlY3Yta2V5cyBcIiRrZXlcIiA7ICAgICBkb25lICAgICBcdTAwMjZcdTAwMjYgY3VybCAtZnNTTE8gLS1jb21wcmVzc2VkIFwiaHR0cHM6Ly9ub2RlanMub3JnL2Rpc3QvdiROT0RFX1ZFUlNJT04vbm9kZS12JE5PREVfVkVSU0lPTi50YXIueHpcIiAgICAgXHUwMDI2XHUwMDI2IGN1cmwgLWZzU0xPIC0tY29tcHJlc3NlZCBcImh0dHBzOi8vbm9kZWpzLm9yZy9kaXN0L3YkTk9ERV9WRVJTSU9OL1NIQVNVTVMyNTYudHh0LmFzY1wiICAgICBcdTAwMjZcdTAwMjYgZ3BnIC0tYmF0Y2ggLS1kZWNyeXB0IC0tb3V0cHV0IFNIQVNVTVMyNTYudHh0IFNIQVNVTVMyNTYudHh0LmFzYyAgICAgXHUwMDI2XHUwMDI2IGdwZ2NvbmYgLS1raWxsIGFsbCAgICAgXHUwMDI2XHUwMDI2IHJtIC1yZiBcIiRHTlVQR0hPTUVcIiAgICAgXHUwMDI2XHUwMDI2IGdyZXAgXCIgbm9kZS12JE5PREVfVkVSU0lPTi50YXIueHpcXCRcIiBTSEFTVU1TMjU2LnR4dCB8IHNoYTI1NnN1bSAtYyAtICAgICBcdTAwMjZcdTAwMjYgdGFyIC14ZiBcIm5vZGUtdiROT0RFX1ZFUlNJT04udGFyLnh6XCIgICAgIFx1MDAyNlx1MDAyNiBjZCBcIm5vZGUtdiROT0RFX1ZFUlNJT05cIiAgICAgXHUwMDI2XHUwMDI2IC4vY29uZmlndXJlICAgICBcdTAwMjZcdTAwMjYgbWFrZSAtaiQoZ2V0Y29uZiBfTlBST0NFU1NPUlNfT05MTikgVj0gICAgIFx1MDAyNlx1MDAyNiBtYWtlIGluc3RhbGwgICAgIFx1MDAyNlx1MDAyNiBhcGsgZGVsIC5idWlsZC1kZXBzLWZ1bGwgICAgIFx1MDAyNlx1MDAyNiBjZCAuLiAgICAgXHUwMDI2XHUwMDI2IHJtIC1SZiBcIm5vZGUtdiROT0RFX1ZFUlNJT05cIiAgICAgXHUwMDI2XHUwMDI2IHJtIFwibm9kZS12JE5PREVfVkVSU0lPTi50YXIueHpcIiBTSEFTVU1TMjU2LnR4dC5hc2MgU0hBU1VNUzI1Ni50eHQ7ICAgZmkgICBcdTAwMjZcdTAwMjYgcm0gLWYgXCJub2RlLXYkTk9ERV9WRVJTSU9OLWxpbnV4LSRBUkNILW11c2wudGFyLnh6XCIgICBcdTAwMjZcdTAwMjYgZmluZCAvdXNyL2xvY2FsL2luY2x1ZGUvbm9kZS9vcGVuc3NsL2FyY2hzIC1taW5kZXB0aCAxIC1tYXhkZXB0aCAxICEgLW5hbWUgXCIkT1BFTlNTTF9BUkNIXCIgLWV4ZWMgcm0gLXJmIHt9IFxcOyAgIFx1MDAyNlx1MDAyNiBhcGsgZGVsIC5idWlsZC1kZXBzICAgXHUwMDI2XHUwMDI2IG5vZGUgLS12ZXJzaW9uICAgXHUwMDI2XHUwMDI2IG5wbSAtLXZlcnNpb24gIyBidWlsZGtpdCIsImNvbW1lbnQiOiJidWlsZGtpdC5kb2NrZXJmaWxlLnYwIn0seyJjcmVhdGVkIjoiMjAyNS0wMy0yN1QxNDoyMzowOFoiLCJjcmVhdGVkX2J5IjoiRU5WIFlBUk5fVkVSU0lPTj0xLjIyLjIyIiwiY29tbWVudCI6ImJ1aWxka2l0LmRvY2tlcmZpbGUudjAiLCJlbXB0eV9sYXllciI6dHJ1ZX0seyJjcmVhdGVkIjoiMjAyNS0wMy0yN1QxNDoyMzowOFoiLCJjcmVhdGVkX2J5IjoiUlVOIC9iaW4vc2ggLWMgYXBrIGFkZCAtLW5vLWNhY2hlIC0tdmlydHVhbCAuYnVpbGQtZGVwcy15YXJuIGN1cmwgZ251cGcgdGFyICAgXHUwMDI2XHUwMDI2IGV4cG9ydCBHTlVQR0hPTUU9XCIkKG1rdGVtcCAtZClcIiAgIFx1MDAyNlx1MDAyNiBmb3Iga2V5IGluICAgICA2QTAxMEM1MTY2MDA2NTk5QUExN0YwODE0NkMyMTMwREZEMjQ5N0Y1ICAgOyBkbyAgICAgZ3BnIC0tYmF0Y2ggLS1rZXlzZXJ2ZXIgaGtwczovL2tleXMub3BlbnBncC5vcmcgLS1yZWN2LWtleXMgXCIka2V5XCIgfHwgICAgIGdwZyAtLWJhdGNoIC0ta2V5c2VydmVyIGtleXNlcnZlci51YnVudHUuY29tIC0tcmVjdi1rZXlzIFwiJGtleVwiIDsgICBkb25lICAgXHUwMDI2XHUwMDI2IGN1cmwgLWZzU0xPIC0tY29tcHJlc3NlZCBcImh0dHBzOi8veWFybnBrZy5jb20vZG93bmxvYWRzLyRZQVJOX1ZFUlNJT04veWFybi12JFlBUk5fVkVSU0lPTi50YXIuZ3pcIiAgIFx1MDAyNlx1MDAyNiBjdXJsIC1mc1NMTyAtLWNvbXByZXNzZWQgXCJodHRwczovL3lhcm5wa2cuY29tL2Rvd25sb2Fkcy8kWUFSTl9WRVJTSU9OL3lhcm4tdiRZQVJOX1ZFUlNJT04udGFyLmd6LmFzY1wiICAgXHUwMDI2XHUwMDI2IGdwZyAtLWJhdGNoIC0tdmVyaWZ5IHlhcm4tdiRZQVJOX1ZFUlNJT04udGFyLmd6LmFzYyB5YXJuLXYkWUFSTl9WRVJTSU9OLnRhci5neiAgIFx1MDAyNlx1MDAyNiBncGdjb25mIC0ta2lsbCBhbGwgICBcdTAwMjZcdTAwMjYgcm0gLXJmIFwiJEdOVVBHSE9NRVwiICAgXHUwMDI2XHUwMDI2IG1rZGlyIC1wIC9vcHQgICBcdTAwMjZcdTAwMjYgdGFyIC14emYgeWFybi12JFlBUk5fVkVSU0lPTi50YXIuZ3ogLUMgL29wdC8gICBcdTAwMjZcdTAwMjYgbG4gLXMgL29wdC95YXJuLXYkWUFSTl9WRVJTSU9OL2Jpbi95YXJuIC91c3IvbG9jYWwvYmluL3lhcm4gICBcdTAwMjZcdTAwMjYgbG4gLXMgL29wdC95YXJuLXYkWUFSTl9WRVJTSU9OL2Jpbi95YXJucGtnIC91c3IvbG9jYWwvYmluL3lhcm5wa2cgICBcdTAwMjZcdTAwMjYgcm0geWFybi12JFlBUk5fVkVSU0lPTi50YXIuZ3ouYXNjIHlhcm4tdiRZQVJOX1ZFUlNJT04udGFyLmd6ICAgXHUwMDI2XHUwMDI2IGFwayBkZWwgLmJ1aWxkLWRlcHMteWFybiAgIFx1MDAyNlx1MDAyNiB5YXJuIC0tdmVyc2lvbiAgIFx1MDAyNlx1MDAyNiBybSAtcmYgL3RtcC8qICMgYnVpbGRraXQiLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCJ9LHsiY3JlYXRlZCI6IjIwMjUtMDMtMjdUMTQ6MjM6MDhaIiwiY3JlYXRlZF9ieSI6IkNPUFkgZG9ja2VyLWVudHJ5cG9pbnQuc2ggL3Vzci9sb2NhbC9iaW4vICMgYnVpbGRraXQiLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCJ9LHsiY3JlYXRlZCI6IjIwMjUtMDMtMjdUMTQ6MjM6MDhaIiwiY3JlYXRlZF9ieSI6IkVOVFJZUE9JTlQgW1wiZG9ja2VyLWVudHJ5cG9pbnQuc2hcIl0iLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCIsImVtcHR5X2xheWVyIjp0cnVlfSx7ImNyZWF0ZWQiOiIyMDI1LTAzLTI3VDE0OjIzOjA4WiIsImNyZWF0ZWRfYnkiOiJDTUQgW1wibm9kZVwiXSIsImNvbW1lbnQiOiJidWlsZGtpdC5kb2NrZXJmaWxlLnYwIiwiZW1wdHlfbGF5ZXIiOnRydWV9LHsiY3JlYXRlZCI6IjIwMjUtMDYtMTFUMDY6MTk6MjUuMzU3MjUyODgxWiIsImNyZWF0ZWRfYnkiOiJXT1JLRElSIC9hcHAiLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCJ9LHsiY3JlYXRlZCI6IjIwMjUtMDYtMThUMDY6MzY6MjMuOTM4Nzg0Mzk1WiIsImNyZWF0ZWRfYnkiOiJDT1BZIHBhY2thZ2UqLmpzb24gLi8gIyBidWlsZGtpdCIsImNvbW1lbnQiOiJidWlsZGtpdC5kb2NrZXJmaWxlLnYwIn0seyJjcmVhdGVkIjoiMjAyNS0wNi0xOFQwNjozNjoyNy45MDQwNzY4NjhaIiwiY3JlYXRlZF9ieSI6IlJVTiAvYmluL3NoIC1jIG5wbSBpbnN0YWxsIC0tcHJvZHVjdGlvbiAjIGJ1aWxka2l0IiwiY29tbWVudCI6ImJ1aWxka2l0LmRvY2tlcmZpbGUudjAifSx7ImNyZWF0ZWQiOiIyMDI1LTA2LTI0VDExOjMzOjIxLjMyNTU5NjgzWiIsImNyZWF0ZWRfYnkiOiJDT1BZIC4gLiAjIGJ1aWxka2l0IiwiY29tbWVudCI6ImJ1aWxka2l0LmRvY2tlcmZpbGUudjAifSx7ImNyZWF0ZWQiOiIyMDI1LTA2LTI0VDExOjMzOjIxLjY3Mjg5NTE0NVoiLCJjcmVhdGVkX2J5IjoiUlVOIC9iaW4vc2ggLWMgYWRkZ3JvdXAgYXBwIFx1MDAyNlx1MDAyNiBhZGR1c2VyIC1TIC1HIGFwcCBhcHB1c2VyICMgYnVpbGRraXQiLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCJ9LHsiY3JlYXRlZCI6IjIwMjUtMDYtMjRUMTE6MzM6MjEuNjcyODk1MTQ1WiIsImNyZWF0ZWRfYnkiOiJVU0VSIGFwcHVzZXIiLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCIsImVtcHR5X2xheWVyIjp0cnVlfSx7ImNyZWF0ZWQiOiIyMDI1LTA2LTI0VDExOjMzOjIxLjY3Mjg5NTE0NVoiLCJjcmVhdGVkX2J5IjoiRVhQT1NFIG1hcFs1MDAwL3RjcDp7fV0iLCJjb21tZW50IjoiYnVpbGRraXQuZG9ja2VyZmlsZS52MCIsImVtcHR5X2xheWVyIjp0cnVlfSx7ImNyZWF0ZWQiOiIyMDI1LTA2LTI0VDExOjMzOjIxLjY3Mjg5NTE0NVoiLCJjcmVhdGVkX2J5IjoiQ01EIFtcIm5vZGVcIiBcInNlcnZlci5qc1wiXSIsImNvbW1lbnQiOiJidWlsZGtpdC5kb2NrZXJmaWxlLnYwIiwiZW1wdHlfbGF5ZXIiOnRydWV9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjA4MDAwYzE4ZDE2ZGFkZjk1NTNkNzQ3YTU4Y2Y0NDAyMzQyM2E5YWIwMTBhYWI5NmNmMjYzZDIyMTZiOGIzNTAiLCJzaGEyNTY6MGIxZjI2MDU3YmQwNDkxYTUwZjU2ZmQ3ZjI5ODNiZDNhZDQ3ODUxMWYxMmZmZjJiMzYxYTk3YzUwY2I1ODI4YiIsInNoYTI1NjpmM2I0MGIwY2RiMWNhYWQxZGIxMWI4NTg5YzgxNGY4NWIzZTY5ZjNlZDMzZjY0YTY4NmU0NjVlNzRhNDdjOWYwIiwic2hhMjU2OjgyMTQwZDlhNzBhNzA2YjcxOTYzMmZlYzhlNGQwODM0MTlmYzYyMTU5Zjk0YWZlYzgwZGNhYmM1MmUwZWQwZDIiLCJzaGEyNTY6ZmJlODRjNDY0MDg1NTA1YjE5ZTcxZmE3ZTdhZDI1NWY2ZmM4ZTc5Mjg5ODBjZTNiMTFmMmZiMjRiNmUwNjU4NSIsInNoYTI1Njo4NDVlY2IzOTMwMjk5ODNlMjg4MDkzYTMwZDIyZGE1ZDlmZmU3NzY1NjdiMGM4NDE2ZWU5OWJhNTA2MTYzOWZiIiwic2hhMjU2OjZmNDJkNzFmZDMwYjc4MWM0ZWZmMTMxN2IwM2YxMWM3NDA5NTNmMjFjNzdhYjdiMzlkMWJiMGQwOGYxYWVkNjMiLCJzaGEyNTY6ODUxNmE2ZTVkMDE5NjZhMDM1ZWQ0YzcyMjUzMzk2MjUyYmM4NWEwZThhM2IwMGYzNTdkNjI2ZTRjY2FmOWYwMiIsInNoYTI1Njo3YzgwZjk0NDgzODY1MTg5ZmM5YWQzNDhjMDU2Y2NlNTY4YTBjZTMwNDIzZWRhMmI4NmZlYzI0MzkwMTdlZWI3Il19fQ==",
+            "repoDigests": [],
+            "architecture": "amd64",
+            "os": "linux",
+            "labels": {
+                "com.docker.compose.project": "eventease",
+                "com.docker.compose.service": "backend",
+                "com.docker.compose.version": "2.36.2"
+            }
+        }
+    },
+    "distro": {
+        "name": "alpine",
+        "version": "3.21.3",
+        "idLike": []
+    },
+    "descriptor": {
+        "name": "grype",
+        "version": "0.92.2",
+        "configuration": {
+            "output": [
+                "json"
+            ],
+            "file": "",
+            "pretty": false,
+            "distro": "",
+            "add-cpes-if-none": false,
+            "output-template-file": "",
+            "check-for-app-update": true,
+            "only-fixed": false,
+            "only-notfixed": false,
+            "ignore-wontfix": "",
+            "platform": "",
+            "search": {
+                "scope": "squashed",
+                "unindexed-archives": false,
+                "indexed-archives": true
+            },
+            "ignore": [
+                {
+                    "vulnerability": "",
+                    "reason": "",
+                    "namespace": "",
+                    "fix-state": "",
+                    "package": {
+                        "name": "kernel-headers",
+                        "version": "",
+                        "language": "",
+                        "type": "rpm",
+                        "location": "",
+                        "upstream-name": "kernel"
+                    },
+                    "vex-status": "",
+                    "vex-justification": "",
+                    "match-type": "exact-indirect-match"
+                },
+                {
+                    "vulnerability": "",
+                    "reason": "",
+                    "namespace": "",
+                    "fix-state": "",
+                    "package": {
+                        "name": "linux(-.*)?-headers-.*",
+                        "version": "",
+                        "language": "",
+                        "type": "deb",
+                        "location": "",
+                        "upstream-name": "linux.*"
+                    },
+                    "vex-status": "",
+                    "vex-justification": "",
+                    "match-type": "exact-indirect-match"
+                },
+                {
+                    "vulnerability": "",
+                    "reason": "",
+                    "namespace": "",
+                    "fix-state": "",
+                    "package": {
+                        "name": "linux-libc-dev",
+                        "version": "",
+                        "language": "",
+                        "type": "deb",
+                        "location": "",
+                        "upstream-name": "linux"
+                    },
+                    "vex-status": "",
+                    "vex-justification": "",
+                    "match-type": "exact-indirect-match"
+                }
+            ],
+            "exclude": [],
+            "externalSources": {
+                "enable": false,
+                "maven": {
+                    "searchUpstreamBySha1": true,
+                    "baseUrl": "https://search.maven.org/solrsearch/select",
+                    "rateLimit": 300000000
+                }
+            },
+            "match": {
+                "java": {
+                    "using-cpes": false
+                },
+                "jvm": {
+                    "using-cpes": true
+                },
+                "dotnet": {
+                    "using-cpes": false
+                },
+                "golang": {
+                    "using-cpes": false,
+                    "always-use-cpe-for-stdlib": true,
+                    "allow-main-module-pseudo-version-comparison": false
+                },
+                "javascript": {
+                    "using-cpes": false
+                },
+                "python": {
+                    "using-cpes": false
+                },
+                "ruby": {
+                    "using-cpes": false
+                },
+                "rust": {
+                    "using-cpes": false
+                },
+                "stock": {
+                    "using-cpes": true
+                }
+            },
+            "fail-on-severity": "",
+            "registry": {
+                "insecure-skip-tls-verify": false,
+                "insecure-use-http": false,
+                "auth": null,
+                "ca-cert": ""
+            },
+            "show-suppressed": false,
+            "by-cve": false,
+            "SortBy": {
+                "sort-by": "risk"
+            },
+            "name": "",
+            "default-image-pull-source": "",
+            "vex-documents": [],
+            "vex-add": [],
+            "match-upstream-kernel-headers": false,
+            "db": {
+                "cache-dir": "/home/azureuser/.cache/grype/db",
+                "update-url": "https://grype.anchore.io/databases",
+                "ca-cert": "",
+                "auto-update": true,
+                "validate-by-hash-on-start": true,
+                "validate-age": true,
+                "max-allowed-built-age": 432000000000000,
+                "require-update-check": false,
+                "update-available-timeout": 30000000000,
+                "update-download-timeout": 300000000000,
+                "max-update-check-frequency": 7200000000000
+            },
+            "exp": {},
+            "dev": {
+                "db": {
+                    "debug": false
+                }
+            }
+        },
+        "db": {
+            "status": {
+                "schemaVersion": "v6.0.2",
+                "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.0.2_2025-06-29T01:31:17Z_1751170775.tar.zst?checksum=sha256%3A374fa82d4669761a6b0114456f358232b6b27837fab10ce2d6acb1a00ce4fae1",
+                "built": "2025-06-29T04:19:35Z",
+                "path": "/home/azureuser/.cache/grype/db/6/vulnerability.db",
+                "valid": true
+            },
+            "providers": {
+                "alpine": {
+                    "captured": "2025-06-29T01:32:21Z",
+                    "input": "xxh64:5e2f8022ca8cb38d"
+                },
+                "amazon": {
+                    "captured": "2025-06-29T01:32:29Z",
+                    "input": "xxh64:ba5b2ed2ee11970e"
+                },
+                "bitnami": {
+                    "captured": "2025-06-29T01:31:17Z",
+                    "input": "xxh64:85154d0bd3f9559f"
+                },
+                "chainguard": {
+                    "captured": "2025-06-29T01:32:30Z",
+                    "input": "xxh64:50d6bf4096d2280c"
+                },
+                "debian": {
+                    "captured": "2025-06-29T01:32:32Z",
+                    "input": "xxh64:005a1e63b89a0d32"
+                },
+                "echo": {
+                    "captured": "2025-06-29T01:32:15Z",
+                    "input": "xxh64:552a5eae3cadc26f"
+                },
+                "epss": {
+                    "captured": "2025-06-29T01:32:16Z",
+                    "input": "xxh64:cb0829fa5c8dbfd7"
+                },
+                "github": {
+                    "captured": "2025-06-29T01:32:21Z",
+                    "input": "xxh64:0885ad7975fc6d50"
+                },
+                "kev": {
+                    "captured": "2025-06-29T01:32:15Z",
+                    "input": "xxh64:d6b6221abdd905bd"
+                },
+                "mariner": {
+                    "captured": "2025-06-29T01:32:12Z",
+                    "input": "xxh64:866073ccfb6dc4d1"
+                },
+                "minimos": {
+                    "captured": "2025-06-29T01:32:23Z",
+                    "input": "xxh64:f27cbcb8455c1c02"
+                },
+                "nvd": {
+                    "captured": "2025-06-29T01:32:30Z",
+                    "input": "xxh64:14e70df2f5d6c4d5"
+                },
+                "oracle": {
+                    "captured": "2025-06-29T01:32:24Z",
+                    "input": "xxh64:d365cc6c8f84ff48"
+                },
+                "rhel": {
+                    "captured": "2025-06-29T01:33:28Z",
+                    "input": "xxh64:68b290808bc491e1"
+                },
+                "sles": {
+                    "captured": "2025-06-29T01:32:30Z",
+                    "input": "xxh64:c840ec2ee9c18d16"
+                },
+                "ubuntu": {
+                    "captured": "2025-06-29T01:33:24Z",
+                    "input": "xxh64:a7feda6aa721b0b0"
+                },
+                "wolfi": {
+                    "captured": "2025-06-29T01:33:13Z",
+                    "input": "xxh64:15ffd551a48e9eae"
+                }
+            }
+        },
+        "timestamp": "2025-06-29T13:48:11.812957085Z"
+    }
+}

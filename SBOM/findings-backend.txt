@@ -1,0 +1,353 @@
+jq '.matches[] | select(.vulnerability.severity == "High")' SBOM/backend-vuln-report.json
+{
+  "vulnerability": {
+    "id": "GHSA-3xgq-45jj-v275",
+    "dataSource": "https://github.com/advisories/GHSA-3xgq-45jj-v275",
+    "namespace": "github:language:javascript",
+    "severity": "High",
+    "urls": [],
+    "description": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+    "cvss": [
+      {
+        "type": "Secondary",
+        "version": "3.1",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "metrics": {
+          "baseScore": 7.5,
+          "exploitabilityScore": 3.9,
+          "impactScore": 3.6
+        },
+        "vendorMetadata": {}
+      }
+    ],
+    "epss": [
+      {
+        "cve": "CVE-2024-21538",
+        "epss": 0.0017,
+        "percentile": 0.38952,
+        "date": "2025-06-28"
+      }
+    ],
+    "fix": {
+      "versions": [
+        "7.0.5"
+      ],
+      "state": "fixed"
+    },
+    "advisories": [],
+    "risk": 0.12749999999999997
+  },
+  "relatedVulnerabilities": [
+    {
+      "id": "CVE-2024-21538",
+      "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2024-21538",
+      "namespace": "nvd:cpe",
+      "severity": "High",
+      "urls": [
+        "https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff",
+        "https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f",
+        "https://github.com/moxystudio/node-cross-spawn/pull/160",
+        "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349",
+        "https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230"
+      ],
+      "description": "Versions of the package cross-spawn before 6.0.6, from 7.0.0 and before 7.0.5 are vulnerable to Regular Expression Denial of Service (ReDoS) due to improper input sanitization. An attacker can increase the CPU usage and crash the program by crafting a very large and well crafted string.",
+      "cvss": [
+        {
+          "source": "report@snyk.io",
+          "type": "Secondary",
+          "version": "4.0",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "metrics": {
+            "baseScore": 7.7
+          },
+          "vendorMetadata": {}
+        },
+        {
+          "source": "report@snyk.io",
+          "type": "Secondary",
+          "version": "3.1",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "metrics": {
+            "baseScore": 7.5,
+            "exploitabilityScore": 3.9,
+            "impactScore": 3.6
+          },
+          "vendorMetadata": {}
+        }
+      ],
+      "epss": [
+        {
+          "cve": "CVE-2024-21538",
+          "epss": 0.0017,
+          "percentile": 0.38952,
+          "date": "2025-06-28"
+        }
+      ]
+    }
+  ],
+  "matchDetails": [
+    {
+      "type": "exact-direct-match",
+      "matcher": "javascript-matcher",
+      "searchedBy": {
+        "language": "javascript",
+        "namespace": "github:language:javascript",
+        "package": {
+          "name": "cross-spawn",
+          "version": "7.0.3"
+        }
+      },
+      "found": {
+        "versionConstraint": ">=7.0.0,<7.0.5 (unknown)",
+        "vulnerabilityID": "GHSA-3xgq-45jj-v275"
+      },
+      "fix": {
+        "suggestedVersion": "7.0.5"
+      }
+    }
+  ],
+  "artifact": {
+    "id": "865cfebf5dd00b8c",
+    "name": "cross-spawn",
+    "version": "7.0.3",
+    "type": "npm",
+    "locations": [
+      {
+        "path": "/usr/local/lib/node_modules/npm/node_modules/cross-spawn/package.json",
+        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+        "accessPath": "/usr/local/lib/node_modules/npm/node_modules/cross-spawn/package.json",
+        "annotations": {
+          "evidence": "primary"
+        }
+      }
+    ],
+    "language": "javascript",
+    "licenses": [
+      "MIT"
+    ],
+    "cpes": [
+      "cpe:2.3:a:cross-spawn:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:cross-spawn:cross_spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:cross_spawn:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:cross_spawn:cross_spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:moxystudio:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:moxystudio:cross_spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:cross:cross-spawn:7.0.3:*:*:*:*:*:*:*",
+      "cpe:2.3:a:cross:cross_spawn:7.0.3:*:*:*:*:*:*:*"
+    ],
+    "purl": "pkg:npm/cross-spawn@7.0.3",
+    "upstreams": []
+  }
+}
+{
+  "vulnerability": {
+    "id": "CVE-2025-23166",
+    "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-23166",
+    "namespace": "nvd:cpe",
+    "severity": "High",
+    "urls": [
+      "https://nodejs.org/en/blog/vulnerability/may-2025-security-releases"
+    ],
+    "description": "The C++ method SignTraits::DeriveBits() may incorrectly call ThrowException() based on user-supplied inputs when executing in a background thread, crashing the Node.js process. Such cryptographic operations are commonly applied to untrusted inputs. Thus, this mechanism potentially allows an adversary to remotely crash a Node.js runtime.",
+    "cvss": [
+      {
+        "source": "support@hackerone.com",
+        "type": "Secondary",
+        "version": "3.0",
+        "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "metrics": {
+          "baseScore": 7.5,
+          "exploitabilityScore": 3.9,
+          "impactScore": 3.6
+        },
+        "vendorMetadata": {}
+      }
+    ],
+    "epss": [
+      {
+        "cve": "CVE-2025-23166",
+        "epss": 0.00088,
+        "percentile": 0.26365,
+        "date": "2025-06-28"
+      }
+    ],
+    "fix": {
+      "versions": [
+        "20.19.2",
+        "22.15.1",
+        "23.11.1",
+        "24.0.2"
+      ],
+      "state": "fixed"
+    },
+    "advisories": [],
+    "risk": 0.066
+  },
+  "relatedVulnerabilities": [],
+  "matchDetails": [
+    {
+      "type": "cpe-match",
+      "matcher": "stock-matcher",
+      "searchedBy": {
+        "namespace": "nvd:cpe",
+        "cpes": [
+          "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+        ],
+        "package": {
+          "name": "node",
+          "version": "18.20.8"
+        }
+      },
+      "found": {
+        "vulnerabilityID": "CVE-2025-23166",
+        "versionConstraint": "< 20.19.2,>= 21, < 22.15.1,>= 23, < 23.11.1,>= 24, < 24.0.2 (unknown)",
+        "cpes": [
+          "cpe:2.3:a:nodejs:node.js:*:*:*:*:*:*:*:*"
+        ]
+      },
+      "fix": {
+        "suggestedVersion": "20.19.2"
+      }
+    }
+  ],
+  "artifact": {
+    "id": "cf59dfa8fdc1f640",
+    "name": "node",
+    "version": "18.20.8",
+    "type": "binary",
+    "locations": [
+      {
+        "path": "/usr/local/bin/node",
+        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+        "accessPath": "/usr/local/bin/node",
+        "annotations": {
+          "evidence": "primary"
+        }
+      }
+    ],
+    "language": "",
+    "licenses": [],
+    "cpes": [
+      "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+    ],
+    "purl": "pkg:generic/node@18.20.8",
+    "upstreams": []
+  }
+}
+
+
+----------
+
+jq '.matches[] | select(.vulnerability.severity == "Medium")' SBOM/backend-vuln-r
+eport.json
+{
+  "vulnerability": {
+    "id": "CVE-2025-23167",
+    "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-23167",
+    "namespace": "nvd:cpe",
+    "severity": "Medium",
+    "urls": [
+      "https://nodejs.org/en/blog/vulnerability/may-2025-security-releases"
+    ],
+    "description": "A flaw in Node.js 20's HTTP parser allows improper termination of HTTP/1 headers using `\\r\\n\\rX` instead of the required `\\r\\n\\r\\n`.\nThis inconsistency enables request smuggling, allowing attackers to bypass proxy-based access controls and submit unauthorized requests.\n\nThe issue was resolved by upgrading `llhttp` to version 9, which enforces correct header termination.\n\nImpact:\n* This vulnerability affects only Node.js 20.x users prior to the `llhttp` v9 upgrade.",
+    "cvss": [
+      {
+        "source": "support@hackerone.com",
+        "type": "Secondary",
+        "version": "3.0",
+        "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "metrics": {
+          "baseScore": 6.5,
+          "exploitabilityScore": 3.9,
+          "impactScore": 2.6
+        },
+        "vendorMetadata": {}
+      }
+    ],
+    "epss": [
+      {
+        "cve": "CVE-2025-23167",
+        "epss": 0.00039,
+        "percentile": 0.10947,
+        "date": "2025-06-28"
+      }
+    ],
+    "fix": {
+      "versions": [
+        "20.19.2"
+      ],
+      "state": "fixed"
+    },
+    "advisories": [],
+    "risk": 0.022424999999999997
+  },
+  "relatedVulnerabilities": [],
+  "matchDetails": [
+    {
+      "type": "cpe-match",
+      "matcher": "stock-matcher",
+      "searchedBy": {
+        "namespace": "nvd:cpe",
+        "cpes": [
+          "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+        ],
+        "package": {
+          "name": "node",
+          "version": "18.20.8"
+        }
+      },
+      "found": {
+        "vulnerabilityID": "CVE-2025-23167",
+        "versionConstraint": "< 20.19.2 (unknown)",
+        "cpes": [
+          "cpe:2.3:a:nodejs:node.js:*:*:*:*:*:*:*:*"
+        ]
+      },
+      "fix": {
+        "suggestedVersion": "20.19.2"
+      }
+    }
+  ],
+  "artifact": {
+    "id": "cf59dfa8fdc1f640",
+    "name": "node",
+    "version": "18.20.8",
+    "type": "binary",
+    "locations": [
+      {
+        "path": "/usr/local/bin/node",
+        "layerID": "sha256:0b1f26057bd0491a50f56fd7f2983bd3ad478511f12fff2b361a97c50cb5828b",
+        "accessPath": "/usr/local/bin/node",
+        "annotations": {
+          "evidence": "primary"
+        }
+      }
+    ],
+    "language": "",
+    "licenses": [],
+    "cpes": [
+      "cpe:2.3:a:nodejs:node.js:18.20.8:*:*:*:*:*:*:*"
+    ],
+    "purl": "pkg:generic/node@18.20.8",
+    "upstreams": []
+  }
+}
+
+azureuser@linux-VM01:~/EventEase/EventEase$ grype sbom:SBOM/backend-sbom.json
+ ✔ Scanned for vulnerabilities     [12 vulnerability matches]  
+   ├── by severity: 0 critical, 2 high, 1 medium, 9 low, 0 negligible
+   └── by status:   6 fixed, 6 not-fixed, 0 ignored 
+NAME             INSTALLED   FIXED-IN                           TYPE    VULNERABILITY        SEVERITY  EPSS%  RISK  
+
+cross-spawn      7.0.3       7.0.5                              npm     GHSA-3xgq-45jj-v275  High      38.95    0.1  
+node             18.20.8     20.19.2, 22.15.1, 23.11.1, 24.0.2  binary  CVE-2025-23166       High      26.36  < 0.1  
+node             18.20.8     20.19.2                            binary  CVE-2025-23167       Medium    10.95  < 0.1  
+node             18.20.8     20.19.2, 22.15.1                   binary  CVE-2025-23165       Low       19.31  < 0.1  
+brace-expansion  1.1.11      1.1.12                             npm     GHSA-v6h2-p8h4-qcjw  Low       16.19  < 0.1  
+brace-expansion  2.0.1       2.0.2                              npm     GHSA-v6h2-p8h4-qcjw  Low       16.19  < 0.1  
+busybox          1.37.0-r12                                     apk     CVE-2024-58251       Low        3.53  < 0.1  
+busybox-binsh    1.37.0-r12                                     apk     CVE-2024-58251       Low        3.53  < 0.1  
+ssl_client       1.37.0-r12                                     apk     CVE-2024-58251       Low        3.53  < 0.1  
+busybox          1.37.0-r12                                     apk     CVE-2025-46394       Low        2.64  < 0.1  
+busybox-binsh    1.37.0-r12                                     apk     CVE-2025-46394       Low        2.64  < 0.1  
+ssl_client       1.37.0-r12                                     apk     CVE-2025-46394       Low        2.64  < 0.1

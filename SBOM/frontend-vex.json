@@ -1,0 +1,22 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "id": "https://eventease.com/vex/frontend-vex",
+  "author": "EventEase Security Team-Archit",
+  "timestamp": "2025-06-29T10:00:00Z",
+  "statements": [
+    {
+      "vulnerability": {
+        "id": "CVE-2023-52356"
+      },
+      "products": [
+        {
+          "id": "pkg:docker/eventease-frontend@latest"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "The TIFF library is part of the base image but not used by the frontend app.",
+      "timestamp": "2025-06-29T10:00:00Z"
+    }
+  ]
+}

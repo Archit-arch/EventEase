@@ -48,9 +48,6 @@ nginx/vhost.d/
 # === Frontend Build Output ===
 my-react-app/dist/
 
-# === SBOM (if auto-generated or not required in repo) ===
-SBOM/
-
 # === .env files ===
 .env
 .env.*
