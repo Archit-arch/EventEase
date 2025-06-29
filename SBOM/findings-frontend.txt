@@ -1,0 +1,18 @@
+azureuser@linux-VM01:~/EventEase/EventEase$ grype sbom:SBOM/frontend-sbom.json
+ ✔ Scanned for vulnerabilities     [12 vulnerability matches]  
+   ├── by severity: 0 critical, 1 high, 5 medium, 6 low, 0 negligible
+   └── by status:   0 fixed, 12 not-fixed, 0 ignored 
+NAME           INSTALLED   FIXED-IN  TYPE  VULNERABILITY   SEVERITY  EPSS%  RISK 
+ 
+tiff           4.7.0-r0              apk   CVE-2023-6277   Medium    60.89    0.2  
+tiff           4.7.0-r0              apk   CVE-2023-52356  High      50.23    0.2  
+tiff           4.7.0-r0              apk   CVE-2015-7313   Medium    44.90    0.1  
+libcrypto3     3.5.0-r0              apk   CVE-2025-4575   Medium     6.41  < 0.1  
+libssl3        3.5.0-r0              apk   CVE-2025-4575   Medium     6.41  < 0.1  
+tiff           4.7.0-r0              apk   CVE-2023-6228   Medium     1.62  < 0.1  
+busybox        1.37.0-r18            apk   CVE-2024-58251  Low        3.53  < 0.1  
+busybox-binsh  1.37.0-r18            apk   CVE-2024-58251  Low        3.53  < 0.1  
+ssl_client     1.37.0-r18            apk   CVE-2024-58251  Low        3.53  < 0.1  
+busybox        1.37.0-r18            apk   CVE-2025-46394  Low        2.64  < 0.1  
+busybox-binsh  1.37.0-r18            apk   CVE-2025-46394  Low        2.64  < 0.1  
+ssl_client     1.37.0-r18            apk   CVE-2025-46394  Low        2.64  < 0.1

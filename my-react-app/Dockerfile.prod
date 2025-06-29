@@ -5,8 +5,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN mkdir -p /app/dist && chown -R node:node /app /app/dist
+# RUN mkdir -p /app/dist && chown -R node:node /app /app/dist
+# USER node
+RUN mkdir -p /app/dist && chown node:node /app /app/dist
 USER node
+COPY --chown=node:node . .
+
 RUN npm run build
 
 

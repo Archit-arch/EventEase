@@ -1,0 +1,36 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "id": "https://eventease.com/vex/backend-vex",
+  "author": "EventEase Security Team - Archit",
+  "timestamp": "2025-06-29T10:00:00Z",
+  "statements": [
+    {
+      "vulnerability": {
+        "id": "GHSA-3xgq-45jj-v275"
+      },
+      "products": [
+        {
+          "id": "pkg:docker/eventease-backend@latest"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "The cross-spawn package is installed for tooling but is never executed during backend runtime.",
+      "timestamp": "2025-06-29T10:00:00Z"
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2025-23166"
+      },
+      "products": [
+        {
+          "id": "pkg:docker/eventease-backend@latest"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "The vulnerable crypto API is part of Node.js but is not invoked by the backend application.",
+      "timestamp": "2025-06-29T10:00:00Z"
+    }
+  ]
+}

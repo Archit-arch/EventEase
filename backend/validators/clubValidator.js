@@ -4,22 +4,29 @@ const { body } = require('express-validator');
 exports.validateClubRequest = [
   body('name')
     .trim()
+    .escape()
+    .isString().withMessage('Club name must be a string.')
     .notEmpty().withMessage('Club name is required.')
     .isLength({ max: 100 }).withMessage('Club name cannot exceed 100 characters.'),
 
   body('description')
     .optional()
+    .trim()
+    .escape()
     .isLength({ max: 500 }).withMessage('Description cannot exceed 500 characters.'),
 ];
 
 exports.validateVenueRequest = [
   body('name')
     .trim()
+    .escape()
     .notEmpty().withMessage('Venue name is required.')
     .isLength({ max: 100 }).withMessage('Venue name cannot exceed 100 characters.'),
 
   body('location')
     .optional()
+    .trim()
+    .escape()
     .isLength({ max: 255 }).withMessage('Location cannot exceed 255 characters.'),
 
   body('capacity')
@@ -30,11 +37,14 @@ exports.validateVenueRequest = [
 exports.validateEventRequest = [
   body('title')
     .trim()
+    .escape()
     .notEmpty().withMessage('Event title is required.')
     .isLength({ max: 100 }).withMessage('Title cannot exceed 100 characters.'),
 
   body('description')
     .optional()
+    .trim()
+    .escape()
     .isLength({ max: 500 }).withMessage('Description cannot exceed 500 characters.'),
 
   body('date')
