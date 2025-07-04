@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios"; // Axios is configured to send cookies
@@ -30,5 +31,5 @@ const { user, loading_auth, error } = useAuth();
     </div>
   );
 };
-//
+
 export default AdminDashboard;

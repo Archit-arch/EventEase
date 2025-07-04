@@ -39,13 +39,13 @@ function App() {
         <Route path="/adminDashboard" element={<AdminDashboard />} />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="/view-requests" element={<ViewRequests />} />
+        <Route path="/adminDashboard/view-requests" element={<ViewRequests />} />
 
-        <Route path="/view-admin-logs" element={< ViewAdminLogs />} />
+        <Route path="/adminDashboard/view-admin-logs" element={< ViewAdminLogs />} />
 
-        <Route path="/venue-requests" element={<VenueRequests />} />
-        <Route path="/user-management" element={<UserManagement />} />
-        <Route path="/security-logs" element={<SecurityLogs />} />
+        <Route path="venue-requests" element={<VenueRequests />} />
+        <Route path="/adminDashboard/user-management" element={<UserManagement />} />
+        <Route path="/adminDashboard/security-logs" element={<SecurityLogs />} />
         {/* Catch-all route for 404 */}
       </Routes>
       <Footer />

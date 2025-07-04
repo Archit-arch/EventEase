@@ -9,6 +9,16 @@ export function useAuth() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    const isAdminPath = window.location.pathname.startsWith('/adminDashboard');
+
+    if (isAdminPath) {
+      //Assume admin is authenticated via client certificate
+      setUser({ role: 'admin', name: 'Admin' }); // You can customize
+      setLoading(false);
+      return;
+    }
+    
     async function fetchUser() {
       try {
         const res = await api.get('/auth/me');

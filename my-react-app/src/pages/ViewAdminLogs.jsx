@@ -11,7 +11,7 @@ const ViewAdminLogs = () => {
   const { user, loading, error } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = React.useState('clubs');
-
+  
   useEffect(() => {
     if (!loading) {
       if (error || !user) {
@@ -23,7 +23,7 @@ const ViewAdminLogs = () => {
       }
     }
   }, [loading, error, user, navigate]);
-
+  
   if (loading) return <div>Loading...</div>;
 
   return (
