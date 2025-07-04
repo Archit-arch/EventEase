@@ -10,22 +10,19 @@ const AdminNavbar = () => {
   const { user, loading, error } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await api.get('/auth/logout'); // GET /logout withCredentials already set in api instance
-      navigate('/login'); // Redirect to login page
-    } catch (err) {
-      console.error('Logout error:', err);
-    }
-  };
+ const handleLogout = () => {
+  navigate('/'); // Redirect to home page, no API call needed
+};
+
 
   const navLinks = [
-    { name: "Admin Logs", path: "/view-admin-logs" },
-    { name: "Approve/Reject Requests", path: "/view-requests" },
-    { name: "Security-Logs", path: "/security-logs" },
-    { name: "User Management", path: "/user-management" },
-  ]; 
+  { name: "Admin Logs", path: "/adminDashboard/view-admin-logs" },
+  { name: "Approve/Reject Requests", path: "/adminDashboard/view-requests" },
+  { name: "Security-Logs", path: "/adminDashboard/security-logs" },
+  { name: "User Management", path: "/adminDashboard/user-management" }, // ✅ fixed slash
+];
 
+/*
   useEffect(() => {
         if (!loading) {
           if (!user) {
@@ -36,7 +33,7 @@ const AdminNavbar = () => {
           }
         }
       }, [user, loading, navigate]);
-
+*/
   return (
     <nav className="navbar">
       <div className="nav-content">

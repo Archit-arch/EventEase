@@ -39,7 +39,7 @@ function Login() {
     const user = verifyRes.data.user;
     console.log('User from verify:', user);
 
-    setSuccess(response.data.message || 'Login successful');
+    setSuccess(response.data.message || 'Login is successful, Proceed');
 
     setTimeout(() => {
       if (user?.role === 'student') {
