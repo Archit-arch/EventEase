@@ -21,6 +21,10 @@ import VenueRequests from "./pages/VenueRequests.jsx";
 import EventRequestForm from './pages/EventRequestForm.jsx';
 import UserManagement from './pages/UserManagement.jsx';
 import SecurityLogs from './pages/SecurityLogs.jsx';
+import ForgotPassword from './pages/ForgotPassword';
+import VerifyOtpReset from './pages/VerifyOtpReset';
+import ResetPassword from './pages/ResetPassword';
+
 function App() {
   return (
     <Router>
@@ -46,6 +50,10 @@ function App() {
         <Route path="venue-requests" element={<VenueRequests />} />
         <Route path="/adminDashboard/user-management" element={<UserManagement />} />
         <Route path="/adminDashboard/security-logs" element={<SecurityLogs />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-reset-otp" element={<VerifyOtpReset />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
         {/* Catch-all route for 404 */}
       </Routes>
       <Footer />

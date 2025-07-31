@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 require('../config/passport'); // Load Google Strategy
 const logSecurityEvent = require('../utils/logSecurityEvent');
+const { sendResetOTP, verifyResetOTP, resetPassword } = require('../controllers/passwordResetController');
 
 const {
   sendOTP,
@@ -142,5 +143,47 @@ router.get(
     res.redirect(redirectUrl);
   }
 );
+
+// ----------------------
+// Forgot Password Routes
+// ----------------------
+
+// POST /api/auth/forgot-password
+router.post('/forgot-password', async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ msg: 'Email is required' });
+    await sendResetOTP(req, res);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/auth/verify-reset-otp
+router.post('/verify-reset-otp', async (req, res, next) => {
+  try {
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+      return res.status(400).json({ msg: 'Email and OTP are required' });
+    }
+    await verifyResetOTP(req, res);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/auth/reset-password
+router.post('/reset-password', async (req, res, next) => {
+  try {
+    const { email, newPassword } = req.body;
+    if (!email || !newPassword) {
+      return res.status(400).json({ msg: 'Email and new password are required' });
+    }
+    await resetPassword(req, res);
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 module.exports = router;

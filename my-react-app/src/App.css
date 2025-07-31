@@ -5,10 +5,10 @@
 }
 
 body {
-  padding-top: 4rem; /* Height of the fixed navbar */
-}
+  padding: 0;
+} 
 
-/* Example of a custom class for a page container */
+
 .page-container {
   padding: 2rem;
   background-color: #fff;
