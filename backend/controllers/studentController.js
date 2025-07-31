@@ -190,8 +190,8 @@ const submitEventFeedback = async (req, res, next) => {
 
     // Insert feedback
     const result = await pool.query(
-      `INSERT INTO event_feedback (user_id, event_id, ratings, comments, submitted_at)
-       VALUES ($1, $2, $3, $4, NOW())
+      `INSERT INTO event_feedback (user_id, event_id, ratings, comments)
+       VALUES ($1, $2, $3, $4)
        RETURNING *`,
       [user_id, event_id, ratings, comments]
     );

@@ -122,6 +122,10 @@ function Login() {
                       </Button>
                     </InputGroup>
                   </Form.Group>
+                  
+                  <div className="text-end mt-2">
+                    <a href="/forgot-password">Forgot Password?</a>
+                  </div>
 
                   <Button variant="primary" type="submit" className="w-100">
                     Log in
