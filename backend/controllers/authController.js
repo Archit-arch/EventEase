@@ -97,7 +97,7 @@ const registerUser = async (req, res, next) => {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);   //12 Rounds of salting for a strong password.
 
     const result = await pool.query(
       `INSERT INTO users (name, email, password_hash, role, is_verified)
